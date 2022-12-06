@@ -1,12 +1,8 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import Text from '../../components/atoms/Text';
 
 const Home = () => {
-  return (
-    <View>
-      <Text>HOME SCREEN</Text>
-    </View>
-  );
+  return <Text>Home</Text>;
 };
 
 export default Home;
