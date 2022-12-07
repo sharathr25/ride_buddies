@@ -1,7 +1,7 @@
 const palette = {
   purple: '#5837D0',
   green: '#0ECD9D',
-  red: '#CD0E61',
+  red: '#FF5D5D',
   black: '#0B0B0B',
   white: '#F0F2F3',
   lightGray: '#9E9E9E',
@@ -39,6 +39,9 @@ export const theme = {
     },
     body: {
       fontSize: 16,
+    },
+    info: {
+      fontSize: 13,
     },
   },
 };

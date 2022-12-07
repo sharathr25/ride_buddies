@@ -17,6 +17,7 @@ const Button = ({ title = '', outline, disabled, color = 'primary', onPress, ...
         borderWidth: 2,
         backgroundColor: outline ? 'transparent' : theme.colors[color],
         opacity: disabled ? 0.5 : 1,
+        elevation: 0,
       }}
       onPress={disabled ? () => {} : onPress}
       {...rest}
