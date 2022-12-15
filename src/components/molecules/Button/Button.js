@@ -11,7 +11,7 @@ const Button = ({ title = '', outline, disabled, color = 'primary', onPress, ...
       style={{
         alignItems: 'center',
         justifyContent: 'center',
-        height: 50,
+        padding: theme.spacing.m,
         borderColor: theme.colors[color],
         borderRadius: 5,
         borderWidth: 2,

@@ -6,10 +6,13 @@ import Text from '../../components/atoms/Text';
 import TextInput from '../../components/molecules/TextInput';
 import { validateMobileNumber } from '../../utils/validators';
 import useForm from '../../hooks/useForm';
+import useKeyboard from '../../hooks/useKeyboard';
 
 import SVGImg from '../../images/illustrations/travelling.svg';
 
 const SignIn = () => {
+  const { isKeyboardShown } = useKeyboard();
+
   const onValidate = ({ mobileNumber }) => {
     const errors = {};
     const mobileNumberErr = validateMobileNumber(mobileNumber);
@@ -30,9 +33,11 @@ const SignIn = () => {
 
   return (
     <Box backgroundColor="background" padding="xl" style={{ flex: 1, justifyContent: 'flex-end' }}>
-      <Box style={{ flex: 1 }}>
-        <SVGImg width="100%" height="100%" />
-      </Box>
+      {!isKeyboardShown && (
+        <Box style={{ flex: 1 }}>
+          <SVGImg width="100%" height="100%" />
+        </Box>
+      )}
       <Text variant="header">Hello Again!</Text>
       <Text>Welcome back you've been missed!</Text>
       <Box margin="m" />

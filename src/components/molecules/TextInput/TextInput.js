@@ -14,7 +14,6 @@ const TextInput = ({ placeholder = '', label, error, ...rest }) => {
         padding="s"
         style={{
           alignSelf: 'stretch',
-          height: 60,
           borderWidth: 2,
           borderRadius: 5,
           borderColor: theme.colors.lightGray,
@@ -34,7 +33,7 @@ const TextInput = ({ placeholder = '', label, error, ...rest }) => {
           placeholder={placeholder.toUpperCase()}
           placeholderTextColor={`${theme.colors.foreground}80`}
           selectionColor={theme.colors.foreground}
-          style={{ color: theme.colors.foreground }}
+          style={{ color: theme.colors.foreground, padding: 0 }}
           {...rest}
         />
       </Box>
