@@ -1,5 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-native';
+import React, { useState } from 'react';
+import { Link, useLinkPressHandler } from 'react-router-native';
+import auth from '@react-native-firebase/auth';
 import Box from '../../components/atoms/Box';
 import Button from '../../components/molecules/Button';
 import Text from '../../components/atoms/Text';
@@ -12,6 +13,9 @@ import SVGImg from '../../images/illustrations/travelling.svg';
 
 const SignIn = () => {
   const { isKeyboardShown } = useKeyboard();
+  const [confirm, setConfirm] = useState(null);
+  const redirect = useLinkPressHandler();
+  console.log(redirect);
 
   const onValidate = ({ mobileNumber }) => {
     const errors = {};
@@ -20,9 +24,17 @@ const SignIn = () => {
     return errors;
   };
 
-  const onSubmit = (values) => {
-    // TODO: login with mobile number
-    console.log(values);
+  const confirmOTP = async () => {
+    try {
+      await confirm.confirm(code);
+    } catch (error) {
+      alert('Invalid code.');
+    }
+  };
+
+  const onSubmit = async ({ mobileNumber }) => {
+    const confirmation = await auth().signInWithPhoneNumber(`+91${mobileNumber}`);
+    setConfirm(confirmation);
   };
 
   const { form, setForm, isValid, validate, handleSubmit } = useForm({

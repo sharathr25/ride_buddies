@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "800978194253",
+    "project_id": "ride-buddies-aee65",
+    "storage_bucket": "ride-buddies-aee65.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:800978194253:android:4e4adf9c089f4d2299f104",
+        "android_client_info": {
+          "package_name": "com.ride_buddies"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "800978194253-9o37jn7d9qce40mo6uu6jck2vsja6avp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ride_buddies",
+            "certificate_hash": "34c7a669046d9fa55ac48fa92b9e049d1638da8c"
+          }
+        },
+        {
+          "client_id": "800978194253-a8lhupe7qt6mbusucffsei0kpk4625j2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArYpMGGpqq8fC0c5OwUyHf9t9fvhahi_E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "800978194253-a8lhupe7qt6mbusucffsei0kpk4625j2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

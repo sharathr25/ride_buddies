@@ -48,7 +48,7 @@ const SignUp = () => {
       <Box margin="s" />
       <Box style={{ flexDirection: 'row' }}>
         <Text>Already a member? </Text>
-        <Link to="/sign-in" replace>
+        <Link to="/sign-in">
           <Text color="link">Sign In</Text>
         </Link>
       </Box>
