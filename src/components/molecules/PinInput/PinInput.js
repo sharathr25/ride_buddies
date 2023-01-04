@@ -60,7 +60,7 @@ const PinInput = ({ placeholder = '', label, error, maxPin, value, ...rest }) =>
         <RNTextInput
           value={value}
           maxLength={maxPin}
-          style={{ color: theme.colors.foreground, padding: 0, height: 0 }}
+          style={{ color: theme.colors.foreground, padding: 0, height: 1, width: 1 }}
           ref={inputRef}
           keyboardType="number-pad"
           {...rest}

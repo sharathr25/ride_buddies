@@ -1,25 +1,31 @@
 import React from 'react';
-import { Link } from 'react-router-native';
+import { Link, useLinkPressHandler } from 'react-router-native';
 import Box from '../../components/atoms/Box';
 import Button from '../../components/molecules/Button';
 import Text from '../../components/atoms/Text';
 import PinInput from '../../components/molecules/PinInput';
 import useForm from '../../hooks/useForm';
+import { validateOTP } from '../../api/firebase/auth';
 
 import SVGImg from '../../images/illustrations/letter.svg';
 
 const MAX_PIN = 6;
 
 const OTP = () => {
+  const goToHomePage = useLinkPressHandler('/');
   const onValidate = ({ otp }) => {
     const errors = {};
     if (otp.length !== MAX_PIN) errors.otp = 'Invalid OTP';
     return errors;
   };
 
-  const onSubmit = (values) => {
-    // TODO: login with mobile number
-    console.log(values);
+  const onSubmit = async ({ otp }) => {
+    try {
+      await validateOTP(otp);
+      goToHomePage();
+    } catch (error) {
+      alert('Invalid OTP');
+    }
   };
 
   const { form, setForm, isValid, validate, handleSubmit } = useForm({
