@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-native';
+import { Link } from '@react-navigation/native';
 import Box from '../../components/atoms/Box';
 import Button from '../../components/molecules/Button';
 import Text from '../../components/atoms/Text';
@@ -48,7 +48,7 @@ const SignUp = () => {
       <Box margin="s" />
       <Box style={{ flexDirection: 'row' }}>
         <Text>Already a member? </Text>
-        <Link to="/sign-in">
+        <Link to={{ screen: 'SignIn' }}>
           <Text color="link">Sign In</Text>
         </Link>
       </Box>

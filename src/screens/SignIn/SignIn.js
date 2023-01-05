@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useLinkPressHandler } from 'react-router-native';
+import { Link } from '@react-navigation/native';
 import Box from '../../components/atoms/Box';
 import Button from '../../components/molecules/Button';
 import Text from '../../components/atoms/Text';
@@ -11,9 +11,8 @@ import { signInWithPhoneNumber } from '../../api/firebase/auth';
 
 import SVGImg from '../../images/illustrations/travelling.svg';
 
-const SignIn = () => {
+const SignIn = ({ navigation }) => {
   const { isKeyboardShown } = useKeyboard();
-  const gotoOtpScreen = useLinkPressHandler('/otp');
 
   const onValidate = ({ mobileNumber }) => {
     const errors = {};
@@ -25,7 +24,7 @@ const SignIn = () => {
   const onSubmit = async ({ mobileNumber }) => {
     try {
       await signInWithPhoneNumber(mobileNumber);
-      gotoOtpScreen();
+      navigation.push('OTP');
     } catch (error) {
       console.error('Something went wrong while sigining in');
     }
@@ -59,7 +58,7 @@ const SignIn = () => {
       <Box margin="m" />
       <Box style={{ flexDirection: 'row' }}>
         <Text>Not a member? </Text>
-        <Link to="/sign-up">
+        <Link to={{ screen: 'SignUp' }}>
           <Text color="link">Register Now</Text>
         </Link>
       </Box>

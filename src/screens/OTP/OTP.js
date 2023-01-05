@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link, useLinkPressHandler } from 'react-router-native';
 import Box from '../../components/atoms/Box';
 import Button from '../../components/molecules/Button';
 import Text from '../../components/atoms/Text';
@@ -8,11 +7,11 @@ import useForm from '../../hooks/useForm';
 import { validateOTP } from '../../api/firebase/auth';
 
 import SVGImg from '../../images/illustrations/letter.svg';
+import { Pressable } from 'react-native';
 
 const MAX_PIN = 6;
 
-const OTP = () => {
-  const goToHomePage = useLinkPressHandler('/');
+const OTP = ({ navigation }) => {
   const onValidate = ({ otp }) => {
     const errors = {};
     if (otp.length !== MAX_PIN) errors.otp = 'Invalid OTP';
@@ -22,7 +21,7 @@ const OTP = () => {
   const onSubmit = async ({ otp }) => {
     try {
       await validateOTP(otp);
-      goToHomePage();
+      navigation.replace('Home');
     } catch (error) {
       alert('Invalid OTP');
     }
@@ -55,9 +54,9 @@ const OTP = () => {
       <Box margin="m" />
       <Box style={{ flexDirection: 'row' }}>
         <Text>Wrong number? </Text>
-        <Link to="/sign-up">
+        <Pressable onPress={() => navigation.goBack()}>
           <Text color="link">Go back</Text>
-        </Link>
+        </Pressable>
       </Box>
     </Box>
   );

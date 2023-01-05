@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-native';
+import { Link } from '@react-navigation/native';
 import { signOut } from '../../api/firebase/auth';
 import Box from '../../components/atoms/Box';
 import Text from '../../components/atoms/Text';
@@ -16,10 +16,10 @@ const Home = () => {
         <Button title="Sign out" onPress={signOut} />
       ) : (
         <Box>
-          <Link to="/sign-in">
+          <Link to={{ screen: 'SignIn' }}>
             <Text color="link">SIGN IN</Text>
           </Link>
-          <Link to="/sign-up">
+          <Link to={{ screen: 'SignUp' }}>
             <Text color="link">SIGN UP</Text>
           </Link>
         </Box>
