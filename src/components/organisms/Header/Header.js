@@ -10,8 +10,9 @@ import Back from '../../../images/icons/back.svg';
 
 const Header = ({ navigation, route, back }) => {
   const { user } = useAuth();
+  const { displayName, photoURL } = user || {};
   const theme = useContext(ThemeContext);
-  const initial = user?.displayName ? user.displayName.charAt(0) : '';
+  const initial = displayName ? displayName.charAt(0) : '';
 
   const renderHeaderContent = () => {
     if (route.name === 'SignIn' || route.name === 'SignUp' || route.name === 'OTP') return null;
@@ -21,7 +22,11 @@ const Header = ({ navigation, route, back }) => {
           <Pressable>
             <BurgerMenu />
           </Pressable>
-          <Avatar onPress={() => navigation.push('Profile')} initial={initial} />
+          <Avatar
+            onPress={() => navigation.push('Profile')}
+            initial={initial}
+            backgroundColor={photoURL}
+          />
         </>
       );
     }

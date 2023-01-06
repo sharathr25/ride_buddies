@@ -3,7 +3,7 @@ import auth from '@react-native-firebase/auth';
 let confirm = null;
 
 export const signInWithPhoneNumber = async (phoneNumber) => {
-  confirm = await auth().signInWithPhoneNumber(`+91${phoneNumber}`);
+  confirm = await auth().signInWithPhoneNumber(phoneNumber);
 };
 
 export const validateOTP = async (code) => {
@@ -17,4 +17,8 @@ export const getCurrentUser = () => auth().currentUser;
 
 export const signOut = async () => {
   return await auth().signOut();
+};
+
+export const updateProfile = async ({ displayName, photoURL }) => {
+  return await auth().currentUser.updateProfile({ displayName, photoURL });
 };

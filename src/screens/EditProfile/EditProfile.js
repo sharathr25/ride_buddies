@@ -8,9 +8,13 @@ import TextInput from '../../components/molecules/TextInput';
 import useForm from '../../hooks/useForm';
 import { validateDisplayName, validateMobileNumber } from '../../utils/validators';
 import ColorPicker from '../../components/molecules/ColorPicker';
+import useAuth from '../../hooks/useAuth';
 import { signInWithPhoneNumber } from '../../api/firebase/auth';
 
-const SignUp = ({ navigation }) => {
+const EditProfile = ({ navigation }) => {
+  const { user } = useAuth();
+  const { displayName, photoURL, phoneNumber } = user;
+
   const onValidate = ({ mobileNumber, displayName }) => {
     const errors = {};
     const mobileNumberErr = validateMobileNumber(mobileNumber);
@@ -28,15 +32,16 @@ const SignUp = ({ navigation }) => {
         mobileNumber: mobileNumberWithCountryCode,
         displayName,
         color,
-        screenToGo: 'Home',
+        screenToGo: 'Profile',
       });
     } catch (error) {
-      console.error('Something went wrong while sign up');
+      console.log(error);
+      console.error('Something went wrong while sigining in');
     }
   };
 
   const { form, setForm, isValid, validate, handleSubmit } = useForm({
-    initialValues: { mobileNumber: '', displayName: '', color: '' },
+    initialValues: { mobileNumber: phoneNumber.slice(-10), displayName, color: photoURL },
     onValidate,
     onSubmit,
   });
@@ -49,7 +54,7 @@ const SignUp = ({ navigation }) => {
         style={{ flex: 1, justifyContent: 'flex-end' }}
       >
         <Text variant="header">Hello!</Text>
-        <Text>Let's create an account!</Text>
+        <Text>Let's update your profile!</Text>
         <Box margin="s" />
         <TextInput
           label="Mobile number"
@@ -70,16 +75,15 @@ const SignUp = ({ navigation }) => {
         <ColorPicker
           onSelect={setForm('color')}
           label="Your favourite color"
-          hint="We will choose a random color if you don't choose"
           value={form.values.color}
         />
         <Box margin="s" />
-        <Button title="Get OTP" onPress={handleSubmit} disabled={!isValid()} />
+        <Button title="Update" onPress={handleSubmit} disabled={!isValid()} />
         <Box margin="xs" />
         <Box style={{ flexDirection: 'row' }}>
-          <Text>Already a member? </Text>
-          <Link to={{ screen: 'SignIn' }}>
-            <Text color="link">Sign In</Text>
+          <Text>Don't wanna edit? </Text>
+          <Link to={{ screen: 'Profile' }}>
+            <Text color="link">Go Back</Text>
           </Link>
         </Box>
       </Box>
@@ -87,4 +91,4 @@ const SignUp = ({ navigation }) => {
   );
 };
 
-export default SignUp;
+export default EditProfile;

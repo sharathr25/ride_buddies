@@ -5,7 +5,7 @@ import Box from '../../atoms/Box';
 import Text from '../../atoms/Text';
 import Error from '../Error';
 
-const TextInput = ({ placeholder = '', label, error, ...rest }) => {
+const TextInput = ({ placeholder = '', label, error, hint, ...rest }) => {
   const theme = useContext(ThemeContext);
 
   return (
@@ -37,6 +37,11 @@ const TextInput = ({ placeholder = '', label, error, ...rest }) => {
           {...rest}
         />
       </Box>
+      {hint && (
+        <Text variant="info" color="darkGray">
+          {hint}
+        </Text>
+      )}
       <Error error={error} />
     </Box>
   );

@@ -1,17 +1,21 @@
 import React from 'react';
+import { Pressable } from 'react-native';
 import Box from '../../components/atoms/Box';
 import Button from '../../components/molecules/Button';
 import Text from '../../components/atoms/Text';
 import PinInput from '../../components/molecules/PinInput';
 import useForm from '../../hooks/useForm';
-import { validateOTP } from '../../api/firebase/auth';
+import { updateProfile, validateOTP } from '../../api/firebase/auth';
+import useKeyboard from '../../hooks/useKeyboard';
 
 import SVGImg from '../../images/illustrations/letter.svg';
-import { Pressable } from 'react-native';
 
 const MAX_PIN = 6;
 
-const OTP = ({ navigation }) => {
+const OTP = ({ navigation, route }) => {
+  const { isKeyboardShown } = useKeyboard();
+  const { params } = route;
+  const { mobileNumber, displayName, color, screenToGo } = params;
   const onValidate = ({ otp }) => {
     const errors = {};
     if (otp.length !== MAX_PIN) errors.otp = 'Invalid OTP';
@@ -21,7 +25,8 @@ const OTP = ({ navigation }) => {
   const onSubmit = async ({ otp }) => {
     try {
       await validateOTP(otp);
-      navigation.replace('Home');
+      if (displayName || color) await updateProfile({ displayName, photoURL: color });
+      navigation.replace(screenToGo);
     } catch (error) {
       alert('Invalid OTP');
     }
@@ -35,11 +40,13 @@ const OTP = ({ navigation }) => {
 
   return (
     <Box backgroundColor="background" padding="xl" style={{ flex: 1, justifyContent: 'flex-end' }}>
-      <Box style={{ flex: 1 }}>
-        <SVGImg width="100%" height="100%" />
-      </Box>
+      {!isKeyboardShown && (
+        <Box style={{ flex: 1 }}>
+          <SVGImg width="100%" height="100%" />
+        </Box>
+      )}
       <Text variant="header">OTP?</Text>
-      <Text>We have sent an OTP to xxxxx-xx999</Text>
+      <Text>We have sent an OTP to {mobileNumber}</Text>
       <Box margin="m" />
       <PinInput
         label="One time password"

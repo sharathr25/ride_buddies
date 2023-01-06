@@ -6,7 +6,7 @@ import { ThemeContext } from '../../../ThemeContext';
 
 import AvatarIcon from '../../../images/icons/avatar.svg';
 
-const Avatar = ({ onPress = () => {}, size = 40, initial }) => {
+const Avatar = ({ onPress = () => {}, size = 40, initial, backgroundColor }) => {
   const theme = useContext(ThemeContext);
 
   return (
@@ -18,11 +18,20 @@ const Avatar = ({ onPress = () => {}, size = 40, initial }) => {
           borderRadius: size / 2,
           justifyContent: 'center',
           alignItems: 'center',
-          backgroundColor: theme.colors.primary,
+          backgroundColor: backgroundColor || theme.colors.primary,
         }}
       >
         {initial ? (
-          <Text style={{ fontSize: size / 2 }} color="background">
+          <Text
+            style={{
+              width: size / 2,
+              height: size / 2,
+              fontSize: size / 2,
+              lineHeight: size / 2,
+              textAlign: 'center',
+            }}
+            color="background"
+          >
             {initial}
           </Text>
         ) : (

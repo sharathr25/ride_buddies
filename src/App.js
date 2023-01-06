@@ -10,6 +10,7 @@ import Profile from './screens/Profile';
 import Header from './components/organisms/Header';
 import { theme, darkTheme } from './theme';
 import { ThemeContext } from './ThemeContext';
+import EditProfile from './screens/EditProfile';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -33,6 +34,7 @@ const App = () => {
             <Stack.Screen name="SignUp" component={SignUp} />
             <Stack.Screen name="OTP" component={OTP} />
             <Stack.Screen name="Profile" component={Profile} />
+            <Stack.Screen name="EditProfile" component={EditProfile} />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaView>

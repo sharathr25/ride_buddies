@@ -1,6 +1,6 @@
 const palette = {
   purple: '#5837D0',
-  green: '#0ECD9D',
+  green: '#4FA095',
   red: '#FF5D5D',
   black: '#0B0B0B',
   white: '#F0F2F3',
@@ -23,6 +23,7 @@ export const theme = {
     link: palette.blue,
   },
   spacing: {
+    xs: 4,
     s: 8,
     m: 16,
     l: 24,
