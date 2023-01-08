@@ -2,9 +2,8 @@ import React, { useContext } from 'react';
 import { Pressable } from 'react-native';
 import Box from '../../atoms/Box';
 import Text from '../../atoms/Text';
+import Icon from '../../atoms/Icon';
 import { ThemeContext } from '../../../ThemeContext';
-
-import AvatarIcon from '../../../images/icons/avatar.svg';
 
 const Avatar = ({ onPress = () => {}, size = 40, initial, backgroundColor }) => {
   const theme = useContext(ThemeContext);
@@ -35,7 +34,7 @@ const Avatar = ({ onPress = () => {}, size = 40, initial, backgroundColor }) => 
             {initial}
           </Text>
         ) : (
-          <AvatarIcon width={size} height={size} />
+          <Icon name="user" color={theme.colors.white} size={size / 2} />
         )}
       </Box>
     </Pressable>

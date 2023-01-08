@@ -2,45 +2,10 @@ import React, { useContext } from 'react';
 import { Pressable } from 'react-native';
 import { ThemeContext } from '../../../ThemeContext';
 import Box from '../../atoms/Box';
-import Avatar from '../../molecules/Avatar';
-import useAuth from '../../../hooks/useAuth';
+import Icon from '../../atoms/Icon';
 
-import BurgerMenu from '../../../images/icons/burger-menu.svg';
-import Back from '../../../images/icons/back.svg';
-
-const Header = ({ navigation, route, back }) => {
-  const { user } = useAuth();
-  const { displayName, photoURL } = user || {};
+const Header = ({ navigation, back }) => {
   const theme = useContext(ThemeContext);
-  const initial = displayName ? displayName.charAt(0) : '';
-
-  const renderHeaderContent = () => {
-    if (route.name === 'SignIn' || route.name === 'SignUp' || route.name === 'OTP') return null;
-    if (route.name === 'Home') {
-      return (
-        <>
-          <Pressable>
-            <BurgerMenu />
-          </Pressable>
-          <Avatar
-            onPress={() => navigation.push('Profile')}
-            initial={initial}
-            backgroundColor={photoURL}
-          />
-        </>
-      );
-    }
-
-    if (back) {
-      return (
-        <Pressable onPress={() => navigation.goBack()}>
-          <Back />
-        </Pressable>
-      );
-    }
-
-    return null;
-  };
 
   return (
     <Box
@@ -52,7 +17,11 @@ const Header = ({ navigation, route, back }) => {
         flexDirection: 'row',
       }}
     >
-      {renderHeaderContent()}
+      {back ? (
+        <Pressable onPress={() => navigation.goBack()}>
+          <Icon name="chevron-left" />
+        </Pressable>
+      ) : null}
     </Box>
   );
 };

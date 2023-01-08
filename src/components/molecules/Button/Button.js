@@ -1,17 +1,28 @@
 import React, { useContext } from 'react';
 import { Pressable } from 'react-native';
 import { ThemeContext } from '../../../ThemeContext';
+import Box from '../../atoms/Box';
+import Icon from '../../atoms/Icon';
 import Text from '../../atoms/Text';
 
-const Button = ({ title = '', outline, disabled, color = 'primary', onPress, ...rest }) => {
+const Button = ({
+  title = '',
+  outline,
+  disabled,
+  color = 'primary',
+  onPress,
+  leftIconName,
+  ...rest
+}) => {
   const theme = useContext(ThemeContext);
 
   return (
     <Pressable
       style={{
+        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: theme.spacing.m,
+        padding: theme.spacing.s,
         borderColor: theme.colors[color],
         borderRadius: 5,
         borderWidth: 2,
@@ -28,6 +39,12 @@ const Button = ({ title = '', outline, disabled, color = 'primary', onPress, ...
       >
         {title}
       </Text>
+      {leftIconName && (
+        <>
+          <Box margin="xs" />
+          <Icon name={leftIconName} color={outline ? theme.colors[color] : 'white'} size={14} />
+        </>
+      )}
     </Pressable>
   );
 };

@@ -1,20 +1,28 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { signOut } from '../../api/firebase/auth';
 import Box from '../../components/atoms/Box';
+import Icon from '../../components/atoms/Icon';
 import Text from '../../components/atoms/Text';
 import Avatar from '../../components/molecules/Avatar';
 import Button from '../../components/molecules/Button';
 import useAuth from '../../hooks/useAuth';
+import { ThemeContext } from '../../ThemeContext';
 
-import MobileIcon from '../../images/icons/mobile.svg';
 import { formatPhoneNumber } from '../../utils/formators';
 
 const Profile = ({ navigation }) => {
+  const theme = useContext(ThemeContext);
   const { user } = useAuth();
   const { displayName, phoneNumber, photoURL } = user || {};
   const initial = displayName ? displayName.charAt(0) : '';
 
   const handleEditProfileClick = () => {
     navigation.push('EditProfile');
+  };
+
+  const handleLogOutClick = async () => {
+    await signOut();
+    navigation.push('Home');
   };
 
   return (
@@ -31,12 +39,14 @@ const Profile = ({ navigation }) => {
             justifyContent: 'flex-start',
           }}
         >
-          <MobileIcon width={25} height={25} />
+          <Icon name="phone" size={20} color={theme.colors.foreground} />
           <Box margin="s" />
           <Text>{formatPhoneNumber(phoneNumber)}</Text>
         </Box>
         <Box margin="s" />
-        <Button title="Edit Profile" onPress={handleEditProfileClick} />
+        <Button title="Log out" onPress={handleLogOutClick} leftIconName="log-out" outline />
+        <Box margin="xs" />
+        <Button title="Edit Profile" onPress={handleEditProfileClick} leftIconName="edit-3" />
       </Box>
     </Box>
   );

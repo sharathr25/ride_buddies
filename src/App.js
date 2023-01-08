@@ -12,9 +12,10 @@ import { theme, darkTheme } from './theme';
 import { ThemeContext } from './ThemeContext';
 import EditProfile from './screens/EditProfile';
 
+const Stack = createNativeStackNavigator();
+
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
-  const Stack = createNativeStackNavigator();
   const backgroundStyle = {
     backgroundColor: isDarkMode ? darkTheme.colors.background : theme.colors.background,
     flex: 1,
@@ -29,10 +30,10 @@ const App = () => {
         />
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Home" screenOptions={{ header: Header }}>
-            <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="SignIn" component={SignIn} />
-            <Stack.Screen name="SignUp" component={SignUp} />
-            <Stack.Screen name="OTP" component={OTP} />
+            <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+            <Stack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }} />
+            <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />
+            <Stack.Screen name="OTP" component={OTP} options={{ headerShown: false }} />
             <Stack.Screen name="Profile" component={Profile} />
             <Stack.Screen name="EditProfile" component={EditProfile} />
           </Stack.Navigator>
