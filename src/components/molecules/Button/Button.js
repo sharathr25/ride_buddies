@@ -24,8 +24,9 @@ const Button = ({
         justifyContent: 'center',
         padding: theme.spacing.s,
         borderColor: theme.colors[color],
-        borderRadius: 5,
-        borderWidth: 2,
+        borderRadius: 10,
+        height: outline ? 48 : 50,
+        borderWidth: outline ? 2 : 0,
         backgroundColor: outline ? 'transparent' : theme.colors[color],
         opacity: disabled ? 0.5 : 1,
         elevation: 0,
@@ -33,10 +34,7 @@ const Button = ({
       onPress={disabled ? () => {} : onPress}
       {...rest}
     >
-      <Text
-        color={outline ? color : 'white'}
-        style={{ textTransform: 'uppercase', fontWeight: '600' }}
-      >
+      <Text color={outline ? color : 'white'} style={{ textTransform: 'uppercase' }}>
         {title}
       </Text>
       {leftIconName && (

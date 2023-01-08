@@ -7,7 +7,6 @@ import Avatar from '../../components/molecules/Avatar';
 import Button from '../../components/molecules/Button';
 import useAuth from '../../hooks/useAuth';
 import { ThemeContext } from '../../ThemeContext';
-
 import { formatPhoneNumber } from '../../utils/formators';
 
 const Profile = ({ navigation }) => {
@@ -29,8 +28,6 @@ const Profile = ({ navigation }) => {
     <Box style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Avatar initial={initial} size={100} backgroundColor={photoURL} />
       <Text variant="header">{displayName}</Text>
-      <Box margin="s" />
-
       <Box style={{ flex: 0.5 }} padding="s">
         <Box
           style={{
@@ -43,10 +40,16 @@ const Profile = ({ navigation }) => {
           <Box margin="s" />
           <Text>{formatPhoneNumber(phoneNumber)}</Text>
         </Box>
-        <Box margin="s" />
-        <Button title="Log out" onPress={handleLogOutClick} leftIconName="log-out" outline />
         <Box margin="xs" />
         <Button title="Edit Profile" onPress={handleEditProfileClick} leftIconName="edit-3" />
+        <Box margin="m" />
+        <Button
+          title="Log out"
+          onPress={handleLogOutClick}
+          leftIconName="log-out"
+          outline
+          color="danger"
+        />
       </Box>
     </Box>
   );
