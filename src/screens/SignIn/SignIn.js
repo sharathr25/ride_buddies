@@ -25,7 +25,7 @@ const SignIn = ({ navigation }) => {
     try {
       const mobileNumberWithCountryCode = `+91${mobileNumber}`;
       await signInWithPhoneNumber(mobileNumberWithCountryCode);
-      navigation.push('OTP', { mobileNumber: mobileNumberWithCountryCode, screenToGo: 'Home' });
+      navigation.push('OTP', { mobileNumber: mobileNumberWithCountryCode, screenToGo: 'HomeTabs' });
     } catch (error) {
       console.error('Something went wrong while sigining in');
     }

@@ -35,8 +35,8 @@ const App = () => {
           backgroundColor={backgroundStyle.backgroundColor}
         />
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="Home" screenOptions={{ header: Header }}>
-            <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+          <Stack.Navigator initialRouteName="HomeTabs" screenOptions={{ header: Header }}>
+            <Stack.Screen name="HomeTabs" component={Home} options={{ headerShown: false }} />
             <Stack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }} />
             <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />
             <Stack.Screen name="OTP" component={OTP} options={{ headerShown: false }} />

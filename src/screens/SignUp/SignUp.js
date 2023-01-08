@@ -28,7 +28,7 @@ const SignUp = ({ navigation }) => {
         mobileNumber: mobileNumberWithCountryCode,
         displayName,
         color,
-        screenToGo: 'Home',
+        screenToGo: 'HomeTabs',
       });
     } catch (error) {
       console.error('Something went wrong while sign up');

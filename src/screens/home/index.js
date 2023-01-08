@@ -16,13 +16,13 @@ const HomeTabs = () => {
 
   return (
     <Tab.Navigator
-      initialRouteName="Main"
+      initialRouteName="Home"
       screenOptions={({ route }) => {
         return {
           tabBarIcon: ({ color, size }) => {
             let iconName = 'chevrons-left';
 
-            if (route.name === 'Main') iconName = 'home';
+            if (route.name === 'Home') iconName = 'home';
             if (route.name === 'Groups') iconName = 'users';
             if (route.name === 'New Group') iconName = 'plus-circle';
             if (route.name === 'Notifications') iconName = 'bell';
@@ -38,13 +38,13 @@ const HomeTabs = () => {
             elevation: 0,
           },
           header: ({ navigation, route }) => {
-            if (route.name === 'Main') return <HomeHeader navigation={navigation} />;
+            if (route.name === 'Home') return <HomeHeader navigation={navigation} />;
             return null;
           },
         };
       }}
     >
-      <Tab.Screen name="Main" component={Home} />
+      <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Groups" component={Groups} />
       <Tab.Screen name="New Group" component={NewGroup} />
       <Tab.Screen name="Notifications" component={Notifications} />

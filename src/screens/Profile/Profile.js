@@ -22,7 +22,7 @@ const Profile = ({ navigation }) => {
 
   const handleLogOutClick = async () => {
     await signOut();
-    navigation.push('Home');
+    navigation.push('HomeTabs');
   };
 
   return (
