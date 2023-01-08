@@ -5,12 +5,13 @@ import Icon from '../../components/atoms/Icon';
 import Text from '../../components/atoms/Text';
 import Avatar from '../../components/molecules/Avatar';
 import Button from '../../components/molecules/Button';
+import Screen from '../../components/molecules/Screen';
 import useAuth from '../../hooks/useAuth';
 import { ThemeContext } from '../../ThemeContext';
 import { formatPhoneNumber } from '../../utils/formators';
 
 const Profile = ({ navigation }) => {
-  const theme = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
   const { user } = useAuth();
   const { displayName, phoneNumber, photoURL } = user || {};
   const initial = displayName ? displayName.charAt(0) : '';
@@ -25,7 +26,7 @@ const Profile = ({ navigation }) => {
   };
 
   return (
-    <Box style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <Screen>
       <Avatar initial={initial} size={100} backgroundColor={photoURL} />
       <Text variant="header">{displayName}</Text>
       <Box style={{ flex: 0.5 }} padding="s">
@@ -36,7 +37,7 @@ const Profile = ({ navigation }) => {
             justifyContent: 'flex-start',
           }}
         >
-          <Icon name="phone" size={20} color={theme.colors.foreground} />
+          <Icon name="smartphone" size={20} color={theme.colors.foreground} />
           <Box margin="s" />
           <Text>{formatPhoneNumber(phoneNumber)}</Text>
         </Box>
@@ -51,7 +52,7 @@ const Profile = ({ navigation }) => {
           color="danger"
         />
       </Box>
-    </Box>
+    </Screen>
   );
 };
 

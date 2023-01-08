@@ -23,7 +23,7 @@ const COLORS = [
 ];
 
 const ColorPicker = ({ label, hint, onSelect, value }) => {
-  const theme = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     onSelect(COLORS[Math.floor(Math.random() * COLORS.length)]);

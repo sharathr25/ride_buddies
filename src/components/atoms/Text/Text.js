@@ -3,7 +3,7 @@ import { Text as RNText } from 'react-native';
 import { ThemeContext } from '../../../ThemeContext';
 
 const Text = ({ style, variant = 'body', color = 'foreground', ...rest }) => {
-  const theme = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
   return (
     <RNText

@@ -7,7 +7,7 @@ import Error from '../Error';
 
 const PinInput = ({ placeholder = '', label, error, maxPin, value, ...rest }) => {
   const inputRef = useRef();
-  const theme = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
   const handleOnPress = () => {
     inputRef.current.focus();

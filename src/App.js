@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SafeAreaView, StatusBar, useColorScheme } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -15,14 +15,20 @@ import EditProfile from './screens/EditProfile';
 const Stack = createNativeStackNavigator();
 
 const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+  const [isDarkMode, setIsDarkMode] = useState(useColorScheme() === 'dark');
   const backgroundStyle = {
     backgroundColor: isDarkMode ? darkTheme.colors.background : theme.colors.background,
     flex: 1,
   };
 
+  const toggleTheme = () => {
+    setIsDarkMode((prev) => !prev);
+  };
+
   return (
-    <ThemeContext.Provider value={isDarkMode ? darkTheme : theme}>
+    <ThemeContext.Provider
+      value={{ theme: isDarkMode ? darkTheme : theme, toggleTheme, isDarkMode }}
+    >
       <SafeAreaView style={backgroundStyle}>
         <StatusBar
           barStyle={isDarkMode ? 'light-content' : 'dark-content'}

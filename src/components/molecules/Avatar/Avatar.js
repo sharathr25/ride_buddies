@@ -6,7 +6,7 @@ import Icon from '../../atoms/Icon';
 import { ThemeContext } from '../../../ThemeContext';
 
 const Avatar = ({ onPress = () => {}, size = 40, initial, backgroundColor }) => {
-  const theme = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
   return (
     <Pressable onPress={onPress}>
@@ -29,7 +29,7 @@ const Avatar = ({ onPress = () => {}, size = 40, initial, backgroundColor }) => 
               lineHeight: size / 2,
               textAlign: 'center',
             }}
-            color="background"
+            color="white"
           >
             {initial}
           </Text>

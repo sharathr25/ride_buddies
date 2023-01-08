@@ -14,7 +14,7 @@ const Button = ({
   leftIconName,
   ...rest
 }) => {
-  const theme = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
   return (
     <Pressable

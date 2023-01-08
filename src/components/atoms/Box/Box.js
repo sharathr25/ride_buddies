@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { ThemeContext } from '../../../ThemeContext';
 
 const Box = ({ style, padding, margin, backgroundColor, ...rest }) => {
-  const theme = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
   return (
     <View

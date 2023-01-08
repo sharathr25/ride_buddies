@@ -5,7 +5,7 @@ import Box from '../../atoms/Box';
 import Icon from '../../atoms/Icon';
 
 const Header = ({ navigation, back }) => {
-  const theme = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
   return (
     <Box
@@ -19,7 +19,7 @@ const Header = ({ navigation, back }) => {
     >
       {back ? (
         <Pressable onPress={() => navigation.goBack()}>
-          <Icon name="chevron-left" />
+          <Icon name="chevron-left" size={40} color={theme.colors.primary} />
         </Pressable>
       ) : null}
     </Box>

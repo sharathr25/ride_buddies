@@ -7,7 +7,7 @@ import useAuth from '../../../hooks/useAuth';
 const Header = ({ navigation }) => {
   const { user } = useAuth();
   const { displayName, photoURL } = user || {};
-  const theme = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
   const initial = displayName ? displayName.charAt(0) : '';
 
   return (
@@ -18,6 +18,7 @@ const Header = ({ navigation }) => {
         alignItems: 'center',
         paddingHorizontal: theme.spacing.m,
         flexDirection: 'row',
+        backgroundColor: theme.colors.background,
       }}
     >
       {user && (

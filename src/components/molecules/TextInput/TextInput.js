@@ -6,7 +6,7 @@ import Text from '../../atoms/Text';
 import Error from '../Error';
 
 const TextInput = ({ placeholder = '', label, error, hint, ...rest }) => {
-  const theme = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
 
   return (
     <Box>
