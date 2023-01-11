@@ -5,7 +5,6 @@ import Icon from '../../components/atoms/Icon';
 import Text from '../../components/atoms/Text';
 import Avatar from '../../components/molecules/Avatar';
 import Button from '../../components/molecules/Button';
-import Screen from '../../components/molecules/Screen';
 import useAuth from '../../hooks/useAuth';
 import { ThemeContext } from '../../ThemeContext';
 import { formatPhoneNumber } from '../../utils/formators';
@@ -26,7 +25,7 @@ const Profile = ({ navigation }) => {
   };
 
   return (
-    <Screen>
+    <Box backgroundColor="background" padding="xl">
       <Avatar initial={initial} size={100} backgroundColor={photoURL} />
       <Text variant="header">{displayName}</Text>
       <Box style={{ flex: 0.5 }} padding="s">
@@ -52,7 +51,7 @@ const Profile = ({ navigation }) => {
           color="danger"
         />
       </Box>
-    </Screen>
+    </Box>
   );
 };
 

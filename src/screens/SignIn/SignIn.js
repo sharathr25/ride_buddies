@@ -8,8 +8,9 @@ import { validateMobileNumber } from '../../utils/validators';
 import useForm from '../../hooks/useForm';
 import useKeyboard from '../../hooks/useKeyboard';
 import { signInWithPhoneNumber } from '../../api/firebase/auth';
+import { INDIA_COUNTRY_CODE } from '../../constants';
 
-import SVGImg from '../../images/illustrations/travelling.svg';
+import SVGImg from '../../images/illustrations/trip.svg';
 
 const SignIn = ({ navigation }) => {
   const { isKeyboardShown } = useKeyboard();
@@ -23,7 +24,7 @@ const SignIn = ({ navigation }) => {
 
   const onSubmit = async ({ mobileNumber }) => {
     try {
-      const mobileNumberWithCountryCode = `+91${mobileNumber}`;
+      const mobileNumberWithCountryCode = `${INDIA_COUNTRY_CODE}${mobileNumber}`;
       await signInWithPhoneNumber(mobileNumberWithCountryCode);
       navigation.push('OTP', { mobileNumber: mobileNumberWithCountryCode, screenToGo: 'HomeTabs' });
     } catch (error) {

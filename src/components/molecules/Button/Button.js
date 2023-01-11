@@ -34,14 +34,14 @@ const Button = ({
       onPress={disabled ? () => {} : onPress}
       {...rest}
     >
-      <Text color={outline ? color : 'white'} style={{ textTransform: 'uppercase' }}>
-        {title}
-      </Text>
+      {title && (
+        <Text color={outline ? color : 'white'} style={{ textTransform: 'uppercase' }}>
+          {title}
+        </Text>
+      )}
+      {title && leftIconName && <Box margin="xs" />}
       {leftIconName && (
-        <>
-          <Box margin="xs" />
-          <Icon name={leftIconName} color={outline ? theme.colors[color] : 'white'} size={14} />
-        </>
+        <Icon name={leftIconName} color={outline ? theme.colors[color] : 'white'} size={14} />
       )}
     </Pressable>
   );

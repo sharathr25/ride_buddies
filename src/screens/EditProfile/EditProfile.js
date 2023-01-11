@@ -10,6 +10,7 @@ import { validateDisplayName, validateMobileNumber } from '../../utils/validator
 import ColorPicker from '../../components/molecules/ColorPicker';
 import useAuth from '../../hooks/useAuth';
 import { signInWithPhoneNumber } from '../../api/firebase/auth';
+import { INDIA_COUNTRY_CODE } from '../../constants';
 
 const EditProfile = ({ navigation }) => {
   const { user } = useAuth();
@@ -26,7 +27,7 @@ const EditProfile = ({ navigation }) => {
 
   const onSubmit = async ({ mobileNumber, displayName, color }) => {
     try {
-      const mobileNumberWithCountryCode = `+91${mobileNumber}`;
+      const mobileNumberWithCountryCode = `${INDIA_COUNTRY_CODE}${mobileNumber}`;
       await signInWithPhoneNumber(mobileNumberWithCountryCode);
       navigation.push('OTP', {
         mobileNumber: mobileNumberWithCountryCode,

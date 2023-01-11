@@ -5,11 +5,19 @@ import Settings from './Settings';
 import Icon from '../../components/atoms/Icon';
 import HomeHeader from '../../components/organisms/HomeHeader';
 import { ThemeContext } from '../../ThemeContext';
-import Groups from './Groups';
-import NewGroup from './NewGroup';
+import Trips from './Trips';
+import NewTrip from './NewTrip';
 import Notifications from './Notifications';
 
 const Tab = createBottomTabNavigator();
+
+const ICONS_FOR_ROUTES = {
+  Home: 'home',
+  Trips: 'users',
+  'New Trip': 'plus-circle',
+  Notifications: 'bell',
+  Settings: 'settings',
+};
 
 const HomeTabs = () => {
   const { theme } = useContext(ThemeContext);
@@ -19,17 +27,9 @@ const HomeTabs = () => {
       initialRouteName="Home"
       screenOptions={({ route }) => {
         return {
-          tabBarIcon: ({ color, size }) => {
-            let iconName = 'chevrons-left';
-
-            if (route.name === 'Home') iconName = 'home';
-            if (route.name === 'Groups') iconName = 'users';
-            if (route.name === 'New Group') iconName = 'plus-circle';
-            if (route.name === 'Notifications') iconName = 'bell';
-            if (route.name === 'Settings') iconName = 'settings';
-
-            return <Icon name={iconName} size={size} color={color} />;
-          },
+          tabBarIcon: ({ color, size }) => (
+            <Icon name={ICONS_FOR_ROUTES[route.name] || 'minus'} size={size} color={color} />
+          ),
           tabBarActiveTintColor: theme.colors.primary,
           tabBarInactiveTintColor: theme.colors.darkGray,
           tabBarStyle: {
@@ -37,6 +37,7 @@ const HomeTabs = () => {
             borderTopWidth: 0,
             elevation: 0,
           },
+          tabBarHideOnKeyboard: true,
           header: ({ navigation, route }) => {
             if (route.name === 'Home') return <HomeHeader navigation={navigation} />;
             return null;
@@ -45,8 +46,8 @@ const HomeTabs = () => {
       }}
     >
       <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Groups" component={Groups} />
-      <Tab.Screen name="New Group" component={NewGroup} />
+      <Tab.Screen name="Trips" component={Trips} />
+      <Tab.Screen name="New Trip" component={NewTrip} />
       <Tab.Screen name="Notifications" component={Notifications} />
       <Tab.Screen name="Settings" component={Settings} />
     </Tab.Navigator>

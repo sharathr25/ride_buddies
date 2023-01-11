@@ -3,14 +3,13 @@ import Text from '../../components/atoms/Text';
 import Icon from '../../components/atoms/Icon';
 import Toggle from '../../components/atoms/Toggle';
 import Box from '../../components/atoms/Box';
-import Screen from '../../components/molecules/Screen';
 import { ThemeContext } from '../../ThemeContext';
 
 const Settings = () => {
   const { isDarkMode, toggleTheme, theme } = useContext(ThemeContext);
 
   return (
-    <Screen style={{ justifyContent: 'flex-start' }}>
+    <Box backgroundColor="background" style={{ justifyContent: 'flex-start' }}>
       <Box
         style={{
           flexDirection: 'row',
@@ -26,7 +25,7 @@ const Settings = () => {
         </Box>
         <Toggle onValueChange={toggleTheme} value={isDarkMode} />
       </Box>
-    </Screen>
+    </Box>
   );
 };
 

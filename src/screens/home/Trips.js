@@ -2,12 +2,12 @@ import React from 'react';
 import Box from '../../components/atoms/Box';
 import Text from '../../components/atoms/Text';
 
-const Notifications = () => {
+const Trips = () => {
   return (
     <Box backgroundColor="background">
-      <Text>Notificationss</Text>
+      <Text>Trips</Text>
     </Box>
   );
 };
 
-export default Notifications;
+export default Trips;
