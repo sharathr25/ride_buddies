@@ -9,7 +9,7 @@ const Settings = () => {
   const { isDarkMode, toggleTheme, theme } = useContext(ThemeContext);
 
   return (
-    <Box backgroundColor="background" style={{ justifyContent: 'flex-start' }}>
+    <Box backgroundColor="background" style={{ justifyContent: 'flex-start', flex: 1 }}>
       <Box
         style={{
           flexDirection: 'row',
@@ -20,7 +20,7 @@ const Settings = () => {
         padding="l"
       >
         <Box style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Icon name="moon" size={25} color={theme.colors.foreground} />
+          <Icon name="moon-waning-crescent" size={25} color={theme.colors.foreground} />
           <Text style={{ marginLeft: 10, fontWeight: 'bold' }}>Dark Mode</Text>
         </Box>
         <Toggle onValueChange={toggleTheme} value={isDarkMode} />

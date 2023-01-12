@@ -9,7 +9,7 @@ import { createTrip } from '../../api/trips';
 
 import Illustration from '../../images/illustrations/trip.svg';
 
-const NewTrip = () => {
+const NewTrip = ({ navigation }) => {
   const { isKeyboardShown } = useKeyboard();
 
   const onValidate = ({ name }) => {
@@ -21,7 +21,7 @@ const NewTrip = () => {
   const onSubmit = async ({ name }) => {
     try {
       const res = await createTrip({ name });
-      console.log(res.data);
+      navigation.replace('Trip', res.data);
     } catch (error) {
       console.log(error);
     }

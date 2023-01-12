@@ -1,6 +1,6 @@
 import React from 'react';
-import FeatherIcon from 'react-native-vector-icons/Feather';
+import MaterialCommunityIconsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const Icon = (props) => <FeatherIcon {...props} />;
+const Icon = (props) => <MaterialCommunityIconsIcon {...props} />;
 
 export default Icon;

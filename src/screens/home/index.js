@@ -13,10 +13,10 @@ const Tab = createBottomTabNavigator();
 
 const ICONS_FOR_ROUTES = {
   Home: 'home',
-  Trips: 'users',
-  'New Trip': 'plus-circle',
-  Notifications: 'bell',
-  Settings: 'settings',
+  Trips: 'bike-fast',
+  'New Trip': 'plus-circle-outline',
+  Notifications: 'bell-outline',
+  Settings: 'cog-outline',
 };
 
 const HomeTabs = () => {

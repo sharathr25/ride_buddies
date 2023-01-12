@@ -7,10 +7,11 @@ import Home from './screens/Home';
 import SignIn from './screens/SignIn';
 import SignUp from './screens/SignUp';
 import Profile from './screens/Profile';
+import EditProfile from './screens/EditProfile';
+import Trip from './screens/Trip';
 import Header from './components/organisms/Header';
 import { theme, darkTheme } from './theme';
 import { ThemeContext } from './ThemeContext';
-import EditProfile from './screens/EditProfile';
 
 const Stack = createNativeStackNavigator();
 
@@ -42,6 +43,7 @@ const App = () => {
             <Stack.Screen name="OTP" component={OTP} options={{ headerShown: false }} />
             <Stack.Screen name="Profile" component={Profile} />
             <Stack.Screen name="EditProfile" component={EditProfile} />
+            <Stack.Screen name="Trip" component={Trip} />
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaView>

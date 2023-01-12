@@ -34,7 +34,7 @@ const Avatar = ({ onPress = () => {}, size = 40, initial, backgroundColor }) => 
             {initial}
           </Text>
         ) : (
-          <Icon name="user" color={theme.colors.white} size={size / 2} />
+          <Icon name="account-circle-outline" color={theme.colors.white} size={size / 2} />
         )}
       </Box>
     </Pressable>

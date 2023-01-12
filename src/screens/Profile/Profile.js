@@ -25,7 +25,11 @@ const Profile = ({ navigation }) => {
   };
 
   return (
-    <Box backgroundColor="background" padding="xl">
+    <Box
+      backgroundColor="background"
+      padding="xl"
+      style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+    >
       <Avatar initial={initial} size={100} backgroundColor={photoURL} />
       <Text variant="header">{displayName}</Text>
       <Box style={{ flex: 0.5 }} padding="s">
@@ -36,17 +40,17 @@ const Profile = ({ navigation }) => {
             justifyContent: 'flex-start',
           }}
         >
-          <Icon name="smartphone" size={20} color={theme.colors.foreground} />
+          <Icon name="cellphone" size={20} color={theme.colors.foreground} />
           <Box margin="s" />
           <Text>{formatPhoneNumber(phoneNumber)}</Text>
         </Box>
         <Box margin="xs" />
-        <Button title="Edit Profile" onPress={handleEditProfileClick} leftIconName="edit-3" />
+        <Button title="Edit Profile" onPress={handleEditProfileClick} leftIconName="pencil" />
         <Box margin="m" />
         <Button
           title="Log out"
           onPress={handleLogOutClick}
-          leftIconName="log-out"
+          leftIconName="logout"
           outline
           color="danger"
         />

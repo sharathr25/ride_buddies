@@ -41,7 +41,7 @@ const Button = ({
       )}
       {title && leftIconName && <Box margin="xs" />}
       {leftIconName && (
-        <Icon name={leftIconName} color={outline ? theme.colors[color] : 'white'} size={14} />
+        <Icon name={leftIconName} color={outline ? theme.colors[color] : 'white'} size={18} />
       )}
     </Pressable>
   );
