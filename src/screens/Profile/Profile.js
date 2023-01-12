@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { signOut } from '../../api/firebase/auth';
+import { signOut } from '../../api/auth';
 import Box from '../../components/atoms/Box';
 import Icon from '../../components/atoms/Icon';
 import Text from '../../components/atoms/Text';

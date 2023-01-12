@@ -5,7 +5,7 @@ import Button from '../../components/molecules/Button';
 import Text from '../../components/atoms/Text';
 import PinInput from '../../components/molecules/PinInput';
 import useForm from '../../hooks/useForm';
-import { updateProfile, validateOTP } from '../../api/firebase/auth';
+import { updateProfile, validateOTP } from '../../api/auth';
 import useKeyboard from '../../hooks/useKeyboard';
 
 import SVGImg from '../../images/illustrations/letter.svg';

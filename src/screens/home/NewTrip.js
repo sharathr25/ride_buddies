@@ -1,30 +1,30 @@
-import React, { useState } from 'react';
-import { ScrollView } from 'react-native';
+import React from 'react';
 import Text from '../../components/atoms/Text';
 import TextInput from '../../components/molecules/TextInput';
 import Box from '../../components/atoms/Box';
 import Button from '../../components/molecules/Button';
-import useAuth from '../../hooks/useAuth';
 import useForm from '../../hooks/useForm';
-// import { INDIA_COUNTRY_CODE } from '../../constants';
-import { validateMobileNumber } from '../../utils/validators';
+import useKeyboard from '../../hooks/useKeyboard';
+import { createTrip } from '../../api/trips';
+
+import Illustration from '../../images/illustrations/trip.svg';
 
 const NewTrip = () => {
-  const { user } = useAuth();
-  const [riderMobileNums, setRiderMobileNums] = useState([user.phoneNumber.slice(-10)]);
+  const { isKeyboardShown } = useKeyboard();
 
   const onValidate = ({ name }) => {
     const errors = {};
     if (name === '') errors.name = 'Name is required';
-    riderMobileNums.forEach((mn, i) => {
-      const err = validateMobileNumber(mn);
-      if (err) errors[`riderMobileNumErr${i}`] = err;
-    });
     return errors;
   };
 
-  const onSubmit = async (values) => {
-    console.log(values, riderMobileNums);
+  const onSubmit = async ({ name }) => {
+    try {
+      const res = await createTrip({ name });
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const { form, setForm, isValid, validate, handleSubmit } = useForm({
@@ -33,29 +33,13 @@ const NewTrip = () => {
     onSubmit,
   });
 
-  const handlePlusClick = () => {
-    setRiderMobileNums((prev) => [...prev, '']);
-  };
-
-  const handleChange = (index) => (value) => {
-    setRiderMobileNums((prev) => {
-      const prevCopy = [...prev];
-      prevCopy[index] = value;
-      return prevCopy;
-    });
-  };
-
-  const handleMinusClick = (index) => () => {
-    setRiderMobileNums((prev) => [...prev.slice(0, index), ...prev.slice(index + 1)]);
-    validate();
-  };
-
   return (
-    <Box
-      backgroundColor="background"
-      padding="xl"
-      style={{ justifyContent: 'flex-start', flex: 1 }}
-    >
+    <Box backgroundColor="background" padding="xl" style={{ justifyContent: 'flex-end', flex: 1 }}>
+      {!isKeyboardShown && (
+        <Box style={{ flex: 1 }}>
+          <Illustration width="100%" height="100%" />
+        </Box>
+      )}
       <Text variant="header">New Trip!</Text>
       <Text>Let's create a new trip</Text>
       <Box margin="s" />
@@ -66,38 +50,8 @@ const NewTrip = () => {
         onChangeText={setForm('name')}
         onBlur={validate}
       />
-      <Text variant="subHeader">Riders</Text>
-      <ScrollView>
-        {riderMobileNums.map((value, index) => (
-          <Box key={index}>
-            <TextInput
-              label={`Rider ${index + 1} Mobile Number${index === 0 ? '(YOU)' : ''}`}
-              value={value}
-              error={form.errors[`riderMobileNumErr${index}`]}
-              onChangeText={handleChange(index)}
-              onBlur={validate}
-              editable={index !== 0}
-            />
-            {index !== 0 && (
-              <Box style={{ position: 'absolute', right: 5, top: 10 }}>
-                <Button
-                  outline
-                  leftIconName="minus"
-                  onPress={handleMinusClick(index)}
-                  color="danger"
-                />
-              </Box>
-            )}
-          </Box>
-        ))}
-        <Box style={{ alignSelf: 'flex-end', marginRight: 5 }}>
-          <Button outline leftIconName="plus" onPress={handlePlusClick} />
-        </Box>
-      </ScrollView>
       <Box margin="s" />
-      <Box style={{ marginTop: 'auto' }}>
-        <Button title="create" onPress={handleSubmit} disabled={!isValid()} />
-      </Box>
+      <Button title="create" onPress={handleSubmit} disabled={!isValid()} />
     </Box>
   );
 };

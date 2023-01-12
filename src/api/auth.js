@@ -22,3 +22,5 @@ export const signOut = async () => {
 export const updateProfile = async ({ displayName, photoURL }) => {
   return await auth().currentUser.updateProfile({ displayName, photoURL });
 };
+
+export const getIdToken = async () => await auth().currentUser.getIdToken();

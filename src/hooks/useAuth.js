@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getCurrentUser, subribeToAuthChange } from '../api/firebase/auth';
+import { getCurrentUser, subribeToAuthChange } from '../api/auth';
 
 const useAuth = () => {
   const [user, setUser] = useState(getCurrentUser());

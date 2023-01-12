@@ -8,7 +8,7 @@ import TextInput from '../../components/molecules/TextInput';
 import useForm from '../../hooks/useForm';
 import { validateDisplayName, validateMobileNumber } from '../../utils/validators';
 import ColorPicker from '../../components/molecules/ColorPicker';
-import { signInWithPhoneNumber } from '../../api/firebase/auth';
+import { signInWithPhoneNumber } from '../../api/auth';
 import { INDIA_COUNTRY_CODE } from '../../constants';
 
 const SignUp = ({ navigation }) => {

@@ -7,10 +7,10 @@ import TextInput from '../../components/molecules/TextInput';
 import { validateMobileNumber } from '../../utils/validators';
 import useForm from '../../hooks/useForm';
 import useKeyboard from '../../hooks/useKeyboard';
-import { signInWithPhoneNumber } from '../../api/firebase/auth';
+import { signInWithPhoneNumber } from '../../api/auth';
 import { INDIA_COUNTRY_CODE } from '../../constants';
 
-import SVGImg from '../../images/illustrations/trip.svg';
+import Illustration from '../../images/illustrations/trip.svg';
 
 const SignIn = ({ navigation }) => {
   const { isKeyboardShown } = useKeyboard();
@@ -42,7 +42,7 @@ const SignIn = ({ navigation }) => {
     <Box backgroundColor="background" padding="xl" style={{ flex: 1, justifyContent: 'flex-end' }}>
       {!isKeyboardShown && (
         <Box style={{ flex: 1 }}>
-          <SVGImg width="100%" height="100%" />
+          <Illustration width="100%" height="100%" />
         </Box>
       )}
       <Text variant="header">Hello Again!</Text>
