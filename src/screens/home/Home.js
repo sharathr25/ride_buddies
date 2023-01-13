@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react';
 import { Link } from '@react-navigation/native';
-// import Carousel, { Pagination } from 'react-native-snap-carousel';
 import Box from '../../components/atoms/Box';
 import Text from '../../components/atoms/Text';
 import useAuth from '../../hooks/useAuth';
@@ -12,8 +11,6 @@ import ChatIllustration from '../../images/illustrations/share-opinion.svg';
 
 const Home = () => {
   const { user } = useAuth();
-  const [index, setIndex] = useState(0);
-  const carouselRef = useRef(null);
 
   return (
     <Box
@@ -21,32 +18,6 @@ const Home = () => {
       padding="l"
       style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
     >
-      {/* <Carousel
-        layout="tinder"
-        layoutCardOffset={9}
-        ref={carouselRef}
-        data={data}
-        renderItem={CarouselCardItem}
-        sliderWidth={SLIDER_WIDTH}
-        itemWidth={ITEM_WIDTH}
-        onSnapToItem={(index) => setIndex(index)}
-        useScrollView={true}
-      />
-      <Pagination
-        dotsLength={data.length}
-        activeDotIndex={index}
-        carouselRef={carouselRef}
-        dotStyle={{
-          width: 10,
-          height: 10,
-          borderRadius: 5,
-          marginHorizontal: 0,
-          backgroundColor: 'rgba(0, 0, 0, 0.92)',
-        }}
-        inactiveDotOpacity={0.4}
-        inactiveDotScale={0.6}
-        tappableDots={true}
-      /> */}
       {user ? null : (
         <>
           <Box style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
