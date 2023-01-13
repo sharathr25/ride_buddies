@@ -35,7 +35,7 @@ export const theme = {
       fontWeight: 'bold',
     },
     subHeader: {
-      fontSize: 26,
+      fontSize: 24,
       fontWeight: 'bold',
     },
     body: {

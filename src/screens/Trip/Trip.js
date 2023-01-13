@@ -1,32 +1,57 @@
-import React, { useContext, useEffect } from 'react';
-import { signOut } from '../../api/auth';
-import { getMyTrips } from '../../api/trips';
+import React from 'react';
+import { ScrollView } from 'react-native';
+import { format } from 'date-fns';
 import Box from '../../components/atoms/Box';
-import Icon from '../../components/atoms/Icon';
 import Text from '../../components/atoms/Text';
 import Avatar from '../../components/molecules/Avatar';
-import Button from '../../components/molecules/Button';
 import useAuth from '../../hooks/useAuth';
-import { ThemeContext } from '../../ThemeContext';
-import { formatPhoneNumber } from '../../utils/formators';
+import ShareRoomCode from '../../components/molecules/ShareRoomCode';
 
-/* riders
-name : "sharath kumar r"
-phoneNumber : "+911234567890"
-*/
-
-const Trip = ({ route }) => {
-  console.log(route.params);
-  const { code, name, riders } = route.params;
-  const { theme } = useContext(ThemeContext);
+const Trip = ({ trip }) => {
+  const { code, name, riders, creation } = trip;
+  const { by: organiser, on: createdOn } = creation;
   const { user } = useAuth();
-  const { displayName, phoneNumber, photoURL } = user || {};
+  const { uid } = user || {};
+
+  const renderRider = (rider, i) => (
+    <Box style={{ alignItems: 'center', marginHorizontal: 5 }} key={i}>
+      <Avatar initial={rider.name[0]} backgroundColor={rider.color} />
+      {user.uid === rider.uid && (
+        <Text variant="info" color="success">
+          (You)
+        </Text>
+      )}
+    </Box>
+  );
 
   return (
-    <Box backgroundColor="background" padding="xl">
+    <Box backgroundColor="background" padding="l" style={{ flex: 1 }}>
       <Text variant="header">{name}</Text>
+      <ShareRoomCode code={code} />
+      <Box margin="m" />
       <Box>
-        <Text variant="subHeader">{code}</Text>
+        <Text variant="subHeader">Organiser</Text>
+        <Box margin="xs" />
+        <Box style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Avatar initial={organiser.name[0]} backgroundColor={organiser.color} />
+          <Box>
+            <Box style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Text style={{ marginLeft: 5 }}>Created by </Text>
+              <Text style={{ fontWeight: 'bold' }}>{organiser.name}</Text>
+              {organiser.uid === uid && (
+                <Text color="success" variant="info">
+                  (You)
+                </Text>
+              )}
+            </Box>
+            <Box style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+              <Text style={{ marginLeft: 5 }}>On </Text>
+              <Text style={{ fontWeight: 'bold' }}>
+                {format(new Date(createdOn), 'do MMM, yyyy')}
+              </Text>
+            </Box>
+          </Box>
+        </Box>
       </Box>
     </Box>
   );

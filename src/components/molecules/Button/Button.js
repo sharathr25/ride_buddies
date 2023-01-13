@@ -12,6 +12,7 @@ const Button = ({
   color = 'primary',
   onPress,
   leftIconName,
+  size = 'm',
   ...rest
 }) => {
   const { theme } = useContext(ThemeContext);
@@ -22,11 +23,10 @@ const Button = ({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: theme.spacing.s,
+        padding: theme.spacing[size],
         borderColor: theme.colors[color],
         borderRadius: 10,
-        height: outline ? 48 : 50,
-        borderWidth: outline ? 2 : 0,
+        borderWidth: 2,
         backgroundColor: outline ? 'transparent' : theme.colors[color],
         opacity: disabled ? 0.5 : 1,
         elevation: 0,
