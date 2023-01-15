@@ -7,6 +7,8 @@ import OTP from './screens/OTP';
 import Home from './screens/Home';
 import SignIn from './screens/SignIn';
 import SignUp from './screens/SignUp';
+import TermsOfUse from './screens/TermsOfUse';
+import PrivacyPolicy from './screens/PrivacyPolicy';
 import Profile from './screens/Profile';
 import EditProfile from './screens/EditProfile';
 import Trip from './screens/Trip';
@@ -45,9 +47,11 @@ const App = () => {
               component={user ? Home : Landing}
               options={{ headerShown: false }}
             />
-            <Stack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }} />
-            <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />
-            <Stack.Screen name="OTP" component={OTP} options={{ headerShown: false }} />
+            <Stack.Screen name="SignIn" component={SignIn} />
+            <Stack.Screen name="SignUp" component={SignUp} />
+            <Stack.Screen name="TermsOfUse" component={TermsOfUse} />
+            <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
+            <Stack.Screen name="OTP" component={OTP} />
             <Stack.Screen name="Profile" component={Profile} />
             <Stack.Screen name="EditProfile" component={EditProfile} />
             <Stack.Screen name="Trip" component={Trip} />

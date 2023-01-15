@@ -1,10 +1,14 @@
 import { useState } from 'react';
 
 const useForm = ({ initialValues, onValidate, onSubmit }) => {
-  const [form, setForm] = useState({ values: initialValues, errors: {} });
+  const [form, setForm] = useState({ values: initialValues, errors: {}, touched: {} });
 
   const setFormValue = (key) => (value) => {
-    setForm({ ...form, values: { ...form.values, [key]: value } });
+    setForm({
+      ...form,
+      values: { ...form.values, [key]: value },
+      touched: { ...form.touched, [key]: value ? true : false },
+    });
   };
 
   const isValid = () => {

@@ -5,19 +5,22 @@ import Box from '../../components/atoms/Box';
 import Button from '../../components/molecules/Button';
 import Text from '../../components/atoms/Text';
 import TextInput from '../../components/molecules/TextInput';
+import CheckBox from '../../components/molecules/CheckBox';
+import ColorPicker from '../../components/molecules/ColorPicker';
 import useForm from '../../hooks/useForm';
 import { validateDisplayName, validateMobileNumber } from '../../utils/validators';
-import ColorPicker from '../../components/molecules/ColorPicker';
 import { signInWithPhoneNumber } from '../../api/auth';
 import { INDIA_COUNTRY_CODE } from '../../constants';
 
 const SignUp = ({ navigation }) => {
-  const onValidate = ({ mobileNumber, displayName }) => {
+  const onValidate = ({ mobileNumber, displayName, termsAndPrivacyPolicyChecked }) => {
     const errors = {};
     const mobileNumberErr = validateMobileNumber(mobileNumber);
     const displayNameErr = validateDisplayName(displayName);
     if (mobileNumberErr) errors.mobileNumber = mobileNumberErr;
     if (displayNameErr) errors.displayName = displayNameErr;
+    if (!termsAndPrivacyPolicyChecked)
+      errors.termsAndPrivacyPolicyChecked = 'Accept Terms of Use and Privacy Policy';
     return errors;
   };
 
@@ -37,21 +40,22 @@ const SignUp = ({ navigation }) => {
   };
 
   const { form, setForm, isValid, validate, handleSubmit } = useForm({
-    initialValues: { mobileNumber: '', displayName: '', color: '' },
+    initialValues: {
+      mobileNumber: '',
+      displayName: '',
+      color: '',
+      termsAndPrivacyPolicyChecked: false,
+    },
     onValidate,
     onSubmit,
   });
 
   return (
-    <ScrollView>
-      <Box
-        backgroundColor="background"
-        padding="xl"
-        style={{ flex: 1, justifyContent: 'flex-end' }}
-      >
+    <ScrollView contentContainerStyle={{ flex: 1 }}>
+      <Box backgroundColor="background" padding="xl" style={{ flex: 1 }}>
         <Text variant="header">Hello!</Text>
-        <Text>Let's create an account!</Text>
-        <Box margin="s" />
+        <Text>Let's create an account and join your ride buddies!</Text>
+        <Box margin="m" />
         <TextInput
           label="Mobile number"
           value={form.values.mobileNumber}
@@ -73,6 +77,24 @@ const SignUp = ({ navigation }) => {
           label="Your favourite color"
           hint="We will choose a random color if you don't choose"
           value={form.values.color}
+        />
+        <Box margin="xs" />
+        <CheckBox
+          onChange={setForm('termsAndPrivacyPolicyChecked')}
+          isChecked={form.values.termsAndPrivacyPolicyChecked}
+          error={form.errors.termsAndPrivacyPolicyChecked}
+          label={
+            <Box style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+              <Text>I have read and accept the </Text>
+              <Link to={{ screen: 'TermsOfUse' }}>
+                <Text color="link">Terms of Use</Text>
+              </Link>
+              <Text> and </Text>
+              <Link to={{ screen: 'PrivacyPolicy' }}>
+                <Text color="link">Privacy Policy</Text>
+              </Link>
+            </Box>
+          }
         />
         <Box margin="s" />
         <Button title="Get OTP" onPress={handleSubmit} disabled={!isValid()} />

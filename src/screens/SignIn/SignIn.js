@@ -10,7 +10,7 @@ import useKeyboard from '../../hooks/useKeyboard';
 import { signInWithPhoneNumber } from '../../api/auth';
 import { INDIA_COUNTRY_CODE } from '../../constants';
 
-import Illustration from '../../images/illustrations/trip.svg';
+import Illustration from '../../images/illustrations/login.svg';
 
 const SignIn = ({ navigation }) => {
   const { isKeyboardShown } = useKeyboard();
@@ -39,14 +39,14 @@ const SignIn = ({ navigation }) => {
   });
 
   return (
-    <Box backgroundColor="background" padding="xl" style={{ flex: 1, justifyContent: 'flex-end' }}>
+    <Box backgroundColor="background" padding="xl" style={{ flex: 1 }}>
       {!isKeyboardShown && (
         <Box style={{ flex: 1 }}>
           <Illustration width="100%" height="100%" />
         </Box>
       )}
       <Text variant="header">Hello Again!</Text>
-      <Text>Welcome back you've been missed!</Text>
+      <Text>Welcome back, We're glad you're here. Enjoy your ride!</Text>
       <Box margin="m" />
       <TextInput
         label="Mobile number"
@@ -57,7 +57,7 @@ const SignIn = ({ navigation }) => {
       />
       <Box margin="s" />
       <Button title="Get OTP" onPress={handleSubmit} disabled={!isValid()} />
-      <Box margin="m" />
+      <Box margin="xs" />
       <Box style={{ flexDirection: 'row' }}>
         <Text>Not a member? </Text>
         <Link to={{ screen: 'SignUp' }}>

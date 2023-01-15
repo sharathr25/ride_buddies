@@ -48,7 +48,7 @@ const EditProfile = ({ navigation }) => {
   });
 
   return (
-    <ScrollView>
+    <ScrollView contentContainerStyle={{ flex: 1 }}>
       <Box
         backgroundColor="background"
         padding="xl"

@@ -38,7 +38,7 @@ const ColorPicker = ({ label, hint, onSelect, value }) => {
           borderWidth: 2,
           borderRadius: 5,
           borderColor: theme.colors.lightGray,
-          backgroundColor: `${theme.colors.foreground}50`,
+          backgroundColor: `${theme.colors.foreground}30`,
           color: theme.colors.foreground,
         }}
       >

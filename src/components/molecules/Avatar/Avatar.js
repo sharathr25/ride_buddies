@@ -28,6 +28,7 @@ const Avatar = ({ onPress = () => {}, size = 40, initial, backgroundColor }) => 
               fontSize: size / 2,
               lineHeight: size / 2,
               textAlign: 'center',
+              textTransform: 'uppercase',
             }}
             color="white"
           >
