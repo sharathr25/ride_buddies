@@ -7,11 +7,15 @@ import Button from '../../components/molecules/Button';
 import ShareRoomCode from '../../components/molecules/ShareRoomCode';
 import { ThemeContext } from '../../ThemeContext';
 import useService from '../../hooks/useService';
+import useAuth from '../../hooks/useAuth';
 import { getMyTrips } from '../../api/trips';
 
 import ErrorIllustration from '../../images/illustrations/error.svg';
+import NoDataIllustration from '../../images/illustrations/void.svg';
 
 const Trips = ({ navigation }) => {
+  const { user } = useAuth();
+  const { uid } = user;
   const {
     data: trips,
     loading,
@@ -59,19 +63,35 @@ const Trips = ({ navigation }) => {
         margin="m"
         style={{ borderRadius: 10, backgroundColor: `${theme.colors.foreground}30` }}
       >
+        <Text variant="subHeader">{name}</Text>
+        <Box margin="s" />
         <Box
           style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}
         >
-          <Text variant="subHeader">{name}</Text>
-          <Box style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Box>
             <ShareRoomCode code={code} />
-            <Box margin="m" />
-            <Button leftIconName="chevron-right" size="xs" onPress={gotoTrip} />
+            {uid === item.creation.by.uid && <Text color="success">You're the organizer</Text>}
           </Box>
+          <Button leftIconName="arrow-right" size="s" onPress={gotoTrip} />
         </Box>
       </Box>
     );
   };
+
+  if (!trips) return null;
+
+  if (trips.length === 0)
+    return (
+      <Box
+        backgroundColor="background"
+        style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+      >
+        <NoDataIllustration width="50%" height="50%" />
+        <Text variant="subHeader">No Trips</Text>
+        <Box margin="s" />
+        <Button leftIconName="refresh" size="xs" onPress={refetch} />
+      </Box>
+    );
 
   return (
     <Box backgroundColor="background" style={{ flex: 1 }}>

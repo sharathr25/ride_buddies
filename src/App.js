@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { SafeAreaView, StatusBar, useColorScheme } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Landing from './screens/Landing';
 import OTP from './screens/OTP';
 import Home from './screens/Home';
 import SignIn from './screens/SignIn';
@@ -12,10 +13,12 @@ import Trip from './screens/Trip';
 import Header from './components/organisms/Header';
 import { theme, darkTheme } from './theme';
 import { ThemeContext } from './ThemeContext';
+import useAuth from './hooks/useAuth';
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
+  const { user } = useAuth();
   const [isDarkMode, setIsDarkMode] = useState(useColorScheme() === 'dark');
   const backgroundStyle = {
     backgroundColor: isDarkMode ? darkTheme.colors.background : theme.colors.background,
@@ -37,7 +40,11 @@ const App = () => {
         />
         <NavigationContainer>
           <Stack.Navigator initialRouteName="HomeTabs" screenOptions={{ header: Header }}>
-            <Stack.Screen name="HomeTabs" component={Home} options={{ headerShown: false }} />
+            <Stack.Screen
+              name="HomeTabs"
+              component={user ? Home : Landing}
+              options={{ headerShown: false }}
+            />
             <Stack.Screen name="SignIn" component={SignIn} options={{ headerShown: false }} />
             <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />
             <Stack.Screen name="OTP" component={OTP} options={{ headerShown: false }} />

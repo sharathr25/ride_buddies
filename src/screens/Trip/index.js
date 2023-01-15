@@ -11,7 +11,7 @@ import { ThemeContext } from '../../ThemeContext';
 const Tab = createBottomTabNavigator();
 
 const ICONS_FOR_ROUTES = {
-  Details: 'details',
+  Information: 'information-outline',
   Riders: 'bike-fast',
   Map: 'map',
   Expences: 'clipboard-list',
@@ -41,7 +41,7 @@ const TripTabs = ({ route }) => {
         };
       }}
     >
-      <Tab.Screen name="Details">{() => <Trip trip={route.params} />}</Tab.Screen>
+      <Tab.Screen name="Information">{() => <Trip trip={route.params} />}</Tab.Screen>
       <Tab.Screen name="Riders">{() => <Riders tripId={route.params._id} />}</Tab.Screen>
       <Tab.Screen name="Map">{() => <Map tripId={route.params._id} />}</Tab.Screen>
       <Tab.Screen name="Expences">{() => <Expenses tripId={route.params._id} />}</Tab.Screen>

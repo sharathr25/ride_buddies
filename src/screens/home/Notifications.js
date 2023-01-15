@@ -4,7 +4,7 @@ import Text from '../../components/atoms/Text';
 
 const Notifications = () => {
   return (
-    <Box backgroundColor="background">
+    <Box backgroundColor="background" style={{ flex: 1 }}>
       <Text>Notificationss</Text>
     </Box>
   );

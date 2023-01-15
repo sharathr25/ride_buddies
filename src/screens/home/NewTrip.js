@@ -21,7 +21,7 @@ const NewTrip = ({ navigation }) => {
   const onSubmit = async ({ name }) => {
     try {
       const res = await createTrip({ name });
-      navigation.replace('Trip', res.data);
+      navigation.push('Trip', res.data);
     } catch (error) {
       console.log(error);
     }

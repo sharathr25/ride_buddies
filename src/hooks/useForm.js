@@ -17,13 +17,17 @@ const useForm = ({ initialValues, onValidate, onSubmit }) => {
     setForm({ ...form, errors });
   };
 
+  const setError = (key, value) => {
+    setForm({ ...form, errors: { ...form.errors, [key]: value } });
+  };
+
   const handleSubmit = () => {
     if (isValid()) {
       onSubmit(form.values);
     }
   };
 
-  return { form, setForm: setFormValue, isValid, validate, handleSubmit };
+  return { form, setForm: setFormValue, isValid, validate, handleSubmit, setError };
 };
 
 export default useForm;

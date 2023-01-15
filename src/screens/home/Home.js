@@ -1,40 +1,67 @@
-import React, { useRef, useState } from 'react';
-import { Link } from '@react-navigation/native';
+import React from 'react';
 import Box from '../../components/atoms/Box';
 import Text from '../../components/atoms/Text';
+import TextInput from '../../components/molecules/TextInput';
+import Button from '../../components/molecules/Button';
+import Features from '../../components/molecules/Features';
 import useAuth from '../../hooks/useAuth';
-import Devider from '../../components/molecules/Devider';
+import useForm from '../../hooks/useForm';
+import { joinTrip } from '../../api/trips';
 
-import LocationIllustration from '../../images/illustrations/location-tracking.svg';
-import ReceiptIllustration from '../../images/illustrations/receipt.svg';
-import ChatIllustration from '../../images/illustrations/share-opinion.svg';
+// use this code 𝐝𝐜𝐣𝟕𝟕𝟎 to join your ride buddies
 
-const Home = () => {
+const Home = ({ navigation }) => {
   const { user } = useAuth();
 
+  const onValidate = ({ tripCode }) => {
+    const errors = {};
+    if (!/^[a-z]{3}[0-9]{3}$/.test(tripCode)) errors.tripCode = 'Invalid trip code';
+    return errors;
+  };
+
+  const onSubmit = async ({ tripCode }) => {
+    try {
+      validate();
+      const { data } = await joinTrip(tripCode);
+      console.log(data);
+      // navigation.push('OTP', { mobileNumber: mobileNumberWithCountryCode, screenToGo: 'HomeTabs' });
+    } catch (error) {
+      if (error.response.status) setError('tripCode', `We didn't find trip with code ${tripCode}`);
+      else console.error('Something went wrong while joining trip', error.response.status);
+    }
+  };
+
+  const { form, setForm, isValid, validate, handleSubmit, setError } = useForm({
+    initialValues: { tripCode: '' },
+    onValidate,
+    onSubmit,
+  });
+
   return (
-    <Box
-      backgroundColor="background"
-      padding="l"
-      style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
-    >
-      {user ? null : (
-        <>
-          <Box style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-            <Text>Exisiting User? </Text>
-            <Link to={{ screen: 'SignIn' }}>
-              <Text color="link">Sign In</Text>
-            </Link>
-          </Box>
-          <Devider width="20%" />
-          <Box style={{ flexDirection: 'row' }}>
-            <Text>New User? </Text>
-            <Link to={{ screen: 'SignUp' }}>
-              <Text color="link">Sign Up</Text>
-            </Link>
-          </Box>
-        </>
-      )}
+    <Box backgroundColor="background" padding="l" style={{ flex: 1 }}>
+      <Box>
+        <Text variant="header">Welcome</Text>
+        <Text variant="header" color="primary">
+          {user?.displayName}
+        </Text>
+      </Box>
+
+      <Box margin="s" />
+
+      <Box>
+        <TextInput
+          label="Trip Code"
+          error={form.errors.tripCode}
+          value={form.values.tripCode}
+          onChangeText={setForm('tripCode')}
+          onBlur={validate}
+        />
+        <Button title="join" onPress={handleSubmit} disabled={!isValid()} />
+      </Box>
+
+      <Box margin="s" />
+
+      <Features />
     </Box>
   );
 };

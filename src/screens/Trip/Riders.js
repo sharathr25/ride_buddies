@@ -51,12 +51,12 @@ const Riders = ({ tripId }) => {
   if (!riders) return null;
 
   const renderRider = ({ item: rider }) => (
-    <Box style={{ flexDirection: 'row', alignItems: 'center' }}>
+    <Box style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 10 }}>
       <Avatar initial={rider.name[0]} backgroundColor={rider.color} />
       <Text style={{ marginLeft: 5 }}>{rider.name}</Text>
       {rider.uid === uid && (
-        <Text color="success" variant="info">
-          (You)
+        <Text color="success" variant="info" style={{ marginLeft: 'auto' }}>
+          You
         </Text>
       )}
     </Box>

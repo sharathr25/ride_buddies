@@ -1,5 +1,4 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
 import { format } from 'date-fns';
 import Box from '../../components/atoms/Box';
 import Text from '../../components/atoms/Text';
@@ -8,21 +7,10 @@ import useAuth from '../../hooks/useAuth';
 import ShareRoomCode from '../../components/molecules/ShareRoomCode';
 
 const Trip = ({ trip }) => {
-  const { code, name, riders, creation } = trip;
+  const { code, name, creation } = trip;
   const { by: organiser, on: createdOn } = creation;
   const { user } = useAuth();
   const { uid } = user || {};
-
-  const renderRider = (rider, i) => (
-    <Box style={{ alignItems: 'center', marginHorizontal: 5 }} key={i}>
-      <Avatar initial={rider.name[0]} backgroundColor={rider.color} />
-      {user.uid === rider.uid && (
-        <Text variant="info" color="success">
-          (You)
-        </Text>
-      )}
-    </Box>
-  );
 
   return (
     <Box backgroundColor="background" padding="l" style={{ flex: 1 }}>
@@ -32,15 +20,19 @@ const Trip = ({ trip }) => {
       <Box>
         <Text variant="subHeader">Organiser</Text>
         <Box margin="xs" />
-        <Box style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <Avatar initial={organiser.name[0]} backgroundColor={organiser.color} />
-          <Box>
+        <Box
+          style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}
+        >
+          <Box style={{ flex: 0.1 }}>
+            <Avatar initial={organiser.name[0]} backgroundColor={organiser.color} />
+          </Box>
+          <Box style={{ flex: 0.85 }}>
             <Box style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Text style={{ marginLeft: 5 }}>Created by </Text>
               <Text style={{ fontWeight: 'bold' }}>{organiser.name}</Text>
               {organiser.uid === uid && (
-                <Text color="success" variant="info">
-                  (You)
+                <Text color="success" variant="info" style={{ marginLeft: 'auto' }}>
+                  You
                 </Text>
               )}
             </Box>

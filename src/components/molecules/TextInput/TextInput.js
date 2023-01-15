@@ -17,7 +17,7 @@ const TextInput = ({ placeholder = '', label, error, hint, ...rest }) => {
           borderWidth: 2,
           borderRadius: 5,
           borderColor: theme.colors.lightGray,
-          backgroundColor: `${theme.colors.foreground}50`,
+          backgroundColor: `${theme.colors.foreground}30`,
           color: theme.colors.foreground,
         }}
       >

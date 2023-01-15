@@ -16,6 +16,7 @@ const OTP = ({ navigation, route }) => {
   const { isKeyboardShown } = useKeyboard();
   const { params } = route;
   const { mobileNumber, displayName, color, screenToGo } = params;
+
   const onValidate = ({ otp }) => {
     const errors = {};
     if (otp.length !== MAX_PIN) errors.otp = 'Invalid OTP';
