@@ -1,6 +1,6 @@
 import React from 'react';
 import { FlatList } from 'react-native';
-import { getTripMessages } from '../../api/trips';
+import { getTripEvents } from '../../api/trips';
 import Box from '../../components/atoms/Box';
 import Loader from '../../components/atoms/Loader';
 import Text from '../../components/atoms/Text';
@@ -8,15 +8,15 @@ import Button from '../../components/molecules/Button';
 import useService from '../../hooks/useService';
 
 import ErrorIllustration from '../../images/illustrations/error.svg';
-import NoDataIllustration from '../../images/illustrations/no-data.svg';
+import NoDataIllustration from '../../images/illustrations/void.svg';
 
-const Messages = ({ tripId }) => {
+const Events = ({ tripId }) => {
   const { data, loading, error, refetch } = useService({
     initialData: [],
-    service: getTripMessages,
+    service: getTripEvents,
     serviceParams: tripId,
   });
-  const { messages } = data;
+  const { events } = data;
 
   if (loading)
     return (
@@ -45,16 +45,16 @@ const Messages = ({ tripId }) => {
     );
   }
 
-  if (!messages) return null;
+  if (!events) return null;
 
-  if (messages.length === 0)
+  if (events.length === 0)
     return (
       <Box
         backgroundColor="background"
         style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
       >
         <NoDataIllustration width="50%" height="50%" />
-        <Text variant="subHeader">No Messages</Text>
+        <Text variant="subHeader">No Events</Text>
         <Box margin="s" />
         <Button leftIconName="refresh" size="xs" onPress={refetch} />
       </Box>
@@ -78,4 +78,4 @@ const Messages = ({ tripId }) => {
   );
 };
 
-export default Messages;
+export default Events;

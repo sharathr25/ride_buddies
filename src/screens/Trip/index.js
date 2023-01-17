@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Trip from './Trip';
 import Expenses from './Expenses';
 import Riders from './Riders';
-import Messages from './Messages';
+import Events from './Events';
 import Map from './Map';
 import Icon from '../../components/atoms/Icon';
 import { ThemeContext } from '../../ThemeContext';
@@ -15,7 +15,7 @@ const ICONS_FOR_ROUTES = {
   Riders: 'bike-fast',
   Map: 'map',
   Expences: 'clipboard-list',
-  Messages: 'chat',
+  Events: 'calendar-clock-outline',
 };
 
 const TripTabs = ({ route }) => {
@@ -45,7 +45,7 @@ const TripTabs = ({ route }) => {
       <Tab.Screen name="Riders">{() => <Riders tripId={route.params._id} />}</Tab.Screen>
       <Tab.Screen name="Map">{() => <Map tripId={route.params._id} />}</Tab.Screen>
       <Tab.Screen name="Expences">{() => <Expenses tripId={route.params._id} />}</Tab.Screen>
-      <Tab.Screen name="Messages">{() => <Messages tripId={route.params._id} />}</Tab.Screen>
+      <Tab.Screen name="Events">{() => <Events tripId={route.params._id} />}</Tab.Screen>
     </Tab.Navigator>
   );
 };
