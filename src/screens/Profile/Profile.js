@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { signOut } from '../../api/auth';
 import Box from '../../components/atoms/Box';
 import Icon from '../../components/atoms/Icon';
@@ -21,8 +21,11 @@ const Profile = ({ navigation }) => {
 
   const handleLogOutClick = async () => {
     await signOut();
-    navigation.push('HomeTabs');
   };
+
+  useEffect(() => {
+    if (!user) navigation.push('Landing');
+  }, [user]);
 
   return (
     <Box

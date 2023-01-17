@@ -41,12 +41,12 @@ const App = () => {
           backgroundColor={backgroundStyle.backgroundColor}
         />
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="HomeTabs" screenOptions={{ header: Header }}>
-            <Stack.Screen
-              name="HomeTabs"
-              component={user ? Home : Landing}
-              options={{ headerShown: false }}
-            />
+          <Stack.Navigator
+            initialRouteName={user ? 'HomeTabs' : 'Landing'}
+            screenOptions={{ header: Header }}
+          >
+            <Stack.Screen name="Landing" component={Landing} options={{ headerShown: false }} />
+            <Stack.Screen name="HomeTabs" component={Home} options={{ headerShown: false }} />
             <Stack.Screen name="SignIn" component={SignIn} />
             <Stack.Screen name="SignUp" component={SignUp} />
             <Stack.Screen name="TermsOfUse" component={TermsOfUse} />

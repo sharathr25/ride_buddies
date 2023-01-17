@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Pressable } from 'react-native';
 import Box from '../../components/atoms/Box';
 import Button from '../../components/molecules/Button';
 import Text from '../../components/atoms/Text';
 import PinInput from '../../components/molecules/PinInput';
+import LoadingErrModal from '../../components/molecules/LoadingErrModal';
 import useForm from '../../hooks/useForm';
+import useAuth from '../../hooks/useAuth';
 import { updateProfile, validateOTP } from '../../api/auth';
 import useKeyboard from '../../hooks/useKeyboard';
 
@@ -14,8 +16,18 @@ const MAX_PIN = 6;
 
 const OTP = ({ navigation, route }) => {
   const { isKeyboardShown } = useKeyboard();
+  const { user } = useAuth();
   const { params } = route;
   const { mobileNumber, displayName, color, screenToGo } = params;
+  const [loading, setLoading] = useState(false);
+  const [otpErr, setOtpErr] = useState(null);
+
+  useEffect(() => {
+    if (user) {
+      navigation.replace(screenToGo);
+      setTimeout(() => setLoading(false), 1000);
+    }
+  }, [user]);
 
   const onValidate = ({ otp }) => {
     const errors = {};
@@ -25,11 +37,12 @@ const OTP = ({ navigation, route }) => {
 
   const onSubmit = async ({ otp }) => {
     try {
+      setLoading(true);
       await validateOTP(otp);
       if (displayName || color) await updateProfile({ displayName, photoURL: color });
-      navigation.replace(screenToGo);
     } catch (error) {
-      alert('Invalid OTP');
+      setLoading(false);
+      setOtpErr('Invalid OTP. Try again');
     }
   };
 
@@ -41,6 +54,7 @@ const OTP = ({ navigation, route }) => {
 
   return (
     <Box backgroundColor="background" padding="xl" style={{ flex: 1, justifyContent: 'flex-end' }}>
+      <LoadingErrModal loading={loading} err={otpErr} reportActionClick={() => setOtpErr(null)} />
       {!isKeyboardShown && (
         <Box style={{ flex: 1 }}>
           <SVGImg width="100%" height="100%" />
