@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { ScrollView } from 'react-native';
+import { useSelector } from 'react-redux';
 import { format } from 'date-fns';
 import Box from '../../components/atoms/Box';
 import Text from '../../components/atoms/Text';
@@ -9,8 +10,10 @@ import Avatar from '../../components/molecules/Avatar';
 import ShareRoomCode from '../../components/molecules/ShareRoomCode';
 import useAuth from '../../hooks/useAuth';
 import { ThemeContext } from '../../ThemeContext';
+import { selectTrip } from '../../redux/slices/tripSlice';
 
-const Trip = ({ trip }) => {
+const Trip = () => {
+  const trip = useSelector(selectTrip);
   const { code, name, creation } = trip;
   const { by: organiser, on: createdOn } = creation;
   const { theme } = useContext(ThemeContext);

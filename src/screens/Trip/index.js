@@ -1,4 +1,5 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Trip from './Trip';
 import Expenses from './Expenses';
@@ -6,7 +7,15 @@ import Riders from './Riders';
 import Events from './Events';
 import Map from './Map';
 import Icon from '../../components/atoms/Icon';
+import Box from '../../components/atoms/Box';
+import Loader from '../../components/atoms/Loader';
+import Text from '../../components/atoms/Text';
 import { ThemeContext } from '../../ThemeContext';
+import { connectSocket, disconnectSocket, joinTrip } from '../../api/socket';
+import { reset, set } from '../../redux/slices/tripSlice';
+
+import ErrorIllustration from '../../images/illustrations/error.svg';
+import NoDataIllustration from '../../images/illustrations/void.svg';
 
 const Tab = createBottomTabNavigator();
 
@@ -20,6 +29,70 @@ const ICONS_FOR_ROUTES = {
 
 const TripTabs = ({ route }) => {
   const { theme } = useContext(ThemeContext);
+  const dispatch = useDispatch();
+  const trip = useSelector(({ trip }) => trip);
+  const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState(null);
+
+  const joinTripGroup = async () => {
+    try {
+      setLoading(true);
+      await connectSocket();
+      const response = await joinTrip(route.params.code);
+      dispatch(set(response));
+    } catch (error) {
+      setErr(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    joinTripGroup();
+    return () => {
+      disconnectSocket();
+      dispatch(reset());
+    };
+  }, []);
+
+  if (loading)
+    return (
+      <Box
+        backgroundColor="background"
+        style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+      >
+        <Loader />
+      </Box>
+    );
+
+  if (err) {
+    return (
+      <Box
+        backgroundColor="background"
+        style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+      >
+        <ErrorIllustration width="50%" height="50%" />
+        <Text color="danger" variant="subHeader">
+          Something went wrong!
+        </Text>
+        <Box margin="s" />
+      </Box>
+    );
+  }
+
+  if (Object.keys(trip).length === 0)
+    return (
+      <Box
+        backgroundColor="background"
+        style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+      >
+        <NoDataIllustration width="50%" height="50%" />
+        <Text color="danger" variant="subHeader">
+          No Details
+        </Text>
+        <Box margin="s" />
+      </Box>
+    );
 
   return (
     <Tab.Navigator
@@ -41,11 +114,11 @@ const TripTabs = ({ route }) => {
         };
       }}
     >
-      <Tab.Screen name="Information">{() => <Trip trip={route.params} />}</Tab.Screen>
-      <Tab.Screen name="Riders">{() => <Riders tripId={route.params._id} />}</Tab.Screen>
-      <Tab.Screen name="Map">{() => <Map tripId={route.params._id} />}</Tab.Screen>
-      <Tab.Screen name="Expences">{() => <Expenses tripId={route.params._id} />}</Tab.Screen>
-      <Tab.Screen name="Events">{() => <Events tripId={route.params._id} />}</Tab.Screen>
+      <Tab.Screen name="Information" component={Trip} />
+      <Tab.Screen name="Riders" component={Riders} />
+      <Tab.Screen name="Map" component={Map} />
+      <Tab.Screen name="Expences" component={Expenses} />
+      <Tab.Screen name="Events" component={Events} />
     </Tab.Navigator>
   );
 };

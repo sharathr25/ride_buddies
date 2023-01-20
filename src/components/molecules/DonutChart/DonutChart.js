@@ -59,8 +59,8 @@ const DonutChart = ({ data, spacing = 0, size = 100, info = '', ...rest }) => {
         </Box>
       </Box>
       <Box>
-        {data.map(({ title, stroke, value }) => (
-          <Box style={{ flexDirection: 'row', alignItems: 'center' }}>
+        {data.map(({ title, stroke, value }, i) => (
+          <Box style={{ flexDirection: 'row', alignItems: 'center' }} key={i}>
             <Box style={{ width: 10, height: 10, backgroundColor: stroke }} />
             <Text style={{ marginHorizontal: 5 }}>{title}</Text>
             <Text color="primary">{value}</Text>

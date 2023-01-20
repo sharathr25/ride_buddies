@@ -1,54 +1,16 @@
 import React from 'react';
 import { FlatList } from 'react-native';
-import { getTripRiders } from '../../api/trips';
+import { useSelector } from 'react-redux';
 import Box from '../../components/atoms/Box';
-import Loader from '../../components/atoms/Loader';
 import Text from '../../components/atoms/Text';
 import Avatar from '../../components/molecules/Avatar';
-import Button from '../../components/molecules/Button';
 import useAuth from '../../hooks/useAuth';
-import useService from '../../hooks/useService';
+import { selectRiders } from '../../redux/slices/tripSlice';
 
-import ErrorIllustration from '../../images/illustrations/error.svg';
-
-const Riders = ({ tripId }) => {
+const Riders = () => {
   const { user } = useAuth();
   const { uid } = user;
-  const { data, loading, error, refetch } = useService({
-    initialData: [],
-    service: getTripRiders,
-    serviceParams: tripId,
-  });
-  const { riders } = data;
-
-  if (loading)
-    return (
-      <Box
-        backgroundColor="background"
-        padding="l"
-        style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
-      >
-        <Loader />
-      </Box>
-    );
-
-  if (error) {
-    return (
-      <Box
-        backgroundColor="background"
-        style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
-      >
-        <ErrorIllustration width="50%" height="50%" />
-        <Text color="danger" variant="subHeader">
-          Something went wrong!
-        </Text>
-        <Box margin="s" />
-        <Button leftIconName="refresh" size="xs" onPress={refetch} />
-      </Box>
-    );
-  }
-
-  if (!riders) return null;
+  const riders = useSelector(selectRiders);
 
   const renderRider = ({ item: rider }) => (
     <Box style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 10 }}>
