@@ -58,11 +58,7 @@ const Trips = ({ navigation }) => {
     };
 
     return (
-      <Box
-        padding="l"
-        margin="m"
-        style={{ borderRadius: 10, backgroundColor: `${theme.colors.foreground}30` }}
-      >
+      <Box padding="l" style={{ backgroundColor: `${theme.colors.foreground}40` }}>
         <Text variant="subHeader">{name}</Text>
         <Box margin="s" />
         <Box
@@ -94,8 +90,21 @@ const Trips = ({ navigation }) => {
     );
 
   return (
-    <Box backgroundColor="background" style={{ flex: 1 }}>
-      <FlatList data={trips} renderItem={renderItem} keyExtractor={(item) => item._id} />
+    <Box backgroundColor="background" style={{ flex: 1 }} padding="l">
+      <FlatList
+        data={trips}
+        renderItem={renderItem}
+        keyExtractor={(item) => item._id}
+        ListHeaderComponent={
+          <Text
+            variant="subHeader"
+            style={{ marginBottom: 5, backgroundColor: theme.colors.background }}
+          >
+            Trips
+          </Text>
+        }
+        stickyHeaderIndices={[0]}
+      />
     </Box>
   );
 };

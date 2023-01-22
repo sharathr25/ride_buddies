@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Switch } from 'react-native';
 import { ThemeContext } from '../../../ThemeContext';
 
-const Settings = ({ onValueChange, value }) => {
+const Toggle = ({ onValueChange, value }) => {
   const { theme } = useContext(ThemeContext);
 
   return (
@@ -16,4 +16,4 @@ const Settings = ({ onValueChange, value }) => {
   );
 };
 
-export default Settings;
+export default Toggle;

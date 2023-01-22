@@ -14,6 +14,7 @@ export const connectSocket = () => {
       transports: ['websocket', 'polling'],
       secure: false,
       reconnectionAttempts: 10,
+      handshake: true,
     });
 
     socket.io.on('error', (error) => {
@@ -51,6 +52,9 @@ export const connectSocket = () => {
         // the disconnection was initiated by the server, you need to reconnect manually
         socket.connect();
       }
+      if (reason === 'io client disconnect') {
+        console.log('Disconnected');
+      }
       // else the socket will automatically try to reconnect
     });
   });
@@ -69,7 +73,7 @@ export const disconnectSocket = () => {
 
 export const joinTrip = (tripCode) => {
   return new Promise((resolve) => {
-    socket.emit('join', `trip:${tripCode}`, (response) => {
+    socket.emit('join', tripCode, (response) => {
       console.log(`Joined Trip ${tripCode}`);
       resolve(response);
     });
@@ -85,5 +89,6 @@ export const sendDataToSocket = (eventName, data) => {
 };
 
 export const listenEvent = (eventName, callBack) => {
+  console.log(eventName);
   socket.on(eventName, callBack);
 };

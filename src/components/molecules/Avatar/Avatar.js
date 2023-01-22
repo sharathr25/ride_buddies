@@ -14,24 +14,14 @@ const Avatar = ({ onPress = () => {}, size = 40, initial, backgroundColor }) => 
         style={{
           height: size,
           width: size,
-          borderRadius: size / 2,
+          borderRadius: 10,
           justifyContent: 'center',
           alignItems: 'center',
           backgroundColor: backgroundColor || theme.colors.primary,
         }}
       >
         {initial ? (
-          <Text
-            style={{
-              width: size / 2,
-              height: size / 2,
-              fontSize: size / 2,
-              lineHeight: size / 2,
-              textAlign: 'center',
-              textTransform: 'uppercase',
-            }}
-            color="white"
-          >
+          <Text style={{ textTransform: 'uppercase' }} color="white">
             {initial}
           </Text>
         ) : (

@@ -21,23 +21,28 @@ const CheckBox = ({ label = '', error, isChecked, onChange }) => {
           justifyContent: 'space-between',
         }}
       >
-        {label && <Box style={{ flex: 0.9 }}>{label}</Box>}
-        <Box style={{ flex: 0.1, alignItems: 'flex-end' }}>
-          <Pressable
-            onPress={onPress}
-            style={{
-              borderColor: isChecked ? theme.colors.primary : theme.colors.lightGray,
-              width: 25,
-              height: 25,
-              borderRadius: 5,
-              borderWidth: 2,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
+        {label && (
+          <Text
+            color="foreground"
+            style={{ fontWeight: '600', textTransform: 'capitalize', opacity: 0.5, marginRight: 5 }}
           >
-            {isChecked && <Icon name="check" size={15} color={theme.colors.primary} />}
-          </Pressable>
-        </Box>
+            {label}
+          </Text>
+        )}
+        <Pressable
+          onPress={onPress}
+          style={{
+            borderColor: isChecked ? theme.colors.primary : theme.colors.lightGray,
+            width: 25,
+            height: 25,
+            borderRadius: 5,
+            borderWidth: 2,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          {isChecked && <Icon name="check" size={15} color={theme.colors.primary} />}
+        </Pressable>
       </Box>
       {error && <Text color="danger">{error}</Text>}
     </Box>

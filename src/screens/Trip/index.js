@@ -11,8 +11,8 @@ import Box from '../../components/atoms/Box';
 import Loader from '../../components/atoms/Loader';
 import Text from '../../components/atoms/Text';
 import { ThemeContext } from '../../ThemeContext';
-import { connectSocket, disconnectSocket, joinTrip } from '../../api/socket';
-import { reset, set } from '../../redux/slices/tripSlice';
+import { connectSocket, disconnectSocket, joinTrip, listenEvent } from '../../api/socket';
+import { addExpense, removeExpense, reset, set, updateExpense } from '../../redux/slices/tripSlice';
 
 import ErrorIllustration from '../../images/illustrations/error.svg';
 import NoDataIllustration from '../../images/illustrations/void.svg';
@@ -37,9 +37,23 @@ const TripTabs = ({ route }) => {
   const joinTripGroup = async () => {
     try {
       setLoading(true);
+
       await connectSocket();
       const response = await joinTrip(route.params.code);
+
       dispatch(set(response));
+
+      listenEvent('EXPENSE_ADDED', (expense) => {
+        dispatch(addExpense(expense));
+      });
+
+      listenEvent('EXPENSE_UPDATED', (expense) => {
+        dispatch(updateExpense(expense));
+      });
+
+      listenEvent('EXPENSE_DELETED', (expenseId) => {
+        dispatch(removeExpense(expenseId));
+      });
     } catch (error) {
       setErr(true);
     } finally {
