@@ -24,7 +24,8 @@ const CheckBox = ({ label = '', error, isChecked, onChange }) => {
         {label && (
           <Text
             color="foreground"
-            style={{ fontWeight: '600', textTransform: 'capitalize', opacity: 0.5, marginRight: 5 }}
+            style={{ textTransform: 'capitalize', opacity: 0.5, marginRight: 5 }}
+            bold
           >
             {label}
           </Text>

@@ -21,7 +21,9 @@ const Settings = () => {
       >
         <Box style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Icon name="moon-waning-crescent" size={25} color={theme.colors.foreground} />
-          <Text style={{ marginLeft: 10, fontWeight: 'bold' }}>Dark Mode</Text>
+          <Text style={{ marginLeft: 10 }} bold>
+            Dark Mode
+          </Text>
         </Box>
         <Toggle onValueChange={toggleTheme} value={isDarkMode} />
       </Box>

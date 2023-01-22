@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { FlatList, Modal, Pressable } from 'react-native';
+import { FlatList, Pressable } from 'react-native';
 import { useSelector } from 'react-redux';
 import format from 'date-fns/format';
 import ExpenseForm from './ExpenseForm';
@@ -12,6 +12,7 @@ import { ThemeContext } from '../../../ThemeContext';
 import { currencyFormatter } from '../../../utils/formators';
 
 import NoDataIllustration from '../../../images/illustrations/no-data.svg';
+import Modal from '../../../components/molecules/Modal';
 
 const Expenses = () => {
   const { expenses, code, ridersMap } = useSelector((state) => ({
@@ -87,38 +88,20 @@ const Expenses = () => {
         />
       )}
 
-      <Modal visible={expenseId !== null} transparent>
-        <Box
-          style={{
-            flex: 1,
-            backgroundColor: `${theme.colors.background}80`,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Expense
-            expenseId={expenseId}
-            setShowExpenseFormModal={setShowExpenseFormModal}
-            setExpenseId={setExpenseId}
-          />
-        </Box>
+      <Modal visible={expenseId !== null} hideModal={() => setExpenseId(null)}>
+        <Expense
+          expenseId={expenseId}
+          setShowExpenseFormModal={setShowExpenseFormModal}
+          setExpenseId={setExpenseId}
+        />
       </Modal>
 
-      <Modal visible={showExpenseFormModal} transparent>
-        <Box
-          style={{
-            flex: 1,
-            backgroundColor: `${theme.colors.background}80`,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <ExpenseForm
-            expenseId={expenseId}
-            setShowExpenseFormModal={setShowExpenseFormModal}
-            code={code}
-          />
-        </Box>
+      <Modal visible={showExpenseFormModal} hideModal={() => setShowExpenseFormModal(false)}>
+        <ExpenseForm
+          expenseId={expenseId}
+          setShowExpenseFormModal={setShowExpenseFormModal}
+          code={code}
+        />
       </Modal>
 
       <Box style={{ position: 'absolute', bottom: 20, right: 20 }}>

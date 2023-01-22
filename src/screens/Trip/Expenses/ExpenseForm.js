@@ -21,9 +21,8 @@ const ExpenseForm = ({ expenseId, setShowExpenseFormModal, code }) => {
     riders: selectRiders(state),
     expenses: selectExpenses(state),
   }));
-  const [forRiders, setForRiders] = useState(new Set(expense?.for || []));
-
   const expense = expenses.find((e) => e._id === expenseId);
+  const [forRiders, setForRiders] = useState(new Set(expense.for));
 
   const onValidate = ({ title, amount }) => {
     const errors = {};
@@ -47,6 +46,8 @@ const ExpenseForm = ({ expenseId, setShowExpenseFormModal, code }) => {
     }
   };
 
+  console.log(forRiders);
+
   const { form, isValid, handleSubmit, setForm } = useForm({
     initialValues: {
       title: expense?.title || '',
@@ -59,11 +60,7 @@ const ExpenseForm = ({ expenseId, setShowExpenseFormModal, code }) => {
   });
 
   return (
-    <Box
-      backgroundColor="background"
-      style={{ borderWidth: 1, borderColor: theme.colors.foreground, borderRadius: 10 }}
-      padding="l"
-    >
+    <>
       <Text variant="subHeader">New Expense</Text>
 
       <Box margin="s" />
@@ -143,16 +140,17 @@ const ExpenseForm = ({ expenseId, setShowExpenseFormModal, code }) => {
         </Box>
       )}
 
+      <Button
+        title="save"
+        disabled={!isValid()}
+        onPress={handleSubmit}
+        style={{ alignSelf: 'flex-end' }}
+      />
+
       <Box margin="s" />
 
       {err && <Text color="danger">{err}</Text>}
-
-      <Box style={{ flexDirection: 'row' }}>
-        <Button title="cancel" outline onPress={() => setShowExpenseFormModal(false)} />
-        <Box margin="s" />
-        <Button title="save" disabled={!isValid()} onPress={handleSubmit} />
-      </Box>
-    </Box>
+    </>
   );
 };
 

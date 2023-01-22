@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, Pressable } from 'react-native';
+import format from 'date-fns/format';
 import Box from '../../components/atoms/Box';
 import Text from '../../components/atoms/Text';
 import Loader from '../../components/atoms/Loader';
@@ -51,26 +52,49 @@ const Trips = ({ navigation }) => {
   }
 
   const renderItem = ({ item }) => {
-    const { code, name } = item;
+    const { code, name, creation } = item;
+    const createdOn = new Date(creation.on);
 
     const gotoTrip = () => {
       navigation.push('Trip', item);
     };
 
     return (
-      <Box padding="l" style={{ backgroundColor: `${theme.colors.foreground}40` }}>
-        <Text variant="subHeader">{name}</Text>
-        <Box margin="s" />
-        <Box
-          style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}
-        >
-          <Box>
-            <ShareRoomCode code={code} />
-            {uid === item.creation.by.uid && <Text color="success">You're the organizer</Text>}
-          </Box>
-          <Button leftIconName="arrow-right" size="s" onPress={gotoTrip} />
+      <Pressable
+        style={{
+          backgroundColor: `${theme.colors.foreground}40`,
+          flexDirection: 'row',
+          flex: 1,
+          alignItems: 'center',
+          padding: theme.spacing.s,
+        }}
+        onPress={gotoTrip}
+      >
+        <Box style={{ flex: 0.12 }}>
+          <Text>
+            {format(createdOn, 'd')}
+            {'\n'}
+            {format(createdOn, 'MMM')}
+            {'\n'}
+            {format(createdOn, 'yyyy')}
+          </Text>
         </Box>
-      </Box>
+        <Box
+          margin="s"
+          style={{ width: 1, backgroundColor: `${theme.colors.foreground}40`, height: '75%' }}
+        />
+        <Box style={{ flex: 0.88 }}>
+          <Text variant="subHeader">{name}</Text>
+          <Box
+            style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}
+          >
+            <Box>
+              <ShareRoomCode code={code} />
+              {uid === item.creation.by.uid && <Text color="success">You're the organizer</Text>}
+            </Box>
+          </Box>
+        </Box>
+      </Pressable>
     );
   };
 

@@ -55,7 +55,7 @@ const DonutChart = ({ data, spacing = 0, size = 100, info = '', ...rest }) => {
           })}
         </Svg>
         <Box style={{ position: 'absolute' }}>
-          <Text style={{ fontWeight: 'bold' }}>{total}</Text>
+          <Text bold>{total}</Text>
         </Box>
       </Box>
       <Box>

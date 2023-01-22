@@ -13,6 +13,7 @@ const Button = ({
   onPress,
   leftIconName,
   size = 'm',
+  style,
   ...rest
 }) => {
   const { theme } = useContext(ThemeContext);
@@ -30,6 +31,7 @@ const Button = ({
         backgroundColor: outline ? 'transparent' : theme.colors[color],
         opacity: disabled ? 0.5 : 1,
         elevation: 0,
+        ...style,
       }}
       onPress={disabled ? () => {} : onPress}
       {...rest}

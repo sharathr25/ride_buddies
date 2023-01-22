@@ -56,7 +56,7 @@ const Trip = () => {
             <Box style={{ flex: 0.85 }}>
               <Box style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text style={{ marginLeft: 5 }}>Created by </Text>
-                <Text style={{ fontWeight: 'bold' }}>{organiser.name}</Text>
+                <Text bold>{organiser.name}</Text>
                 {organiser.uid === uid && (
                   <Text color="primary" variant="info" style={{ marginLeft: 'auto' }}>
                     You
@@ -65,9 +65,7 @@ const Trip = () => {
               </Box>
               <Box style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
                 <Text style={{ marginLeft: 5 }}>On </Text>
-                <Text style={{ fontWeight: 'bold' }}>
-                  {format(new Date(createdOn), 'do MMM, yyyy')}
-                </Text>
+                <Text bold>{format(new Date(createdOn), 'do MMM, yyyy')}</Text>
               </Box>
             </Box>
           </Box>

@@ -47,10 +47,7 @@ const PinInput = ({ placeholder = '', label, error, maxPin, value, ...rest }) =>
         }}
       >
         {label && (
-          <Text
-            color="foreground"
-            style={{ fontWeight: '600', textTransform: 'capitalize', opacity: 0.5 }}
-          >
+          <Text color="foreground" style={{ textTransform: 'capitalize', opacity: 0.5 }} bold>
             {label}
           </Text>
         )}

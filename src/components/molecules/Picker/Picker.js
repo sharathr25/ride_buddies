@@ -24,12 +24,12 @@ const CustomPicker = ({ label, hint, options = [], selectedValue, onValueChange,
           <Text
             color="foreground"
             style={{
-              fontWeight: '600',
               textTransform: 'capitalize',
               opacity: 0.5,
               position: 'absolute',
               left: 10,
             }}
+            bold
           >
             {label}
           </Text>
