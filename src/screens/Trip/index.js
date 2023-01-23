@@ -12,7 +12,14 @@ import Loader from '../../components/atoms/Loader';
 import Text from '../../components/atoms/Text';
 import { ThemeContext } from '../../ThemeContext';
 import { connectSocket, disconnectSocket, joinTrip, listenEvent } from '../../api/socket';
-import { addExpense, removeExpense, reset, set, updateExpense } from '../../redux/slices/tripSlice';
+import {
+  addEvent,
+  addExpense,
+  removeExpense,
+  reset,
+  set,
+  updateExpense,
+} from '../../redux/slices/tripSlice';
 
 import ErrorIllustration from '../../images/illustrations/error.svg';
 import NoDataIllustration from '../../images/illustrations/void.svg';
@@ -53,6 +60,10 @@ const TripTabs = ({ route }) => {
 
       listenEvent('EXPENSE_DELETED', (expenseId) => {
         dispatch(removeExpense(expenseId));
+      });
+
+      listenEvent('EVENT_ADDED', (event) => {
+        dispatch(addEvent(event));
       });
     } catch (error) {
       setErr(true);

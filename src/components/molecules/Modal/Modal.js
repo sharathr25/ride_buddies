@@ -4,7 +4,7 @@ import Box from '../../../components/atoms/Box';
 import { ThemeContext } from '../../../ThemeContext';
 import Button from '../Button';
 
-const Modal = ({ visible, hideModal = () => {}, children }) => {
+const Modal = ({ visible, hideModal = () => {}, children, header = <></> }) => {
   const { theme } = useContext(ThemeContext);
 
   return (
@@ -34,6 +34,8 @@ const Modal = ({ visible, hideModal = () => {}, children }) => {
             style={{ position: 'absolute', top: -2, right: -2, zIndex: 1 }}
             onPress={hideModal}
           />
+          {header}
+          <Box margin="s" />
           {children}
         </Box>
       </Box>

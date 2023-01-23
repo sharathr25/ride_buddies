@@ -10,6 +10,7 @@ import Avatar from '../../components/molecules/Avatar/Avatar';
 import { selectExpenses, selectRidersMap } from '../../redux/slices/tripSlice';
 import { currencyFormatter } from '../../utils/formators';
 import { sendDataToSocket } from '../../api/socket';
+import useAuth from '../../hooks/useAuth';
 
 const Expense = ({ navigation, route }) => {
   const { expenseId } = route.params;
@@ -18,6 +19,8 @@ const Expense = ({ navigation, route }) => {
     ridersMap: selectRidersMap(state),
     expenses: selectExpenses(state),
   }));
+  const { user } = useAuth();
+
   const expense = expenses.find((e) => e._id === expenseId);
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState(null);
@@ -92,11 +95,13 @@ const Expense = ({ navigation, route }) => {
         <FlatList
           keyExtractor={(_, i) => i}
           data={forRiders.map((uid) => ridersMap[uid])}
-          renderItem={({ item: { name, color } }) => (
+          renderItem={({ item: { name, color, uid } }) => (
             <Box style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Avatar initial={name.charAt(0)} backgroundColor={color} />
               <Box margin="xs" />
               <Text>{name}</Text>
+              <Box margin="xs" />
+              {user.uid === uid && <Text color="success">You</Text>}
             </Box>
           )}
           ItemSeparatorComponent={<Box margin="s" />}

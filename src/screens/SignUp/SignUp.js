@@ -34,7 +34,6 @@ const SignUp = ({ navigation }) => {
     const mobileNumberWithCountryCode = `${INDIA_COUNTRY_CODE}${mobileNumber}`;
     try {
       const { data } = await getUserByPhoneNumber(mobileNumberWithCountryCode);
-      console.log(data);
       setLoading(false);
       setSignUpErr('User already exists');
     } catch (_) {

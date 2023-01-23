@@ -13,6 +13,7 @@ import ApiStatusModal from '../../components/molecules/ApiStatusModal';
 import useForm from '../../hooks/useForm';
 import { sendDataToSocket } from '../../api/socket';
 import { selectExpenses, selectRiders } from '../../redux/slices/tripSlice';
+import useAuth from '../../hooks/useAuth';
 
 const ExpenseForm = ({ route, navigation }) => {
   const { expenseId, tripCode } = route.params;
@@ -23,6 +24,7 @@ const ExpenseForm = ({ route, navigation }) => {
     riders: selectRiders(state),
     expenses: selectExpenses(state),
   }));
+  const { user } = useAuth();
   const expense = expenses.find((e) => e._id === expenseId);
   const [forRiders, setForRiders] = useState(new Set(expense ? expense.for : []));
 
@@ -50,7 +52,7 @@ const ExpenseForm = ({ route, navigation }) => {
     setLoading(false);
   };
 
-  const { form, isValid, handleSubmit, setForm } = useForm({
+  const { form, isValid, handleSubmit, setForm, validate } = useForm({
     initialValues: {
       title: expense?.title || '',
       amount: expense?.amount ? `${expense?.amount}` : '',
@@ -91,12 +93,14 @@ const ExpenseForm = ({ route, navigation }) => {
         value={form.values.title}
         error={form.errors.title}
         onChangeText={setForm('title')}
+        onBlur={validate}
       />
 
       <Picker
         options={riders.map((r) => ({ value: r.uid, label: r.name }))}
         label="by"
         selectedValue={form.values.by}
+        onValueChange={setForm('by')}
       />
 
       <Box margin="s" />
@@ -124,6 +128,8 @@ const ExpenseForm = ({ route, navigation }) => {
             <Avatar initial={r.name.charAt(0)} backgroundColor={r.color} />
             <Box margin="xs" />
             <Text>{r.name}</Text>
+            <Box margin="xs" />
+            {user.uid === r.uid && <Text color="success">You</Text>}
             <Box style={{ flex: 1 }} />
             <CheckBox
               onChange={() => {

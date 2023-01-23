@@ -8,8 +8,6 @@ import useAuth from '../../hooks/useAuth';
 import useForm from '../../hooks/useForm';
 import { joinTrip } from '../../api/trips';
 
-// use this code 𝐝𝐜𝐣𝟕𝟕𝟎 to join your ride buddies
-
 const Home = ({ navigation }) => {
   const { user } = useAuth();
 

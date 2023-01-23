@@ -15,6 +15,7 @@ const tripSlice = createSlice({
       ...state,
       expenses: state.expenses.filter((e) => e._id !== action.payload),
     }),
+    addEvent: (state, action) => ({ ...state, events: [...state.events, action.payload] }),
     set: (state, action) => ({
       ...state,
       ...action.payload,
@@ -24,7 +25,7 @@ const tripSlice = createSlice({
   },
 });
 
-export const { set, reset, addExpense, removeExpense, updateExpense } = tripSlice.actions;
+export const { set, reset, addExpense, removeExpense, updateExpense, addEvent } = tripSlice.actions;
 
 export const selectTrip = (state) => state.trip;
 
