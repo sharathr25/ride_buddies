@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView } from 'react-native';
+import { FlatList } from 'react-native';
 import { useSelector } from 'react-redux';
 import Box from '../../components/atoms/Box';
 import Text from '../../components/atoms/Text';
@@ -116,9 +116,11 @@ const ExpenseForm = ({ route, navigation }) => {
 
       <Box margin="s" />
 
-      <ScrollView style={{ opacity: form.values.forAll ? 0 : 1 }}>
-        {riders.map((r, i) => (
-          <Box key={i} style={{ alignItems: 'center', flexDirection: 'row' }}>
+      <FlatList
+        keyExtractor={(_, i) => i}
+        data={riders}
+        renderItem={({ item: r }) => (
+          <Box style={{ alignItems: 'center', flexDirection: 'row' }}>
             <Avatar initial={r.name.charAt(0)} backgroundColor={r.color} />
             <Box margin="xs" />
             <Text>{r.name}</Text>
@@ -132,8 +134,9 @@ const ExpenseForm = ({ route, navigation }) => {
               isChecked={forRiders.has(r.uid)}
             />
           </Box>
-        ))}
-      </ScrollView>
+        )}
+        ItemSeparatorComponent={<Box margin="s" />}
+      />
 
       <Button
         title="save"

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView } from 'react-native';
+import { FlatList } from 'react-native';
 import { useSelector } from 'react-redux';
 import format from 'date-fns/format';
 import Box from '../../components/atoms/Box';
@@ -75,7 +75,9 @@ const Expense = ({ navigation, route }) => {
             {format(expenseCreatedOn, 'd MMM yyyy')}
           </Text>
         </Box>
+
         <Box margin="s" />
+
         <Box style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <Text bold>For</Text>
           <Text>
@@ -84,19 +86,21 @@ const Expense = ({ navigation, route }) => {
               : `${forRiders.length} Person${forRiders.length === 1 ? '' : 's'}`}
           </Text>
         </Box>
+
         <Box margin="xs" />
 
-        <ScrollView>
-          {forRiders
-            .map((uid) => ridersMap[uid])
-            .map(({ name, color }, i) => (
-              <Box key={i} style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Avatar initial={name.charAt(0)} backgroundColor={color} />
-                <Box margin="xs" />
-                <Text>{name}</Text>
-              </Box>
-            ))}
-        </ScrollView>
+        <FlatList
+          keyExtractor={(_, i) => i}
+          data={forRiders.map((uid) => ridersMap[uid])}
+          renderItem={({ item: { name, color } }) => (
+            <Box style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Avatar initial={name.charAt(0)} backgroundColor={color} />
+              <Box margin="xs" />
+              <Text>{name}</Text>
+            </Box>
+          )}
+          ItemSeparatorComponent={<Box margin="s" />}
+        />
 
         <Box margin="s" />
 

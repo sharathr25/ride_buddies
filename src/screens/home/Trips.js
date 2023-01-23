@@ -5,7 +5,6 @@ import Box from '../../components/atoms/Box';
 import Text from '../../components/atoms/Text';
 import Loader from '../../components/atoms/Loader';
 import Button from '../../components/molecules/Button';
-import ShareRoomCode from '../../components/molecules/ShareRoomCode';
 import { ThemeContext } from '../../ThemeContext';
 import useService from '../../hooks/useService';
 import useAuth from '../../hooks/useAuth';
@@ -89,7 +88,7 @@ const Trips = ({ navigation }) => {
             style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}
           >
             <Box>
-              <ShareRoomCode code={code} />
+              <Text>{code}</Text>
               {uid === item.creation.by.uid && <Text color="success">You're the organizer</Text>}
             </Box>
           </Box>
