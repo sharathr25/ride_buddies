@@ -1,22 +1,24 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { ScrollView } from 'react-native';
 import { useSelector } from 'react-redux';
 import Box from '../../components/atoms/Box';
 import Text from '../../components/atoms/Text';
-import Icon from '../../components/atoms/Icon';
 import Toggle from '../../components/atoms/Toggle';
 import TextInput from '../../components/molecules/TextInput';
+import CheckBox from '../../components/molecules/CheckBox';
 import Button from '../../components/molecules/Button';
 import Avatar from '../../components/molecules/Avatar/Avatar';
 import Picker from '../../components/molecules/Picker/Picker';
-import { ThemeContext } from '../../ThemeContext';
+import ApiStatusModal from '../../components/molecules/ApiStatusModal';
 import useForm from '../../hooks/useForm';
 import { sendDataToSocket } from '../../api/socket';
 import { selectExpenses, selectRiders } from '../../redux/slices/tripSlice';
 
-const ExpenseForm = ({ expenseId, setShowExpenseFormModal, code }) => {
-  const { theme } = useContext(ThemeContext);
+const ExpenseForm = ({ route, navigation }) => {
+  const { expenseId, tripCode } = route.params;
+  const [loading, setLoading] = useState(false);
   const [err, setErr] = useState(null);
+  const [msg, setMsg] = useState(null);
   const { riders, expenses } = useSelector((state) => ({
     riders: selectRiders(state),
     expenses: selectExpenses(state),
@@ -35,18 +37,18 @@ const ExpenseForm = ({ expenseId, setShowExpenseFormModal, code }) => {
 
   const onSubmit = async (values) => {
     const { forAll, ...rest } = values;
+    setLoading(true);
     const data = await sendDataToSocket(expense ? 'UPDATE_EXPENSE' : 'ADD_EXPENSE', {
       expense: { ...rest, for: [...forRiders.values()], _id: expense?._id },
-      tripCode: code,
+      tripCode,
     });
     if ('error' in data) {
       setErr(data.error);
     } else {
-      setShowExpenseFormModal(false);
+      setMsg(data.msg);
     }
+    setLoading(false);
   };
-
-  console.log(forRiders);
 
   const { form, isValid, handleSubmit, setForm } = useForm({
     initialValues: {
@@ -59,8 +61,27 @@ const ExpenseForm = ({ expenseId, setShowExpenseFormModal, code }) => {
     onSubmit,
   });
 
+  const setForAll = (value) => {
+    setForm('forAll')(value);
+    if (!value) setForRiders(new Set());
+  };
+
+  const reportActionClick = () => {
+    if (err) setErr(null);
+    if (msg) {
+      setMsg(null);
+      navigation.goBack();
+    }
+  };
+
   return (
-    <>
+    <Box backgroundColor="background" padding="l" style={{ flex: 1 }}>
+      <ApiStatusModal
+        loading={loading}
+        error={err}
+        success={msg}
+        reportActionClick={reportActionClick}
+      />
       <Text variant="subHeader">New Expense</Text>
 
       <Box margin="s" />
@@ -90,66 +111,29 @@ const ExpenseForm = ({ expenseId, setShowExpenseFormModal, code }) => {
 
       <Box style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
         <Text>For All</Text>
-        <Toggle onValueChange={setForm('forAll')} value={form.values.forAll} />
+        <Toggle onValueChange={setForAll} value={form.values.forAll} />
       </Box>
 
       <Box margin="s" />
 
-      {!form.values.forAll && (
-        <Box style={{ height: 60 }}>
-          <ScrollView horizontal>
-            {riders.map((r, i) => (
-              <Box
-                key={i}
-                style={{
-                  // width: 40,
-                  marginRight: 10,
-                  alignItems: 'center',
-                  zIndex: 1,
-                  flexDirection: 'row',
-                  borderWidth: 1,
-                  borderColor: theme.colors.primary,
-                }}
-              >
-                <Avatar
-                  initial={r.name.charAt(0)}
-                  backgroundColor={r.color}
-                  onPress={() => {
-                    const cloned = new Set(forRiders);
-                    forRiders.has(r.uid) ? cloned.delete(r.uid) : cloned.add(r.uid);
-                    setForRiders(cloned);
-                  }}
-                />
-                <Text variant="info" ellipsizeMode="tail" numberOfLines={1}>
-                  {r.name}
-                </Text>
-                {forRiders.has(r.uid) && (
-                  <Box
-                    style={{
-                      position: 'absolute',
-                      right: 0,
-                      width: 0,
-                      height: 0,
-                      borderLeftWidth: 20,
-                      borderTopWidth: 20,
-                      borderLeftColor: 'transparent',
-                      borderTopColor: theme.colors.success,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    <Icon
-                      name="check"
-                      color={theme.colors.white}
-                      style={{ position: 'absolute', top: -20, right: 0 }}
-                    />
-                  </Box>
-                )}
-              </Box>
-            ))}
-          </ScrollView>
-        </Box>
-      )}
+      <ScrollView style={{ opacity: form.values.forAll ? 0 : 1 }}>
+        {riders.map((r, i) => (
+          <Box key={i} style={{ alignItems: 'center', flexDirection: 'row' }}>
+            <Avatar initial={r.name.charAt(0)} backgroundColor={r.color} />
+            <Box margin="xs" />
+            <Text>{r.name}</Text>
+            <Box style={{ flex: 1 }} />
+            <CheckBox
+              onChange={() => {
+                const cloned = new Set(forRiders);
+                forRiders.has(r.uid) ? cloned.delete(r.uid) : cloned.add(r.uid);
+                setForRiders(cloned);
+              }}
+              isChecked={forRiders.has(r.uid)}
+            />
+          </Box>
+        ))}
+      </ScrollView>
 
       <Button
         title="save"
@@ -157,11 +141,7 @@ const ExpenseForm = ({ expenseId, setShowExpenseFormModal, code }) => {
         onPress={handleSubmit}
         style={{ alignSelf: 'flex-end' }}
       />
-
-      <Box margin="s" />
-
-      {err && <Text color="danger">{err}</Text>}
-    </>
+    </Box>
   );
 };
 

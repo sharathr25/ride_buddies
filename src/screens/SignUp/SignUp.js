@@ -7,7 +7,7 @@ import Text from '../../components/atoms/Text';
 import TextInput from '../../components/molecules/TextInput';
 import CheckBox from '../../components/molecules/CheckBox';
 import ColorPicker from '../../components/molecules/ColorPicker';
-import LoadingErrModal from '../../components/molecules/LoadingErrModal';
+import ApiStatusModal from '../../components/molecules/ApiStatusModal';
 import useForm from '../../hooks/useForm';
 import { validateDisplayName, validateMobileNumber } from '../../utils/validators';
 import { signInWithPhoneNumber } from '../../api/auth';
@@ -68,9 +68,9 @@ const SignUp = ({ navigation }) => {
   return (
     <ScrollView contentContainerStyle={{ flex: 1 }}>
       <Box backgroundColor="background" padding="xl" style={{ flex: 1 }}>
-        <LoadingErrModal
+        <ApiStatusModal
           loading={loading}
-          err={signUpErr}
+          error={signUpErr}
           reportActionClick={() => setSignUpErr(null)}
         />
         <Text variant="header">Hello!</Text>

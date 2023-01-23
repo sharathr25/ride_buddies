@@ -4,7 +4,7 @@ import Box from '../../components/atoms/Box';
 import Button from '../../components/molecules/Button';
 import Text from '../../components/atoms/Text';
 import PinInput from '../../components/molecules/PinInput';
-import LoadingErrModal from '../../components/molecules/LoadingErrModal';
+import ApiStatusModal from '../../components/molecules/ApiStatusModal';
 import useForm from '../../hooks/useForm';
 import useAuth from '../../hooks/useAuth';
 import { updateProfile, validateOTP } from '../../api/auth';
@@ -54,7 +54,7 @@ const OTP = ({ navigation, route }) => {
 
   return (
     <Box backgroundColor="background" padding="xl" style={{ flex: 1, justifyContent: 'flex-end' }}>
-      <LoadingErrModal loading={loading} err={otpErr} reportActionClick={() => setOtpErr(null)} />
+      <ApiStatusModal loading={loading} error={otpErr} reportActionClick={() => setOtpErr(null)} />
       {!isKeyboardShown && (
         <Box style={{ flex: 1 }}>
           <SVGImg width="100%" height="100%" />

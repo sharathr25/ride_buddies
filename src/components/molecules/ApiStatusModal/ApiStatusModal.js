@@ -7,11 +7,11 @@ import Icon from '../../atoms/Icon';
 import { ThemeContext } from '../../../ThemeContext';
 import Button from '../Button';
 
-const LoadingErrModal = ({ err, loading, reportActionClick = () => {} }) => {
+const ApiStatusModal = ({ error, success, loading, reportActionClick = () => {} }) => {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <Modal visible={loading || err !== null} transparent>
+    <Modal visible={loading || error !== null || success !== null} transparent>
       <Box
         style={{
           flex: 1,
@@ -31,11 +31,22 @@ const LoadingErrModal = ({ err, loading, reportActionClick = () => {} }) => {
             height: 200,
           }}
         >
-          {loading ? <Loader /> : <Icon name="close-thick" color={theme.colors.danger} size={50} />}
-          {err && (
+          {loading && <Loader />}
+          {error && (
             <>
+              <Icon name="close-thick" color={theme.colors.danger} size={50} />
               <Text color="background" style={{ textAlign: 'center' }}>
-                {err}
+                {error}
+              </Text>
+              <Box margin="xs" />
+              <Button title="ok" size="xs" onPress={reportActionClick} />
+            </>
+          )}
+          {success && (
+            <>
+              <Icon name="check-bold" color={theme.colors.success} size={50} />
+              <Text color="background" style={{ textAlign: 'center' }}>
+                {success}
               </Text>
               <Box margin="xs" />
               <Button title="ok" size="xs" onPress={reportActionClick} />
@@ -47,4 +58,4 @@ const LoadingErrModal = ({ err, loading, reportActionClick = () => {} }) => {
   );
 };
 
-export default LoadingErrModal;
+export default ApiStatusModal;

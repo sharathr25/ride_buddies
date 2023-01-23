@@ -13,6 +13,8 @@ import PrivacyPolicy from './screens/PrivacyPolicy';
 import Profile from './screens/Profile';
 import EditProfile from './screens/EditProfile';
 import Trip from './screens/Trip';
+import Expense from './screens/Expense';
+import ExpenseForm from './screens/ExpenseForm';
 import Header from './components/organisms/Header';
 import { theme, darkTheme } from './theme';
 import { ThemeContext } from './ThemeContext';
@@ -58,6 +60,8 @@ const App = () => {
               <Stack.Screen name="Profile" component={Profile} />
               <Stack.Screen name="EditProfile" component={EditProfile} />
               <Stack.Screen name="Trip" component={Trip} />
+              <Stack.Screen name="ExpenseForm" component={ExpenseForm} />
+              <Stack.Screen name="Expense" component={Expense} />
             </Stack.Navigator>
           </NavigationContainer>
         </Provider>

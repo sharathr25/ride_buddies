@@ -4,7 +4,7 @@ import Box from '../../components/atoms/Box';
 import Button from '../../components/molecules/Button';
 import Text from '../../components/atoms/Text';
 import TextInput from '../../components/molecules/TextInput';
-import LoadingErrModal from '../../components/molecules/LoadingErrModal';
+import ApiStatusModal from '../../components/molecules/ApiStatusModal';
 import { validateMobileNumber } from '../../utils/validators';
 import useForm from '../../hooks/useForm';
 import useKeyboard from '../../hooks/useKeyboard';
@@ -48,9 +48,9 @@ const SignIn = ({ navigation }) => {
 
   return (
     <Box backgroundColor="background" padding="xl" style={{ flex: 1 }}>
-      <LoadingErrModal
+      <ApiStatusModal
         loading={loading}
-        err={signInErr}
+        error={signInErr}
         reportActionClick={() => setSignInErr(null)}
       />
       {!isKeyboardShown && (
