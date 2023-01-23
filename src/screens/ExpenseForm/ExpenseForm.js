@@ -1,18 +1,18 @@
 import React, { useContext, useState } from 'react';
 import { ScrollView } from 'react-native';
 import { useSelector } from 'react-redux';
-import Box from '../../../components/atoms/Box';
-import Text from '../../../components/atoms/Text';
-import Icon from '../../../components/atoms/Icon';
-import Toggle from '../../../components/atoms/Toggle';
-import TextInput from '../../../components/molecules/TextInput';
-import Button from '../../../components/molecules/Button';
-import Avatar from '../../../components/molecules/Avatar/Avatar';
-import Picker from '../../../components/molecules/Picker/Picker';
-import { ThemeContext } from '../../../ThemeContext';
-import useForm from '../../../hooks/useForm';
-import { sendDataToSocket } from '../../../api/socket';
-import { selectExpenses, selectRiders } from '../../../redux/slices/tripSlice';
+import Box from '../../components/atoms/Box';
+import Text from '../../components/atoms/Text';
+import Icon from '../../components/atoms/Icon';
+import Toggle from '../../components/atoms/Toggle';
+import TextInput from '../../components/molecules/TextInput';
+import Button from '../../components/molecules/Button';
+import Avatar from '../../components/molecules/Avatar/Avatar';
+import Picker from '../../components/molecules/Picker/Picker';
+import { ThemeContext } from '../../ThemeContext';
+import useForm from '../../hooks/useForm';
+import { sendDataToSocket } from '../../api/socket';
+import { selectExpenses, selectRiders } from '../../redux/slices/tripSlice';
 
 const ExpenseForm = ({ expenseId, setShowExpenseFormModal, code }) => {
   const { theme } = useContext(ThemeContext);
@@ -22,7 +22,7 @@ const ExpenseForm = ({ expenseId, setShowExpenseFormModal, code }) => {
     expenses: selectExpenses(state),
   }));
   const expense = expenses.find((e) => e._id === expenseId);
-  const [forRiders, setForRiders] = useState(new Set(expense.for));
+  const [forRiders, setForRiders] = useState(new Set(expense ? expense.for : []));
 
   const onValidate = ({ title, amount }) => {
     const errors = {};
@@ -99,7 +99,18 @@ const ExpenseForm = ({ expenseId, setShowExpenseFormModal, code }) => {
         <Box style={{ height: 60 }}>
           <ScrollView horizontal>
             {riders.map((r, i) => (
-              <Box key={i} style={{ width: 40, marginRight: 10, alignItems: 'center', zIndex: 1 }}>
+              <Box
+                key={i}
+                style={{
+                  // width: 40,
+                  marginRight: 10,
+                  alignItems: 'center',
+                  zIndex: 1,
+                  flexDirection: 'row',
+                  borderWidth: 1,
+                  borderColor: theme.colors.primary,
+                }}
+              >
                 <Avatar
                   initial={r.name.charAt(0)}
                   backgroundColor={r.color}

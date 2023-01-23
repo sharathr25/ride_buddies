@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { ScrollView } from 'react-native';
 import { useSelector } from 'react-redux';
 import format from 'date-fns/format';
-import Box from '../../../components/atoms/Box';
-import Text from '../../../components/atoms/Text';
-import Button from '../../../components/molecules/Button';
-import { selectExpenses, selectRidersMap } from '../../../redux/slices/tripSlice';
-import { currencyFormatter } from '../../../utils/formators';
-import Avatar from '../../../components/molecules/Avatar/Avatar';
-import { sendDataToSocket } from '../../../api/socket';
-import Loader from '../../../components/atoms/Loader';
+import Box from '../../components/atoms/Box';
+import Text from '../../components/atoms/Text';
+import Button from '../../components/molecules/Button';
+import { selectExpenses, selectRidersMap } from '../../redux/slices/tripSlice';
+import { currencyFormatter } from '../../utils/formators';
+import Avatar from '../../components/molecules/Avatar/Avatar';
+import { sendDataToSocket } from '../../api/socket';
+import Loader from '../../components/atoms/Loader';
 
 const Expense = ({ expenseId, setShowExpenseFormModal }) => {
   const { code, ridersMap, expenses } = useSelector((state) => ({

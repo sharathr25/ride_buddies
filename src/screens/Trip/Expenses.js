@@ -3,16 +3,16 @@ import { FlatList, Pressable } from 'react-native';
 import { useSelector } from 'react-redux';
 import format from 'date-fns/format';
 import ExpenseForm from './ExpenseForm';
-import Expense from './Expense';
-import Box from '../../../components/atoms/Box';
-import Text from '../../../components/atoms/Text';
-import Button from '../../../components/molecules/Button';
-import { selectExpenses, selectRidersMap } from '../../../redux/slices/tripSlice';
-import { ThemeContext } from '../../../ThemeContext';
-import { currencyFormatter } from '../../../utils/formators';
+import Expense from '../Expense/Expense';
+import Box from '../../components/atoms/Box';
+import Text from '../../components/atoms/Text';
+import Button from '../../components/molecules/Button';
+import { selectExpenses, selectRidersMap } from '../../redux/slices/tripSlice';
+import { ThemeContext } from '../../ThemeContext';
+import { currencyFormatter } from '../../utils/formators';
 
 import NoDataIllustration from '../../../images/illustrations/no-data.svg';
-import Modal from '../../../components/molecules/Modal';
+import Modal from '../../components/molecules/Modal';
 
 const Expenses = () => {
   const { expenses, code, ridersMap } = useSelector((state) => ({
