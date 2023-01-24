@@ -15,9 +15,11 @@ import { connectSocket, disconnectSocket, joinTrip, listenEvent } from '../../ap
 import {
   addEvent,
   addExpense,
+  removeEvent,
   removeExpense,
   reset,
   set,
+  updateEvent,
   updateExpense,
 } from '../../redux/slices/tripSlice';
 
@@ -64,6 +66,14 @@ const TripTabs = ({ route }) => {
 
       listenEvent('EVENT_ADDED', (event) => {
         dispatch(addEvent(event));
+      });
+
+      listenEvent('EVENT_UPDATED', (event) => {
+        dispatch(updateEvent(event));
+      });
+
+      listenEvent('EVENT_DELETED', (eventId) => {
+        dispatch(removeEvent(eventId));
       });
     } catch (error) {
       setErr(true);

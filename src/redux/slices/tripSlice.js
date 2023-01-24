@@ -16,6 +16,16 @@ const tripSlice = createSlice({
       expenses: state.expenses.filter((e) => e._id !== action.payload),
     }),
     addEvent: (state, action) => ({ ...state, events: [...state.events, action.payload] }),
+    updateEvent: (state, action) => ({
+      ...state,
+      events: state.events.map((e) =>
+        e._id === action.payload._id ? { ...e, ...action.payload } : e
+      ),
+    }),
+    removeEvent: (state, action) => ({
+      ...state,
+      events: state.events.filter((e) => e._id !== action.payload),
+    }),
     set: (state, action) => ({
       ...state,
       ...action.payload,
@@ -25,7 +35,16 @@ const tripSlice = createSlice({
   },
 });
 
-export const { set, reset, addExpense, removeExpense, updateExpense, addEvent } = tripSlice.actions;
+export const {
+  set,
+  reset,
+  addExpense,
+  removeExpense,
+  updateExpense,
+  addEvent,
+  updateEvent,
+  removeEvent,
+} = tripSlice.actions;
 
 export const selectTrip = (state) => state.trip;
 

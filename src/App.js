@@ -15,6 +15,8 @@ import EditProfile from './screens/EditProfile';
 import Trip from './screens/Trip';
 import Expense from './screens/Expense';
 import ExpenseForm from './screens/ExpenseForm';
+import EventForm from './screens/EventForm';
+import Event from './screens/Event';
 import Header from './components/organisms/Header';
 import { theme, darkTheme } from './theme';
 import { ThemeContext } from './ThemeContext';
@@ -62,6 +64,8 @@ const App = () => {
               <Stack.Screen name="Trip" component={Trip} />
               <Stack.Screen name="ExpenseForm" component={ExpenseForm} />
               <Stack.Screen name="Expense" component={Expense} />
+              <Stack.Screen name="EventForm" component={EventForm} />
+              <Stack.Screen name="Event" component={Event} />
             </Stack.Navigator>
           </NavigationContainer>
         </Provider>
