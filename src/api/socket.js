@@ -82,6 +82,7 @@ export const joinTrip = (tripCode) => {
 
 export const sendDataToSocket = (eventName, data) => {
   return new Promise((resolve, reject) => {
+    console.log(`sending event ${eventName}`);
     socket.emit(eventName, data, (response) => {
       if ('error' in response) reject(response);
       else resolve(response);

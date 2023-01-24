@@ -63,7 +63,7 @@ const DonutChart = ({ data, spacing = 0, size = 100, info = '', ...rest }) => {
           <Box style={{ flexDirection: 'row', alignItems: 'center' }} key={i}>
             <Box style={{ width: 10, height: 10, backgroundColor: stroke }} />
             <Text style={{ marginHorizontal: 5 }}>{title}</Text>
-            <Text color="primary">{value}</Text>
+            <Text color="success">{value}</Text>
           </Box>
         ))}
       </Box>

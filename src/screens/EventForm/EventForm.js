@@ -11,7 +11,7 @@ import ApiStatusModal from '../../components/molecules/ApiStatusModal';
 import { selectEvents } from '../../redux/slices/tripSlice';
 
 const EventForm = ({ navigation, route }) => {
-  const { eventId } = route.params;
+  const { eventId } = route.params || {};
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState(null);
   const [msg, setMsg] = useState(null);
@@ -33,7 +33,7 @@ const EventForm = ({ navigation, route }) => {
   const onSubmit = async ({ type, title }) => {
     try {
       setLoading(true);
-      const data = await sendDataToSocket(event ? 'UPDATE_EVENT' : 'ADD_EVENT', {
+      const data = await sendDataToSocket(eventId ? 'UPDATE_EVENT' : 'ADD_EVENT', {
         tripCode,
         event: { type, title: type === EVENT_TYPES.CUSTOM ? title : '', _id: event._id },
       });
