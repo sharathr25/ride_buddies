@@ -66,6 +66,7 @@ const Expenses = ({ navigation }) => {
 
   return (
     <Box backgroundColor="background" padding="l" style={{ flex: 1 }}>
+      <Box margin="m" />
       {expenses.length === 0 ? (
         <Box style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
           <NoDataIllustration width="50%" height="50%" />

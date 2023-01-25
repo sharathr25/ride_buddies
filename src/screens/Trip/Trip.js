@@ -13,7 +13,8 @@ import { ThemeContext } from '../../ThemeContext';
 import { selectTrip } from '../../redux/slices/tripSlice';
 import { capitalize } from '../../utils/formators';
 
-import NoDataIllustration from '../../images/illustrations/void.svg';
+import NoDataIllustration from '../../images/illustrations/no-data.svg';
+import VoidIllustration from '../../images/illustrations/void.svg';
 
 const Trip = () => {
   const trip = useSelector(selectTrip);
@@ -23,7 +24,7 @@ const Trip = () => {
   const { user } = useAuth();
   const { uid } = user || {};
 
-  const dataPie = expensesGrouped.map((e) => ({
+  const expensesDataPie = expensesGrouped.map((e) => ({
     value: e.amount,
     stroke: ridersMap[e._id].color,
     strokeWidth: 10,
@@ -44,7 +45,7 @@ const Trip = () => {
     if (eventsGrouped.length === 0)
       return (
         <Box style={{ justifyContent: 'center', alignItems: 'center' }}>
-          <NoDataIllustration width="100%" height={100} />
+          <VoidIllustration width="100%" height={100} />
           <Box margin="s" />
           <Text>No events</Text>
         </Box>
@@ -72,9 +73,24 @@ const Trip = () => {
     );
   };
 
+  const renderExpenses = () => {
+    if (expensesDataPie.length === 0)
+      return (
+        <Box style={{ justifyContent: 'center', alignItems: 'center' }}>
+          <NoDataIllustration width="100%" height={100} />
+          <Box margin="s" />
+          <Text>No expenses</Text>
+          <Box margin="m" />
+        </Box>
+      );
+
+    return <DonutChart data={expensesDataPie} size={200} />;
+  };
+
   return (
     <ScrollView contentContainerStyle={{ flex: 1 }}>
       <Box backgroundColor="background" padding="l" style={{ flex: 1 }}>
+        <Box margin="m" />
         <Text variant="header">{name}</Text>
         <ShareRoomCode code={code} />
 
@@ -115,7 +131,8 @@ const Trip = () => {
 
         <Box>
           <Text variant="subHeader">Total Expenses</Text>
-          <DonutChart data={dataPie} size={200} />
+          <Box margin="xs" />
+          {renderExpenses()}
         </Box>
 
         <Box>

@@ -21,11 +21,10 @@ const Home = ({ navigation }) => {
     try {
       validate();
       const { data } = await joinTrip(tripCode);
-      console.log(data);
-      // navigation.push('OTP', { mobileNumber: mobileNumberWithCountryCode, screenToGo: 'HomeTabs' });
+      navigation.push('Trip', data);
     } catch (error) {
-      if (error.response.status) setError('tripCode', `We didn't find trip with code ${tripCode}`);
-      else console.error('Something went wrong while joining trip', error.response.status);
+      if (error.response?.status) setError('tripCode', `We didn't find trip with code ${tripCode}`);
+      else console.error('Something went wrong while joining trip', error.response?.status);
     }
   };
 

@@ -15,7 +15,7 @@ import NoDataIllustration from '../../images/illustrations/void.svg';
 
 const Trips = ({ navigation }) => {
   const { user } = useAuth();
-  const { uid } = user;
+  const { uid } = user || {};
   const {
     data: trips,
     loading,

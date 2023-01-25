@@ -3,6 +3,7 @@ import { SafeAreaView, StatusBar, useColorScheme } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Provider } from 'react-redux';
+import { enableLatestRenderer } from 'react-native-maps';
 import Landing from './screens/Landing';
 import OTP from './screens/OTP';
 import Home from './screens/Home';
@@ -23,6 +24,7 @@ import { ThemeContext } from './ThemeContext';
 import useAuth from './hooks/useAuth';
 import store from './redux/store';
 
+enableLatestRenderer();
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -61,7 +63,7 @@ const App = () => {
               <Stack.Screen name="OTP" component={OTP} />
               <Stack.Screen name="Profile" component={Profile} />
               <Stack.Screen name="EditProfile" component={EditProfile} />
-              <Stack.Screen name="Trip" component={Trip} />
+              <Stack.Screen name="Trip" component={Trip} options={{ headerTransparent: true }} />
               <Stack.Screen name="ExpenseForm" component={ExpenseForm} />
               <Stack.Screen name="Expense" component={Expense} />
               <Stack.Screen name="EventForm" component={EventForm} />

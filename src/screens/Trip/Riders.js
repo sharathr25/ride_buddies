@@ -26,6 +26,7 @@ const Riders = () => {
 
   return (
     <Box backgroundColor="background" padding="l" style={{ flex: 1 }}>
+      <Box margin="m" />
       <FlatList
         data={riders}
         keyExtractor={(item) => item.uid}

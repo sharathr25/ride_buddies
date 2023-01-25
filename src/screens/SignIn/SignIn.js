@@ -36,7 +36,7 @@ const SignIn = ({ navigation }) => {
       setTimeout(() => setLoading(false), 1000);
     } catch (error) {
       setLoading(false);
-      setSignInErr(error.response.status === 404 ? 'User not found!' : 'Something went wrong!');
+      setSignInErr(error.response?.status === 404 ? 'User not found!' : 'Something went wrong!');
     }
   };
 

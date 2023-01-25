@@ -1,38 +1,44 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import Box from '../../components/atoms/Box';
-import Text from '../../components/atoms/Text';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import Icon from '../../components/atoms/Icon';
+import { useSelector } from 'react-redux';
 import { selectLocation } from '../../redux/slices/locationSlice';
+import { selectRiders } from '../../redux/slices/tripSlice';
+
+const INDIA_COORDS = [78.9629, 20.5937];
 
 const Map = () => {
-  const location = useSelector(selectLocation);
-  const [long, lat] = location;
+  const { myLocation, riders } = useSelector((state) => ({
+    myLocation: selectLocation(state),
+    riders: selectRiders(state),
+  }));
 
   return (
-    <Box backgroundColor="background" padding="l" style={{ flex: 1 }}>
-      <Text>Map</Text>
-      <Text>
-        {long}, {lat}
-      </Text>
-      {!long && (
-        <Box
-          backgroundColor="danger"
-          style={{
-            position: 'absolute',
-            width: '200%',
-            bottom: 0,
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}
-          padding="s"
-        >
-          <Icon name="map-marker" size={16} />
-          <Box margin="xs" />
-          <Text>Location not available</Text>
-        </Box>
-      )}
-    </Box>
+    <MapView
+      provider={PROVIDER_GOOGLE}
+      style={{ flex: 1 }}
+      region={{
+        longitude: myLocation[0] || INDIA_COORDS[0],
+        latitude: myLocation[1] || INDIA_COORDS[1],
+        latitudeDelta: 0.015,
+        longitudeDelta: 0.0121,
+      }}
+    >
+      {riders.map((r, index) => {
+        if (r.location.length === 0) return null;
+
+        const [longitude, latitude] = r.location;
+        return (
+          <Marker
+            key={index}
+            coordinate={{ longitude: longitude || 0, latitude: latitude || 0 }}
+            title={r.name}
+          >
+            <Icon name="map-marker" size={30} color={r.color} />
+          </Marker>
+        );
+      })}
+    </MapView>
   );
 };
 

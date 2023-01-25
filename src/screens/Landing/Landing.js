@@ -3,6 +3,7 @@ import Box from '../../components/atoms/Box';
 import Text from '../../components/atoms/Text';
 import Button from '../../components/molecules/Button';
 import Features from '../../components/molecules/Features';
+import { API_URL } from '../../configs/api';
 
 const Landing = ({ navigation }) => {
   const signIn = () => {
@@ -32,6 +33,9 @@ const Landing = ({ navigation }) => {
         <Button title="SIGN IN" onPress={signIn} />
         <Box margin="s" />
         <Button title="SIGN UP" outline onPress={signUp} />
+      </Box>
+      <Box>
+        <Text>{API_URL}</Text>
       </Box>
     </Box>
   );

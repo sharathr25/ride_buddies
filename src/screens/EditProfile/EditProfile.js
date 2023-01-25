@@ -14,7 +14,7 @@ import { INDIA_COUNTRY_CODE } from '../../constants';
 
 const EditProfile = ({ navigation }) => {
   const { user } = useAuth();
-  const { displayName, photoURL, phoneNumber } = user;
+  const { displayName, photoURL, phoneNumber } = user || {};
 
   const onValidate = ({ mobileNumber, displayName }) => {
     const errors = {};
