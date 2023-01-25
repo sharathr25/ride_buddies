@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { PermissionsAndroid } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Geolocation from 'react-native-geolocation-service';
 import Trip from './Trip';
 import Expenses from './Expenses';
 import Riders from './Riders';
@@ -11,7 +13,13 @@ import Box from '../../components/atoms/Box';
 import Loader from '../../components/atoms/Loader';
 import Text from '../../components/atoms/Text';
 import { ThemeContext } from '../../ThemeContext';
-import { connectSocket, disconnectSocket, joinTrip, listenEvent } from '../../api/socket';
+import {
+  connectSocket,
+  disconnectSocket,
+  joinTrip,
+  listenEvent,
+  sendDataToSocket,
+} from '../../api/socket';
 import {
   addEvent,
   addExpense,
@@ -21,11 +29,17 @@ import {
   set,
   updateEvent,
   updateExpense,
+  updateLocation,
 } from '../../redux/slices/tripSlice';
+import { reset as resetLocation, set as setLocation } from '../../redux/slices/locationSlice';
 
 import ErrorIllustration from '../../images/illustrations/error.svg';
 import NoDataIllustration from '../../images/illustrations/void.svg';
 
+const FIFTEEN_SECONDS = 15000;
+const TEN_SECONDS = 10000;
+const FIVE_MINUTES_IN_MS = 300000;
+const FIVE_KMS_IN_MS = 5000;
 const Tab = createBottomTabNavigator();
 
 const ICONS_FOR_ROUTES = {
@@ -37,18 +51,58 @@ const ICONS_FOR_ROUTES = {
 };
 
 const TripTabs = ({ route }) => {
+  const { code } = route.params;
   const { theme } = useContext(ThemeContext);
   const dispatch = useDispatch();
   const trip = useSelector(({ trip }) => trip);
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState(null);
 
+  const onLocation = (position) => {
+    const { coords } = position;
+    const { latitude, longitude } = coords;
+    dispatch(setLocation([longitude, latitude]));
+    sendDataToSocket('UPDATE_LOCATION', { location: [longitude, latitude], tripCode: code });
+  };
+
+  const onLocationErr = (error) => {
+    console.log(error.code, error.message);
+  };
+
+  useEffect(() => {
+    PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION, {
+      title: 'Geolocation Permission',
+      message: 'Can we access your location?',
+      buttonNeutral: 'Ask Me Later',
+      buttonNegative: 'Cancel',
+      buttonPositive: 'OK',
+    }).then((granted) => {
+      if (granted === 'granted') {
+        Geolocation.getCurrentPosition(onLocation, onLocationErr, {
+          enableHighAccuracy: true,
+          timeout: FIFTEEN_SECONDS,
+          maximumAge: TEN_SECONDS,
+          distanceFilter: FIVE_KMS_IN_MS,
+        });
+        Geolocation.watchPosition(onLocation, onLocationErr, {
+          enableHighAccuracy: true,
+          interval: FIVE_MINUTES_IN_MS,
+          distanceFilter: FIVE_KMS_IN_MS,
+        });
+      }
+    });
+
+    return () => {
+      dispatch(resetLocation());
+    };
+  }, []);
+
   const joinTripGroup = async () => {
     try {
       setLoading(true);
 
       await connectSocket();
-      const response = await joinTrip(route.params.code);
+      const response = await joinTrip(code);
 
       dispatch(set(response));
 
@@ -74,6 +128,10 @@ const TripTabs = ({ route }) => {
 
       listenEvent('EVENT_DELETED', (eventId) => {
         dispatch(removeEvent(eventId));
+      });
+
+      listenEvent('LOCATION_UPDATED', (location) => {
+        dispatch(updateLocation(location));
       });
     } catch (error) {
       setErr(true);

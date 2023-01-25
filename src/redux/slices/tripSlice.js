@@ -26,6 +26,12 @@ const tripSlice = createSlice({
       ...state,
       events: state.events.filter((e) => e._id !== action.payload),
     }),
+    updateLocation: (state, action) => ({
+      ...state,
+      riders: state.riders.map((r) =>
+        r.uid === action.payload.uid ? { ...r, location: action.payload.coords } : r
+      ),
+    }),
     set: (state, action) => ({
       ...state,
       ...action.payload,
@@ -44,6 +50,7 @@ export const {
   addEvent,
   updateEvent,
   removeEvent,
+  updateLocation,
 } = tripSlice.actions;
 
 export const selectTrip = (state) => state.trip;

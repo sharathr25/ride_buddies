@@ -7,7 +7,12 @@ import Icon from '../../atoms/Icon';
 import { ThemeContext } from '../../../ThemeContext';
 import Button from '../Button';
 
-const ApiStatusModal = ({ error, success, loading, reportActionClick = () => {} }) => {
+const ApiStatusModal = ({
+  error = null,
+  success = null,
+  loading = false,
+  reportActionClick = () => {},
+}) => {
   const { theme } = useContext(ThemeContext);
 
   return (
