@@ -67,6 +67,7 @@ const SignIn = ({ navigation }) => {
         onChangeText={setForm('mobileNumber')}
         onBlur={validate}
         error={form.errors.mobileNumber}
+        keyboardType="number-pad"
       />
       <Box margin="s" />
       <Button title="Get OTP" onPress={handleSubmit} disabled={!isValid()} />

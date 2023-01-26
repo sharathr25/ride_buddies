@@ -81,6 +81,7 @@ const SignUp = ({ navigation }) => {
           onChangeText={setForm('mobileNumber')}
           onBlur={validate}
           error={form.errors.mobileNumber}
+          keyboardType="number-pad"
         />
         <Box margin="xs" />
         <TextInput

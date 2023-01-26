@@ -118,6 +118,7 @@ const Trips = ({ navigation }) => {
         data={trips}
         renderItem={renderItem}
         keyExtractor={(item) => item._id}
+        ItemSeparatorComponent={<Box margin="s" />}
         ListHeaderComponent={
           <Text
             variant="subHeader"
