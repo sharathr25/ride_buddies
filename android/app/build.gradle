@@ -144,6 +144,14 @@ android {
         versionName "1.0"
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
 
+        
+        def addConstant = {constantName, constantValue ->
+            manifestPlaceholders += [ (constantName):constantValue]
+            buildConfigField "String", "${constantName}", "\"${constantValue}\""
+        }
+
+        addConstant("GOOGLE_MAPS_API_KEY", System.getenv("RIDE_BUDDIES_GOOGLE_MAPS_API_KEY"))
+
         if (isNewArchitectureEnabled()) {
             // We configure the CMake build only if you decide to opt-in for the New Architecture.
             externalNativeBuild {
@@ -220,10 +228,13 @@ android {
             keyPassword 'android'
         }
         release {
-            storeFile file('ride_buddies.keystore')
-            storePassword 'drowssap'
-            keyAlias 'ride_buddies_key'
-            keyPassword 'drowssap'
+            def keystore = System.getenv("RIDE_BUDDIES_KEYSTORE")
+            def kAlias = System.getenv("RIDE_BUDDIES_KEYSTORE_ALIAS")
+            def kPass = System.getenv("RIDE_BUDDIES_KEYSTORE_PASS")
+            storeFile file("$keystore")
+            storePassword "$kPass"
+            keyAlias = "$kAlias"
+            keyPassword "$kPass"
         }
     }
     buildTypes {
