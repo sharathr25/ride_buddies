@@ -24,8 +24,11 @@ const OTP = ({ navigation, route }) => {
 
   useEffect(() => {
     if (user) {
-      navigation.replace(screenToGo);
-      setTimeout(() => setLoading(false), 1000);
+      if (displayName || color)
+        updateProfile({ displayName, photoURL: color })
+          .then(() => navigation.replace(screenToGo))
+          .catch((e) => console.log(e))
+          .finally(() => setLoading(false), 1000);
     }
   }, [user]);
 
@@ -39,7 +42,6 @@ const OTP = ({ navigation, route }) => {
     try {
       setLoading(true);
       await validateOTP(otp);
-      if (displayName || color) await updateProfile({ displayName, photoURL: color });
     } catch (error) {
       setLoading(false);
       setOtpErr('Invalid OTP. Try again');

@@ -7,6 +7,7 @@ import Features from '../../components/molecules/Features';
 import useAuth from '../../hooks/useAuth';
 import useForm from '../../hooks/useForm';
 import { joinTrip } from '../../api/trips';
+import { ScrollView } from 'react-native';
 
 const Home = ({ navigation }) => {
   const { user } = useAuth();
@@ -43,7 +44,7 @@ const Home = ({ navigation }) => {
         </Text>
       </Box>
 
-      <Box margin="s" />
+      <Box margin="xs" />
 
       <Box>
         <TextInput
@@ -56,9 +57,11 @@ const Home = ({ navigation }) => {
         <Button title="join" onPress={handleSubmit} disabled={!isValid()} />
       </Box>
 
-      <Box margin="s" />
+      <Box margin="xs" />
 
-      <Features />
+      <ScrollView>
+        <Features />
+      </ScrollView>
     </Box>
   );
 };

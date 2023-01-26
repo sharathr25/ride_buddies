@@ -10,7 +10,7 @@ import { sendDataToSocket } from '../../api/socket';
 import { EVENT_TYPES } from '../../constants';
 
 import Sightseeing from '../../images/illustrations/sightseeing.svg';
-import CofeeBreak from '../../images/illustrations/coffee_break.svg';
+import CoffeeBreak from '../../images/illustrations/coffee_break.svg';
 import GotLost from '../../images/illustrations/got_lost.svg';
 import Police from '../../images/illustrations/police.svg';
 import Custom from '../../images/illustrations/custom.svg';
@@ -19,12 +19,11 @@ import Refueling from '../../images/illustrations/city_driver.svg';
 import ApiStatusModal from '../../components/molecules/ApiStatusModal';
 
 const illustrations = {
-  [EVENT_TYPES.COFEE_BREAK]: CofeeBreak,
+  [EVENT_TYPES.COFFEE_BREAK]: CoffeeBreak,
   [EVENT_TYPES.CUSTOM]: Custom,
   [EVENT_TYPES.GOT_LOST]: GotLost,
   [EVENT_TYPES.PULL_OVER]: Police,
   [EVENT_TYPES.REPAIR]: Repair,
-  [EVENT_TYPES.COFEE_BREAK]: CofeeBreak,
   [EVENT_TYPES.REFUELING]: Refueling,
   [EVENT_TYPES.SIGHTSEEING]: Sightseeing,
 };

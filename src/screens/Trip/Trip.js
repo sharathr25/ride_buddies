@@ -35,7 +35,7 @@ const Trip = () => {
     CUSTOM: 'cog',
     SIGHTSEEING: 'binoculars',
     REFUELING: 'fuel',
-    COFEE_BREAK: 'coffee',
+    COFFEE_BREAK: 'coffee',
     REPAIR: 'wrench',
     GOT_LOST: 'compass',
     PULL_OVER: 'police-badge',
@@ -73,6 +73,8 @@ const Trip = () => {
     );
   };
 
+  console.log(organiser);
+
   const renderExpenses = () => {
     if (expensesDataPie.length === 0)
       return (
@@ -103,7 +105,7 @@ const Trip = () => {
             style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}
           >
             <Box style={{ flex: 0.1 }}>
-              <Avatar initial={organiser.name[0]} backgroundColor={organiser.color} />
+              <Avatar initial={organiser?.name[0] || ''} backgroundColor={organiser.color} />
             </Box>
             <Box style={{ flex: 0.85 }}>
               <Box style={{ flexDirection: 'row', alignItems: 'center' }}>

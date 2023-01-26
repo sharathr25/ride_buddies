@@ -33,7 +33,7 @@ const SignUp = ({ navigation }) => {
     setLoading(true);
     const mobileNumberWithCountryCode = `${INDIA_COUNTRY_CODE}${mobileNumber}`;
     try {
-      const { data } = await getUserByPhoneNumber(mobileNumberWithCountryCode);
+      await getUserByPhoneNumber(mobileNumberWithCountryCode);
       setLoading(false);
       setSignUpErr('User already exists');
     } catch (_) {
@@ -103,7 +103,7 @@ const SignUp = ({ navigation }) => {
           isChecked={form.values.termsAndPrivacyPolicyChecked}
           error={form.errors.termsAndPrivacyPolicyChecked}
           label={
-            <Box style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+            <>
               <Text>I have read and accept the </Text>
               <Link to={{ screen: 'TermsOfUse' }}>
                 <Text color="link">Terms of Use</Text>
@@ -112,7 +112,7 @@ const SignUp = ({ navigation }) => {
               <Link to={{ screen: 'PrivacyPolicy' }}>
                 <Text color="link">Privacy Policy</Text>
               </Link>
-            </Box>
+            </>
           }
         />
         <Box margin="s" />
