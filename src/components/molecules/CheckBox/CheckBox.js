@@ -44,7 +44,11 @@ const CheckBox = ({ label = '', error, isChecked, onChange }) => {
           {isChecked && <Icon name="check" size={15} color={theme.colors.primary} />}
         </Pressable>
       </Box>
-      {error && <Text color="danger">{error}</Text>}
+      {error && (
+        <Text color="danger" variant="info">
+          {error}
+        </Text>
+      )}
     </Box>
   );
 };

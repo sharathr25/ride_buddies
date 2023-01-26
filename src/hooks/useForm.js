@@ -18,6 +18,11 @@ const useForm = ({ initialValues, onValidate, onSubmit }) => {
 
   const validate = () => {
     const errors = onValidate(form.values);
+    Object.keys(errors).forEach((key) => {
+      if (!form.touched[key]) {
+        delete errors[key];
+      }
+    });
     setForm({ ...form, errors });
   };
 

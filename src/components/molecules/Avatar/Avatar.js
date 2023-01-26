@@ -21,7 +21,7 @@ const Avatar = ({ onPress = () => {}, size = 40, initial, backgroundColor }) => 
         }}
       >
         {initial ? (
-          <Text style={{ textTransform: 'uppercase' }} color="white">
+          <Text style={{ textTransform: 'uppercase', fontSize: size / 2 }} color="white">
             {initial}
           </Text>
         ) : (

@@ -10,6 +10,7 @@ const PinInput = ({ placeholder = '', label, error, maxPin, value, ...rest }) =>
   const { theme } = useContext(ThemeContext);
 
   const handleOnPress = () => {
+    if (inputRef.current.isFocused()) inputRef.current.blur();
     inputRef.current.focus();
   };
 
