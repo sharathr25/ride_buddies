@@ -24,11 +24,17 @@ const OTP = ({ navigation, route }) => {
 
   useEffect(() => {
     if (user) {
-      if (displayName || color)
+      if (displayName || color) {
         updateProfile({ displayName, photoURL: color })
-          .then(() => navigation.replace(screenToGo))
+          .then(() => {
+            navigation.replace(screenToGo);
+          })
           .catch((e) => console.log(e))
           .finally(() => setLoading(false));
+      } else {
+        navigation.replace(screenToGo);
+        setTimeout(() => setLoading(false), 1000);
+      }
     }
   }, [user]);
 
