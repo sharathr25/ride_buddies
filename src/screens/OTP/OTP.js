@@ -28,7 +28,7 @@ const OTP = ({ navigation, route }) => {
         updateProfile({ displayName, photoURL: color })
           .then(() => navigation.replace(screenToGo))
           .catch((e) => console.log(e))
-          .finally(() => setLoading(false), 1000);
+          .finally(() => setLoading(false));
     }
   }, [user]);
 
