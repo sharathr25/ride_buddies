@@ -38,9 +38,9 @@ const Features = () => (
       }}
     >
       <Box style={{ flex: DETAILS_FLEX }}>
-        <Text variant="subHeader">Real Time Messaging</Text>
+        <Text variant="subHeader">Real Time Events</Text>
         <Text>
-          Stay connected and informed during your road trip with our real-time message sharing
+          Stay connected and informed during your road trip with our real-time event sharing
           feature.
         </Text>
       </Box>
