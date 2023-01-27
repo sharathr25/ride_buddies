@@ -22,7 +22,7 @@ const CheckBox = ({ label = '', error, isChecked, onChange }) => {
         }}
       >
         {label && (
-          <Box style={{ flex: 0.92 }}>
+          <Box style={{ flex: 1 }}>
             <Text color="foreground" style={{ textTransform: 'capitalize', marginRight: 5 }} bold>
               {label}
             </Text>
@@ -38,7 +38,6 @@ const CheckBox = ({ label = '', error, isChecked, onChange }) => {
             borderWidth: 2,
             alignItems: 'center',
             justifyContent: 'center',
-            flex: 0.08,
           }}
         >
           {isChecked && <Icon name="check" size={15} color={theme.colors.primary} />}

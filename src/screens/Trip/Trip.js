@@ -73,8 +73,6 @@ const Trip = () => {
     );
   };
 
-  console.log(organiser);
-
   const renderExpenses = () => {
     if (expensesDataPie.length === 0)
       return (

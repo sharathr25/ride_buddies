@@ -120,30 +120,32 @@ const ExpenseForm = ({ route, navigation }) => {
 
       <Box margin="s" />
 
-      <FlatList
-        keyExtractor={(_, i) => i}
-        data={riders}
-        renderItem={({ item: r }) => (
-          <Box style={{ alignItems: 'center', flexDirection: 'row' }}>
-            <Avatar initial={r.name.charAt(0)} backgroundColor={r.color} />
-            <Box margin="xs" />
-            <Text>{r.name}</Text>
-            <Box margin="xs" />
-            {user.uid === r.uid && <Text color="success">You</Text>}
-            <Box style={{ flex: 1 }} />
-            <CheckBox
-              onChange={() => {
-                const cloned = new Set(forRiders);
-                forRiders.has(r.uid) ? cloned.delete(r.uid) : cloned.add(r.uid);
-                setForRiders(cloned);
-              }}
-              isChecked={forRiders.has(r.uid)}
-            />
-          </Box>
-        )}
-        ItemSeparatorComponent={<Box margin="s" />}
-      />
-
+      {!form.values.forAll && (
+        <FlatList
+          keyExtractor={(_, i) => i}
+          data={riders}
+          renderItem={({ item: r }) => (
+            <Box style={{ alignItems: 'center', flexDirection: 'row' }}>
+              <Avatar initial={r.name.charAt(0)} backgroundColor={r.color} />
+              <Box margin="xs" />
+              <Text>{r.name}</Text>
+              <Box margin="xs" />
+              {user.uid === r.uid && <Text color="success">You</Text>}
+              <Box style={{ flex: 1 }} />
+              <CheckBox
+                onChange={() => {
+                  const cloned = new Set(forRiders);
+                  forRiders.has(r.uid) ? cloned.delete(r.uid) : cloned.add(r.uid);
+                  setForRiders(cloned);
+                }}
+                isChecked={forRiders.has(r.uid)}
+              />
+            </Box>
+          )}
+          ItemSeparatorComponent={<Box margin="s" />}
+        />
+      )}
+      <Box style={{ flex: 1 }} />
       <Button
         title="save"
         disabled={!isValid()}
