@@ -41,7 +41,7 @@ const ExpenseForm = ({ route, navigation }) => {
     const { forAll, ...rest } = values;
     setLoading(true);
     const data = await sendDataToSocket(expense ? 'UPDATE_EXPENSE' : 'ADD_EXPENSE', {
-      expense: { ...rest, for: [...forRiders.values()], _id: expense?._id },
+      expense: { ...rest, for: [...forRiders.values()], _id: expense?._id, type: 'EXPENSE' },
       tripCode,
     });
     if ('error' in data) {

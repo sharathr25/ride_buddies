@@ -3,7 +3,14 @@ import { Circle, Svg } from 'react-native-svg';
 import Box from '../../atoms/Box';
 import Text from '../../atoms/Text';
 
-const DonutChart = ({ data, spacing = 0, size = 100, info = '', ...rest }) => {
+const DonutChart = ({
+  data,
+  spacing = 0,
+  size = 75,
+  info = '',
+  formatter = (value) => value,
+  ...rest
+}) => {
   const total = data.reduce((prev, current) => current.value + prev, 0);
   const width = size / 2;
   const center = {
@@ -15,13 +22,14 @@ const DonutChart = ({ data, spacing = 0, size = 100, info = '', ...rest }) => {
   let percentAcc = 0;
 
   return (
-    <Box style={{ alignItems: 'center', flexDirection: 'row' }}>
+    <Box>
       <Box
         style={{
           width: size,
           height: size,
           alignItems: 'center',
           justifyContent: 'center',
+          alignSelf: 'center',
         }}
       >
         <Svg viewBox={`0 0 ${width} ${width}`} {...rest}>
@@ -54,16 +62,25 @@ const DonutChart = ({ data, spacing = 0, size = 100, info = '', ...rest }) => {
             );
           })}
         </Svg>
-        <Box style={{ position: 'absolute' }}>
-          <Text bold>{total}</Text>
+        <Box style={{ position: 'absolute', alignItems: 'center' }}>
+          <Text bold>Total</Text>
+          <Text bold>{formatter(total)}</Text>
         </Box>
       </Box>
       <Box>
         {data.map(({ title, stroke, value }, i) => (
-          <Box style={{ flexDirection: 'row', alignItems: 'center' }} key={i}>
-            <Box style={{ width: 10, height: 10, backgroundColor: stroke }} />
-            <Text style={{ marginHorizontal: 5 }}>{title}</Text>
-            <Text color="success">{value}</Text>
+          <Box
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}
+            key={i}
+          >
+            <Box style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Box style={{ width: 10, height: 10, backgroundColor: stroke }} />
+              <Text style={{ marginLeft: 5 }}>{title}</Text>
+            </Box>
+            <Text bold>{formatter(value)}</Text>
           </Box>
         ))}
       </Box>

@@ -11,24 +11,33 @@ import ShareRoomCode from '../../components/molecules/ShareRoomCode';
 import useAuth from '../../hooks/useAuth';
 import { ThemeContext } from '../../ThemeContext';
 import { selectTrip } from '../../redux/slices/tripSlice';
-import { capitalize } from '../../utils/formators';
+import { capitalize, currencyFormatter } from '../../utils/formators';
 
 import NoDataIllustration from '../../images/illustrations/no-data.svg';
 import VoidIllustration from '../../images/illustrations/void.svg';
 
 const Trip = () => {
   const trip = useSelector(selectTrip);
-  const { code, name, creation, expensesGrouped, eventsGrouped, ridersMap } = trip;
+  const {
+    code,
+    name,
+    creation,
+    totalExpenditure,
+    eventsCount,
+    ridersBalance,
+    suggestedPayments,
+    ridersMap,
+  } = trip;
   const { by: organiser, on: createdOn } = creation;
   const { theme } = useContext(ThemeContext);
   const { user } = useAuth();
   const { uid } = user || {};
 
-  const expensesDataPie = expensesGrouped.map((e) => ({
-    value: e.amount,
-    stroke: ridersMap[e._id].color,
+  const expensesDataPie = Object.keys(totalExpenditure).map((uid) => ({
+    value: totalExpenditure[uid],
+    stroke: ridersMap[uid].color,
     strokeWidth: 10,
-    title: ridersMap[e._id].name,
+    title: ridersMap[uid].name,
   }));
 
   const icons = {
@@ -42,7 +51,7 @@ const Trip = () => {
   };
 
   const renderEvents = () => {
-    if (eventsGrouped.length === 0)
+    if (Object.keys(eventsCount).length === 0)
       return (
         <Box style={{ justifyContent: 'center', alignItems: 'center' }}>
           <VoidIllustration width="100%" height={100} />
@@ -53,7 +62,7 @@ const Trip = () => {
 
     return (
       <Box style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-        {eventsGrouped.map(({ _id: event, count }) => (
+        {Object.keys(eventsCount).map((event) => (
           <Box
             key={event}
             style={{
@@ -66,35 +75,68 @@ const Trip = () => {
           >
             <Icon name={icons[event]} size={16} />
             <Text style={{ marginHorizontal: 5 }}>{capitalize(event).replace('_', ' ')}</Text>
-            <Text color="success">{count}</Text>
+            <Text color="success">{eventsCount[event]}</Text>
           </Box>
         ))}
       </Box>
     );
   };
 
-  const renderExpenses = () => {
-    if (expensesDataPie.length === 0)
-      return (
-        <Box style={{ justifyContent: 'center', alignItems: 'center' }}>
-          <NoDataIllustration width="100%" height={100} />
-          <Box margin="s" />
-          <Text>No expenses</Text>
-          <Box margin="m" />
-        </Box>
-      );
+  const renderNoData = (msg) => (
+    <Box style={{ justifyContent: 'center', alignItems: 'center' }}>
+      <NoDataIllustration width="100%" height={100} />
+      <Box margin="s" />
+      <Text>{msg}</Text>
+      <Box margin="m" />
+    </Box>
+  );
 
-    return <DonutChart data={expensesDataPie} size={200} />;
+  const renderTotalExpenditure = () => {
+    if (expensesDataPie.length === 0) return renderNoData('No Expenses');
+
+    return <DonutChart data={expensesDataPie} size={200} formatter={currencyFormatter.format} />;
+  };
+
+  const renderBalance = () => {
+    if (expensesDataPie.length === 0) return renderNoData('No Balance');
+
+    return Object.keys(ridersBalance).map((uid) => (
+      <Box style={{ flexDirection: 'row', justifyContent: 'space-between' }} key={uid}>
+        <Text>{ridersMap[uid].name}</Text>
+        <Text bold>{currencyFormatter.format(ridersBalance[uid])}</Text>
+      </Box>
+    ));
+  };
+
+  const renderSuggestedPayments = () => {
+    if (expensesDataPie.length === 0) return renderNoData('No Suggested Payments');
+
+    return suggestedPayments.map(({ from, to, amount }, i) => (
+      <Box style={{ flexDirection: 'row' }} key={from + to + i}>
+        <Box style={{ flex: 0.35 }}>
+          <Text>{ridersMap[from].name}</Text>
+        </Box>
+        <Box style={{ flex: 0.05, justifyContent: 'center', alignItems: 'center' }}>
+          <Icon name="arrow-right" />
+        </Box>
+        <Box style={{ alignItems: 'flex-end', flex: 0.35 }}>
+          <Text>{ridersMap[to].name}</Text>
+        </Box>
+        <Box style={{ alignItems: 'flex-end', flex: 0.25 }}>
+          <Text bold>{currencyFormatter.format(amount)}</Text>
+        </Box>
+      </Box>
+    ));
   };
 
   return (
-    <ScrollView contentContainerStyle={{ flex: 1 }}>
+    <ScrollView contentContainerStyle={{ backgroundColor: theme.colors.background }}>
       <Box backgroundColor="background" padding="l" style={{ flex: 1 }}>
-        <Box margin="m" />
+        <Box margin="s" />
         <Text variant="header">{name}</Text>
         <ShareRoomCode code={code} />
 
-        <Box margin="m" />
+        <Box margin="s" />
 
         <Box>
           <Text variant="subHeader">Organiser</Text>
@@ -127,13 +169,20 @@ const Trip = () => {
           </Box>
         </Box>
 
-        <Box margin="m" />
+        <Box margin="s" />
 
         <Box>
-          <Text variant="subHeader">Total Expenses</Text>
+          <Text variant="subHeader">Total Expenditure</Text>
+          {renderTotalExpenditure()}
           <Box margin="xs" />
-          {renderExpenses()}
+          <Text variant="subHeader">Balance</Text>
+          {renderBalance()}
+          <Box margin="xs" />
+          <Text variant="subHeader">Suggested Payments</Text>
+          {renderSuggestedPayments()}
         </Box>
+
+        <Box margin="s" />
 
         <Box>
           <Text variant="subHeader">Overview of Events</Text>
