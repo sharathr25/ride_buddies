@@ -12,6 +12,8 @@ import { ThemeContext } from '../../ThemeContext';
 import { selectTrip } from '../../redux/slices/tripSlice';
 import { currencyFormatter } from '../../utils/formators';
 
+import Bike from '../../images/illustrations/bike.svg';
+
 const Trip = ({ navigation }) => {
   const trip = useSelector(selectTrip);
   const { code, name, creation, riders, events, numberOfExpenses, totalAmountForExpenses } = trip;
@@ -68,6 +70,7 @@ const Trip = ({ navigation }) => {
             alignItems: 'center',
             backgroundColor: `${theme.colors.foreground}40`,
             flex: 0.5,
+            overflow: 'hidden',
           }}
           padding="l"
         >
@@ -75,6 +78,18 @@ const Trip = ({ navigation }) => {
             {riders.length}
           </Text>
           <Text>Rider{riders.length === 1 ? '' : 's'}</Text>
+          <Box
+            style={{
+              width: 200,
+              height: 200,
+              position: 'absolute',
+              right: -75,
+              bottom: -50,
+              opacity: 0.5,
+            }}
+          >
+            <Bike width="100%" height="100%" />
+          </Box>
         </Box>
         <Box margin="s" />
         <Box
