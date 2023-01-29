@@ -143,7 +143,7 @@ const Events = ({ navigation }) => {
       )}
 
       <Box style={{ position: 'absolute', bottom: 20, right: 20 }}>
-        <Button leftIconName="plus" onPress={gotoCreateEventScreen} size="m" />
+        <Button rightIconName="plus" onPress={gotoCreateEventScreen} size="m" />
       </Box>
     </Box>
   );

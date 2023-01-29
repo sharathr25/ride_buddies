@@ -45,7 +45,7 @@ const Trips = ({ navigation }) => {
           Something went wrong!
         </Text>
         <Box margin="s" />
-        <Button leftIconName="refresh" size="xs" onPress={refetch} />
+        <Button rightIconName="refresh" size="xs" onPress={refetch} />
       </Box>
     );
   }
@@ -108,7 +108,7 @@ const Trips = ({ navigation }) => {
         <NoDataIllustration width="50%" height="50%" />
         <Text variant="subHeader">No Trips</Text>
         <Box margin="s" />
-        <Button leftIconName="refresh" size="xs" onPress={refetch} />
+        <Button rightIconName="refresh" size="xs" onPress={refetch} />
       </Box>
     );
 

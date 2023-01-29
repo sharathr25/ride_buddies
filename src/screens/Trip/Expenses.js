@@ -93,7 +93,7 @@ const Expenses = ({ navigation }) => {
       )}
 
       <Box style={{ position: 'absolute', bottom: 20, right: 20 }}>
-        <Button leftIconName="plus" onPress={gotoCreateExpenseScreen} size="m" />
+        <Button rightIconName="plus" onPress={gotoCreateExpenseScreen} size="m" />
       </Box>
     </Box>
   );

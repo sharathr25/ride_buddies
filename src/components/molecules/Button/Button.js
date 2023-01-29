@@ -11,7 +11,7 @@ const Button = ({
   disabled,
   color = 'primary',
   onPress,
-  leftIconName,
+  rightIconName,
   size = 'm',
   style,
   ...rest
@@ -41,9 +41,9 @@ const Button = ({
           {title}
         </Text>
       )}
-      {title && leftIconName && <Box margin="xs" />}
-      {leftIconName && (
-        <Icon name={leftIconName} color={outline ? theme.colors[color] : 'white'} size={18} />
+      {title && rightIconName && <Box margin="xs" />}
+      {rightIconName && (
+        <Icon name={rightIconName} color={outline ? theme.colors[color] : 'white'} size={18} />
       )}
     </Pressable>
   );

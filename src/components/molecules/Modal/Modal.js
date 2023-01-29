@@ -29,7 +29,7 @@ const Modal = ({ visible, hideModal = () => {}, children, header = <></> }) => {
         >
           <Button
             color="danger"
-            leftIconName="close"
+            rightIconName="close"
             size="xs"
             style={{ position: 'absolute', top: -2, right: -2, zIndex: 1 }}
             onPress={hideModal}

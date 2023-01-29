@@ -81,7 +81,7 @@ const NewTrip = () => {
               <Box style={{ position: 'absolute', right: 5, top: 10 }}>
                 <Button
                   outline
-                  leftIconName="minus"
+                  rightIconName="minus"
                   onPress={handleMinusClick(index)}
                   color="danger"
                 />
@@ -90,7 +90,7 @@ const NewTrip = () => {
           </Box>
         ))}
         <Box style={{ alignSelf: 'flex-end', marginRight: 5 }}>
-          <Button outline leftIconName="plus" onPress={handlePlusClick} />
+          <Button outline rightIconName="plus" onPress={handlePlusClick} />
         </Box>
       </ScrollView>
       <Box margin="s" />

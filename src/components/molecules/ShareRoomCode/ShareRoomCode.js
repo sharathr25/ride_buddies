@@ -16,7 +16,7 @@ const ShareRoomCode = ({ code }) => {
     <Box style={{ flexDirection: 'row', alignItems: 'center' }}>
       <Text>{code}</Text>
       <Box margin="xs" />
-      <Button leftIconName="share-variant" outline size="xs" onPress={share} />
+      <Button rightIconName="share-variant" outline size="xs" onPress={share} />
     </Box>
   );
 };

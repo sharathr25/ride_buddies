@@ -48,12 +48,12 @@ const Profile = ({ navigation }) => {
           <Text>{formatPhoneNumber(phoneNumber)}</Text>
         </Box>
         <Box margin="xs" />
-        <Button title="Edit Profile" onPress={handleEditProfileClick} leftIconName="pencil" />
+        <Button title="Edit Profile" onPress={handleEditProfileClick} rightIconName="pencil" />
         <Box margin="m" />
         <Button
           title="Log out"
           onPress={handleLogOutClick}
-          leftIconName="logout"
+          rightIconName="logout"
           outline
           color="danger"
         />

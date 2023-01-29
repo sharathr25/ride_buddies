@@ -18,11 +18,13 @@ import Expense from './screens/Expense';
 import ExpenseForm from './screens/ExpenseForm';
 import EventForm from './screens/EventForm';
 import Event from './screens/Event';
+import TripExpensesDetails from './screens/TripExpensesDetails';
 import Header from './components/organisms/Header';
 import { theme, darkTheme } from './theme';
 import { ThemeContext } from './ThemeContext';
 import useAuth from './hooks/useAuth';
 import store from './redux/store';
+import TripEventsDetails from './screens/TripEventsDetails';
 
 enableLatestRenderer();
 const Stack = createNativeStackNavigator();
@@ -64,6 +66,16 @@ const App = () => {
               <Stack.Screen name="Profile" component={Profile} />
               <Stack.Screen name="EditProfile" component={EditProfile} />
               <Stack.Screen name="Trip" component={Trip} options={{ headerTransparent: true }} />
+              <Stack.Screen
+                name="TripExpensesDetails"
+                component={TripExpensesDetails}
+                options={{ headerTransparent: true }}
+              />
+              <Stack.Screen
+                name="TripEventsDetails"
+                component={TripEventsDetails}
+                options={{ headerTransparent: true }}
+              />
               <Stack.Screen name="ExpenseForm" component={ExpenseForm} />
               <Stack.Screen name="Expense" component={Expense} />
               <Stack.Screen name="EventForm" component={EventForm} />
