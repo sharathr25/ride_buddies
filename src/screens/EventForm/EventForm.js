@@ -9,6 +9,7 @@ import { EVENT_TYPES } from '../../constants';
 import { sendDataToSocket } from '../../api/socket';
 import ApiStatusModal from '../../components/molecules/ApiStatusModal';
 import { selectEvents } from '../../redux/slices/tripSlice';
+import { selectLocation } from '../../redux/slices/locationSlice';
 
 const EventForm = ({ navigation, route }) => {
   const { eventId } = route.params || {};
@@ -16,9 +17,10 @@ const EventForm = ({ navigation, route }) => {
   const [err, setErr] = useState(null);
   const [msg, setMsg] = useState(null);
 
-  const { tripCode, events } = useSelector((state) => ({
+  const { tripCode, events, myLocation } = useSelector((state) => ({
     tripCode: state.trip.code,
     events: selectEvents(state),
+    myLocation: selectLocation(state),
   }));
 
   const event = events.find((e) => e._id === eventId) || {};
@@ -35,7 +37,12 @@ const EventForm = ({ navigation, route }) => {
       setLoading(true);
       const data = await sendDataToSocket(eventId ? 'UPDATE_EVENT' : 'ADD_EVENT', {
         tripCode,
-        event: { type, title: type === EVENT_TYPES.CUSTOM ? title : '', _id: event._id },
+        event: {
+          type,
+          title: type === EVENT_TYPES.CUSTOM ? title : '',
+          _id: event._id,
+          location: myLocation,
+        },
       });
       setMsg(data.msg);
     } catch (error) {

@@ -66,6 +66,9 @@ const TripTabs = ({ route }) => {
   };
 
   const onLocationErr = (error) => {
+    if (error.code === 2) {
+      dispatch(resetLocation());
+    }
     console.log(error.code, error.message);
   };
 

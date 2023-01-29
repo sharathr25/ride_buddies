@@ -72,6 +72,7 @@ const EditProfile = ({ navigation }) => {
           onChangeText={setForm('displayName')}
           onBlur={validate}
           error={form.errors.displayName}
+          hint="The new display name will not reflect any trips that you have joined in the past."
         />
         <Box margin="xs" />
         <ColorPicker

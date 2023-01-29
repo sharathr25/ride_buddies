@@ -13,6 +13,7 @@ import ApiStatusModal from '../../components/molecules/ApiStatusModal';
 import useForm from '../../hooks/useForm';
 import { sendDataToSocket } from '../../api/socket';
 import { selectExpenses, selectRiders } from '../../redux/slices/tripSlice';
+import { selectLocation } from '../../redux/slices/locationSlice';
 import useAuth from '../../hooks/useAuth';
 
 const ExpenseForm = ({ route, navigation }) => {
@@ -20,9 +21,10 @@ const ExpenseForm = ({ route, navigation }) => {
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState(null);
   const [msg, setMsg] = useState(null);
-  const { riders, expenses } = useSelector((state) => ({
+  const { riders, expenses, myLocation } = useSelector((state) => ({
     riders: selectRiders(state),
     expenses: selectExpenses(state),
+    myLocation: selectLocation(state),
   }));
   const { user } = useAuth();
   const expense = expenses.find((e) => e._id === expenseId);
@@ -41,7 +43,13 @@ const ExpenseForm = ({ route, navigation }) => {
     const { forAll, ...rest } = values;
     setLoading(true);
     const data = await sendDataToSocket(expense ? 'UPDATE_EXPENSE' : 'ADD_EXPENSE', {
-      expense: { ...rest, for: [...forRiders.values()], _id: expense?._id, type: 'EXPENSE' },
+      expense: {
+        ...rest,
+        for: [...forRiders.values()],
+        _id: expense?._id,
+        type: expense?.type || 'EXPENSE',
+        location: myLocation,
+      },
       tripCode,
     });
     if ('error' in data) {
