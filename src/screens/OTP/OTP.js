@@ -18,12 +18,13 @@ const OTP = ({ navigation, route }) => {
   const { isKeyboardShown } = useKeyboard();
   const { user } = useAuth();
   const { params } = route;
-  const { mobileNumber, displayName, color, screenToGo } = params;
+  const { mobileNumber, displayName, color, screenToGo, goToScreenAfterSubmit } = params;
   const [loading, setLoading] = useState(false);
   const [otpErr, setOtpErr] = useState(null);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
-    if (user) {
+    if (user && ((goToScreenAfterSubmit && isSubmitted) || !goToScreenAfterSubmit)) {
       if (displayName || color) {
         updateProfile({ displayName, photoURL: color })
           .then(() => {
@@ -36,7 +37,7 @@ const OTP = ({ navigation, route }) => {
         setTimeout(() => setLoading(false), 1000);
       }
     }
-  }, [user]);
+  }, [user, goToScreenAfterSubmit, isSubmitted]);
 
   const onValidate = ({ otp }) => {
     const errors = {};
@@ -48,6 +49,7 @@ const OTP = ({ navigation, route }) => {
     try {
       setLoading(true);
       await validateOTP(otp);
+      setIsSubmitted(true);
     } catch (error) {
       setLoading(false);
       setOtpErr('Invalid OTP. Try again');

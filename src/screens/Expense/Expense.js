@@ -52,23 +52,23 @@ const Expense = ({ navigation, route }) => {
   const renderExpense = () => {
     if (!expense) return null;
 
-    const { title, amount, creation, by, for: forRiders } = expense;
+    const { to, amount, creation, from, for: forRiders, type } = expense;
     const expenseCreatedOn = new Date(creation.on);
 
     return (
       <>
-        <Text variant="header">{title}</Text>
-        <Text color="danger" variant="subHeader">
+        <Text variant="header">{type === 'SETTLEMENT' ? ridersMap[to].name : to}</Text>
+        <Text color={type === 'SETTLEMENT' ? 'success' : 'danger'} variant="subHeader">
           {currencyFormatter.format(amount)}
         </Text>
         <Box margin="s" />
         <Box style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <Text bold>Created by</Text>
-          <Text>{ridersMap[by]?.name}</Text>
+          <Text>{ridersMap[creation.by]?.name}</Text>
         </Box>
         <Box style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <Text bold>Paid by</Text>
-          <Text>{ridersMap[by]?.name}</Text>
+          <Text>{ridersMap[from]?.name}</Text>
         </Box>
         <Box style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <Text bold>On</Text>

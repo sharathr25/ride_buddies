@@ -16,7 +16,7 @@ import { selectRidersMap } from '../../redux/slices/tripSlice';
 import ErrorIllustration from '../../images/illustrations/error.svg';
 import NoDataIllustration from '../../images/illustrations/no-data.svg';
 
-const TripExpensesDetails = () => {
+const TripExpensesDetails = ({ navigation }) => {
   const { tripCode, ridersMap } = useSelector((state) => ({
     tripCode: state.trip.code,
     ridersMap: selectRidersMap(state),
@@ -28,18 +28,6 @@ const TripExpensesDetails = () => {
   });
 
   const { theme } = useContext(ThemeContext);
-
-  if (!data)
-    return (
-      <Box
-        backgroundColor="background"
-        padding="l"
-        style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
-      >
-        <NoDataIllustration width="50%" height="50%" />
-        <Text>No Expenses</Text>
-      </Box>
-    );
 
   if (loading)
     return (
@@ -64,6 +52,18 @@ const TripExpensesDetails = () => {
         </Text>
         <Box margin="s" />
         <Button rightIconName="refresh" size="xs" onPress={refetch} />
+      </Box>
+    );
+
+  if (!data)
+    return (
+      <Box
+        backgroundColor="background"
+        padding="l"
+        style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
+      >
+        <NoDataIllustration width="50%" height="50%" />
+        <Text>No Expenses</Text>
       </Box>
     );
 
@@ -102,19 +102,13 @@ const TripExpensesDetails = () => {
       );
 
     return suggestedPayments.map(({ from, to, amount }, i) => (
-      <Box style={{ flexDirection: 'row' }} key={from + to + i}>
-        <Box style={{ flex: 0.35 }}>
-          <Text>{ridersMap[from].name}</Text>
-        </Box>
-        <Box style={{ flex: 0.05, justifyContent: 'center', alignItems: 'center' }}>
-          <Icon name="arrow-right" />
-        </Box>
-        <Box style={{ alignItems: 'flex-end', flex: 0.35 }}>
-          <Text>{ridersMap[to].name}</Text>
-        </Box>
-        <Box style={{ alignItems: 'flex-end', flex: 0.25 }}>
-          <Text bold>{currencyFormatter.format(amount)}</Text>
-        </Box>
+      <Box style={{ flexDirection: 'row', alignItems: 'center' }} key={from + to + i}>
+        <Text>{ridersMap[from].name}</Text>
+        <Icon name="menu-right-outline" size={20} />
+        <Text>{ridersMap[to].name}</Text>
+        <Text bold style={{ marginLeft: 'auto' }}>
+          {currencyFormatter.format(amount)}
+        </Text>
       </Box>
     ));
   };
@@ -124,7 +118,6 @@ const TripExpensesDetails = () => {
       <Box backgroundColor="background" padding="l" style={{ flex: 1 }}>
         <Box margin="m" />
         <Text variant="subHeader">Total Expenditure</Text>
-        <Box margin="m" />
         {renderTotalExpenditure()}
         <Box margin="m" />
         <Text variant="subHeader">Balance</Text>
@@ -132,6 +125,15 @@ const TripExpensesDetails = () => {
         <Box margin="m" />
         <Text variant="subHeader">Suggested Payments</Text>
         {renderSuggestedPayments()}
+        <Box margin="xs" />
+        {suggestedPayments.length ? (
+          <Box style={{ alignItems: 'flex-end' }}>
+            <Button
+              title="settle up"
+              onPress={() => navigation.push('SettleUp', { suggestedPayments })}
+            />
+          </Box>
+        ) : null}
       </Box>
     </ScrollView>
   );

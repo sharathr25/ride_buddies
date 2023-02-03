@@ -34,6 +34,7 @@ const EditProfile = ({ navigation }) => {
         displayName,
         color,
         screenToGo: 'Profile',
+        goToScreenAfterSubmit: true,
       });
     } catch (error) {
       console.log(error);
@@ -42,7 +43,7 @@ const EditProfile = ({ navigation }) => {
   };
 
   const { form, setForm, isValid, validate, handleSubmit } = useForm({
-    initialValues: { mobileNumber: phoneNumber.slice(-10), displayName, color: photoURL },
+    initialValues: { mobileNumber: phoneNumber?.slice(-10) || '', displayName, color: photoURL },
     onValidate,
     onSubmit,
   });

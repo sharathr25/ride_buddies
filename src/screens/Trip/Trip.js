@@ -12,9 +12,6 @@ import { ThemeContext } from '../../ThemeContext';
 import { selectTrip } from '../../redux/slices/tripSlice';
 import { currencyFormatter } from '../../utils/formators';
 
-import Bike from '../../images/illustrations/bike.svg';
-import Receipt from '../../images/illustrations/receipt.svg';
-
 const Trip = ({ navigation }) => {
   const trip = useSelector(selectTrip);
   const { code, name, creation, riders, events, numberOfExpenses, totalAmountForExpenses } = trip;

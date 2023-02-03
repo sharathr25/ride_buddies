@@ -25,6 +25,7 @@ import { ThemeContext } from './ThemeContext';
 import useAuth from './hooks/useAuth';
 import store from './redux/store';
 import TripEventsDetails from './screens/TripEventsDetails';
+import SettleUp from './screens/SettleUp';
 
 enableLatestRenderer();
 const Stack = createNativeStackNavigator();
@@ -69,6 +70,11 @@ const App = () => {
               <Stack.Screen
                 name="TripExpensesDetails"
                 component={TripExpensesDetails}
+                options={{ headerTransparent: true }}
+              />
+              <Stack.Screen
+                name="SettleUp"
+                component={SettleUp}
                 options={{ headerTransparent: true }}
               />
               <Stack.Screen

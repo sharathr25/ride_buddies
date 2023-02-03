@@ -113,6 +113,10 @@ const TripTabs = ({ route }) => {
         dispatch(addExpense(expense));
       });
 
+      listenEvent('SETTLEMENT_ADDED', (expense) => {
+        dispatch(addExpense(expense));
+      });
+
       listenEvent('EXPENSE_UPDATED', (expense) => {
         dispatch(updateExpense(expense));
       });

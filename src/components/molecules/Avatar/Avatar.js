@@ -14,7 +14,7 @@ const Avatar = ({ onPress = () => {}, size = 40, initial, backgroundColor }) => 
         style={{
           height: size,
           width: size,
-          borderRadius: 10,
+          borderRadius: size / 2,
           justifyContent: 'center',
           alignItems: 'center',
           backgroundColor: backgroundColor || theme.colors.primary,

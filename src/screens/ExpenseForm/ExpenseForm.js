@@ -30,10 +30,10 @@ const ExpenseForm = ({ route, navigation }) => {
   const expense = expenses.find((e) => e._id === expenseId);
   const [forRiders, setForRiders] = useState(new Set(expense ? expense.for : []));
 
-  const onValidate = ({ title, amount }) => {
+  const onValidate = ({ to, amount }) => {
     const errors = {};
 
-    if (title === '') errors.title = 'Title is required';
+    if (to === '') errors.to = 'Title is required';
     if (amount === '') errors.amount = 'Amount is required';
 
     return errors;
@@ -62,9 +62,9 @@ const ExpenseForm = ({ route, navigation }) => {
 
   const { form, isValid, handleSubmit, setForm, validate } = useForm({
     initialValues: {
-      title: expense?.title || '',
+      to: expense?.to || '',
       amount: expense?.amount ? `${expense?.amount}` : '',
-      by: expense?.by || riders[0].uid,
+      from: expense?.from || riders[0].uid,
       forAll: forRiders.size ? false : true,
     },
     onValidate,
@@ -97,18 +97,18 @@ const ExpenseForm = ({ route, navigation }) => {
       <Box margin="s" />
 
       <TextInput
-        label="title"
-        value={form.values.title}
-        error={form.errors.title}
-        onChangeText={setForm('title')}
+        label="Title"
+        value={form.values.to}
+        error={form.errors.to}
+        onChangeText={setForm('to')}
         onBlur={validate}
       />
 
       <Picker
         options={riders.map((r) => ({ value: r.uid, label: r.name }))}
-        label="by"
-        selectedValue={form.values.by}
-        onValueChange={setForm('by')}
+        label="from"
+        selectedValue={form.values.from}
+        onValueChange={setForm('from')}
       />
 
       <Box margin="s" />

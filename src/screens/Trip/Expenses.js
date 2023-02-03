@@ -37,6 +37,8 @@ const Expenses = ({ navigation }) => {
           flex: 1,
           alignItems: 'center',
           padding: theme.spacing.s,
+          borderColor: theme.colors.success,
+          borderWidth: expense.type === 'SETTLEMENT' ? 2 : 0,
         }}
         onPress={gotoExpenseScreen.bind(null, expense._id)}
       >
@@ -54,11 +56,15 @@ const Expenses = ({ navigation }) => {
           style={{ width: 1, backgroundColor: `${theme.colors.foreground}40`, height: '75%' }}
         />
         <Box style={{ flex: 0.63 }}>
-          <Text variant="subHeader">{expense.title}</Text>
-          <Text variant="info">{ridersMap[expense.by].name} paid</Text>
+          <Text variant="subHeader">
+            {expense.type === 'SETTLEMENT' ? ridersMap[expense.to].name : expense.to}
+          </Text>
+          <Text variant="info">{ridersMap[expense.from].name} paid</Text>
         </Box>
         <Box style={{ flex: 0.25, alignItems: 'flex-end' }}>
-          <Text color="danger">{currencyFormatter.format(expense.amount)}</Text>
+          <Text color={expense.type === 'SETTLEMENT' ? 'success' : 'danger'}>
+            {currencyFormatter.format(expense.amount)}
+          </Text>
         </Box>
       </Pressable>
     );
