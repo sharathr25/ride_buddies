@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 import { FlatList, Pressable } from 'react-native';
 import { useSelector } from 'react-redux';
 import { format } from 'date-fns';
@@ -35,6 +35,7 @@ const Events = ({ navigation }) => {
     ridersMap: selectRidersMap(state),
   }));
   const { theme } = useContext(ThemeContext);
+  const flatList = useRef(null);
 
   const gotoCreateEventScreen = () => {
     navigation.push('EventForm');
@@ -125,6 +126,7 @@ const Events = ({ navigation }) => {
         </Box>
       ) : (
         <FlatList
+          ref={flatList}
           initialScrollIndex={events.length - 1}
           data={events}
           keyExtractor={(item) => item.on}
@@ -132,13 +134,19 @@ const Events = ({ navigation }) => {
           ItemSeparatorComponent={<Box margin="s" />}
           ListHeaderComponent={() => (
             <Text
-              variant="subHeader"
+              variant="header"
               style={{ marginBottom: 5, backgroundColor: theme.colors.background }}
             >
               Events
             </Text>
           )}
           stickyHeaderIndices={[0]}
+          onScrollToIndexFailed={(info) => {
+            const wait = new Promise((resolve) => setTimeout(resolve, 500));
+            wait.then(() => {
+              flatList.current?.scrollToIndex({ index: info.index, animated: true });
+            });
+          }}
         />
       )}
 

@@ -91,6 +91,8 @@ export const sendDataToSocket = (eventName, data) => {
 };
 
 export const listenEvent = (eventName, callBack) => {
-  console.log(eventName);
-  socket.on(eventName, callBack);
+  socket.on(eventName, (data) => {
+    console.log(`Got event ${eventName}`);
+    callBack(data);
+  });
 };

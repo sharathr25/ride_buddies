@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 import { FlatList, Pressable } from 'react-native';
 import { useSelector } from 'react-redux';
 import format from 'date-fns/format';
@@ -18,6 +18,7 @@ const Expenses = ({ navigation }) => {
     ridersMap: selectRidersMap(state),
   }));
   const { theme } = useContext(ThemeContext);
+  const flatlist = useRef(null);
 
   const gotoCreateExpenseScreen = () => {
     navigation.push('ExpenseForm', { tripCode });
@@ -84,13 +85,19 @@ const Expenses = ({ navigation }) => {
           ItemSeparatorComponent={<Box margin="s" />}
           ListHeaderComponent={() => (
             <Text
-              variant="subHeader"
+              variant="header"
               style={{ marginBottom: 5, backgroundColor: theme.colors.background }}
             >
               Expenses
             </Text>
           )}
           stickyHeaderIndices={[0]}
+          onScrollToIndexFailed={(info) => {
+            const wait = new Promise((resolve) => setTimeout(resolve, 500));
+            wait.then(() => {
+              flatlist.current?.scrollToIndex({ index: info.index, animated: true });
+            });
+          }}
           data={expenses}
           keyExtractor={(item) => item._id}
           renderItem={renderExpense}

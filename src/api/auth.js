@@ -20,7 +20,6 @@ export const signOut = async () => {
 };
 
 export const updateProfile = async ({ displayName, photoURL }) => {
-  console.log(displayName, photoURL);
   return await auth().currentUser.updateProfile({ displayName, photoURL });
 };
 

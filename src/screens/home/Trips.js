@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 import { FlatList, Pressable } from 'react-native';
 import format from 'date-fns/format';
 import Box from '../../components/atoms/Box';
@@ -23,6 +23,7 @@ const Trips = ({ navigation }) => {
     refetch,
   } = useService({ initialData: [], service: getMyTrips });
   const { theme } = useContext(ThemeContext);
+  const flatlist = useRef(null);
 
   if (loading)
     return (
@@ -121,13 +122,19 @@ const Trips = ({ navigation }) => {
         ItemSeparatorComponent={<Box margin="s" />}
         ListHeaderComponent={
           <Text
-            variant="subHeader"
+            variant="header"
             style={{ marginBottom: 5, backgroundColor: theme.colors.background }}
           >
             Trips
           </Text>
         }
         stickyHeaderIndices={[0]}
+        onScrollToIndexFailed={(info) => {
+          const wait = new Promise((resolve) => setTimeout(resolve, 500));
+          wait.then(() => {
+            flatlist.current?.scrollToIndex({ index: info.index, animated: true });
+          });
+        }}
       />
     </Box>
   );

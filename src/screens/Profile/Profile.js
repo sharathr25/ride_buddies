@@ -1,16 +1,13 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { signOut } from '../../api/auth';
 import Box from '../../components/atoms/Box';
-import Icon from '../../components/atoms/Icon';
 import Text from '../../components/atoms/Text';
 import Avatar from '../../components/molecules/Avatar';
 import Button from '../../components/molecules/Button';
 import useAuth from '../../hooks/useAuth';
-import { ThemeContext } from '../../ThemeContext';
 import { formatPhoneNumber } from '../../utils/formators';
 
 const Profile = ({ navigation }) => {
-  const { theme } = useContext(ThemeContext);
   const { user } = useAuth();
   const { displayName, phoneNumber, photoURL } = user || {};
   const initial = displayName ? displayName.charAt(0) : '';
@@ -28,28 +25,19 @@ const Profile = ({ navigation }) => {
   }, [user]);
 
   return (
-    <Box
-      backgroundColor="background"
-      padding="xl"
-      style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
-    >
-      <Avatar initial={initial} size={100} backgroundColor={photoURL} />
-      <Text variant="header">{displayName}</Text>
-      <Box style={{ flex: 0.5 }} padding="s">
-        <Box
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'flex-start',
-          }}
-        >
-          <Icon name="cellphone" size={20} color={theme.colors.foreground} />
-          <Box margin="s" />
-          <Text>{formatPhoneNumber(phoneNumber)}</Text>
-        </Box>
-        <Box margin="xs" />
+    <Box backgroundColor="background" padding="l" style={{ flex: 1 }}>
+      <Text variant="header">Profile</Text>
+      <Box margin="m" />
+
+      <Box style={{ alignItems: 'center' }}>
+        <Avatar initial={initial} size={100} backgroundColor={photoURL} />
+        <Text variant="subHeader">{displayName}</Text>
+        <Text>{formatPhoneNumber(phoneNumber)}</Text>
+        <Box margin="s" />
         <Button title="Edit Profile" onPress={handleEditProfileClick} rightIconName="pencil" />
-        <Box margin="m" />
+      </Box>
+
+      <Box style={{ alignSelf: 'flex-start', marginTop: 'auto' }}>
         <Button
           title="Log out"
           onPress={handleLogOutClick}

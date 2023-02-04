@@ -95,7 +95,7 @@ const TripEventsDetails = () => {
   return (
     <Box backgroundColor="background" padding="l" style={{ flex: 1 }}>
       <Box margin="m" />
-      <Text variant="subHeader">Number of diffrent events</Text>
+      <Text variant="subHeader">Number of different events</Text>
       <Box margin="xs" />
       {Object.keys(eventsCount).map((event) => {
         const Illustration = illustrations[event] || <></>;

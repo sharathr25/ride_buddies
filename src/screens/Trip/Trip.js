@@ -112,7 +112,7 @@ const Trip = ({ navigation }) => {
           <Text>Total Amount</Text>
           <Text color="link">
             View in Detail
-            <Icon name="arrow-right" size={16} color={theme.colors.link} />
+            <Icon name="chevron-right" size={16} color={theme.colors.link} />
           </Text>
         </Pressable>
         <Box margin="s" />
@@ -132,7 +132,7 @@ const Trip = ({ navigation }) => {
           <Text>Event{events.length === 1 ? '' : 's'}</Text>
           <Text color="link">
             View in Detail
-            <Icon name="arrow-right" size={16} color={theme.colors.link} />
+            <Icon name="chevron-right" size={16} color={theme.colors.link} />
           </Text>
         </Pressable>
       </Box>

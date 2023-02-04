@@ -32,7 +32,7 @@ const Riders = () => {
         keyExtractor={(item) => item.uid}
         renderItem={renderRider}
         ListHeaderComponent={() => (
-          <Text variant="subHeader" style={{ marginBottom: 5 }}>
+          <Text variant="header" style={{ marginBottom: 5 }}>
             Riders
           </Text>
         )}
