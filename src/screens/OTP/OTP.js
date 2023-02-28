@@ -18,15 +18,15 @@ const OTP = ({ navigation, route }) => {
   const { isKeyboardShown } = useKeyboard();
   const { user } = useAuth();
   const { params } = route;
-  const { mobileNumber, displayName, color, screenToGo, goToScreenAfterSubmit } = params;
+  const { mobileNumber, displayName, screenToGo, goToScreenAfterSubmit } = params;
   const [loading, setLoading] = useState(false);
   const [otpErr, setOtpErr] = useState(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
     if (user && ((goToScreenAfterSubmit && isSubmitted) || !goToScreenAfterSubmit)) {
-      if (displayName || color) {
-        updateProfile({ displayName, photoURL: color })
+      if (displayName) {
+        updateProfile({ displayName })
           .then(() => {
             navigation.replace(screenToGo);
           })

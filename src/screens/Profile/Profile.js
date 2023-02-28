@@ -12,10 +12,6 @@ const Profile = ({ navigation }) => {
   const { displayName, phoneNumber, photoURL } = user || {};
   const initial = displayName ? displayName.charAt(0) : '';
 
-  const handleEditProfileClick = () => {
-    navigation.push('EditProfile');
-  };
-
   const handleLogOutClick = async () => {
     await signOut();
   };
@@ -34,10 +30,6 @@ const Profile = ({ navigation }) => {
         <Text variant="subHeader">{displayName}</Text>
         <Text>{formatPhoneNumber(phoneNumber)}</Text>
         <Box margin="s" />
-        <Button title="Edit Profile" onPress={handleEditProfileClick} rightIconName="pencil" />
-      </Box>
-
-      <Box style={{ alignSelf: 'flex-start', marginTop: 'auto' }}>
         <Button
           title="Log out"
           onPress={handleLogOutClick}

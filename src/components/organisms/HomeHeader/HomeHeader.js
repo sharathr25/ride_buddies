@@ -6,7 +6,7 @@ import useAuth from '../../../hooks/useAuth';
 
 const Header = ({ navigation }) => {
   const { user } = useAuth();
-  const { displayName, photoURL } = user || {};
+  const { displayName } = user || {};
   const { theme } = useContext(ThemeContext);
   const initial = displayName ? displayName.charAt(0) : '';
 
@@ -21,13 +21,7 @@ const Header = ({ navigation }) => {
         backgroundColor: theme.colors.background,
       }}
     >
-      {user && (
-        <Avatar
-          onPress={() => navigation.push('Profile')}
-          initial={initial}
-          backgroundColor={photoURL}
-        />
-      )}
+      {user && <Avatar onPress={() => navigation.push('Profile')} initial={initial} />}
     </Box>
   );
 };

@@ -6,7 +6,6 @@ import Button from '../../components/molecules/Button';
 import Text from '../../components/atoms/Text';
 import TextInput from '../../components/molecules/TextInput';
 import CheckBox from '../../components/molecules/CheckBox';
-import ColorPicker from '../../components/molecules/ColorPicker';
 import ApiStatusModal from '../../components/molecules/ApiStatusModal';
 import useForm from '../../hooks/useForm';
 import { validateDisplayName, validateMobileNumber } from '../../utils/validators';
@@ -29,7 +28,7 @@ const SignUp = ({ navigation }) => {
     return errors;
   };
 
-  const onSubmit = async ({ mobileNumber, displayName, color }) => {
+  const onSubmit = async ({ mobileNumber, displayName }) => {
     setLoading(true);
     const mobileNumberWithCountryCode = `${INDIA_COUNTRY_CODE}${mobileNumber}`;
     try {
@@ -42,7 +41,6 @@ const SignUp = ({ navigation }) => {
         navigation.push('OTP', {
           mobileNumber: mobileNumberWithCountryCode,
           displayName,
-          color,
           screenToGo: 'HomeTabs',
         });
         setTimeout(() => setLoading(false), 1000);
@@ -57,7 +55,6 @@ const SignUp = ({ navigation }) => {
     initialValues: {
       mobileNumber: '',
       displayName: '',
-      color: '',
       termsAndPrivacyPolicyChecked: false,
     },
     onValidate,
@@ -66,7 +63,11 @@ const SignUp = ({ navigation }) => {
 
   return (
     <ScrollView contentContainerStyle={{ flex: 1 }}>
-      <Box backgroundColor="background" padding="xl" style={{ flex: 1 }}>
+      <Box
+        backgroundColor="background"
+        padding="xl"
+        style={{ flex: 1, justifyContent: 'flex-end' }}
+      >
         <ApiStatusModal
           loading={loading}
           error={signUpErr}
@@ -90,13 +91,6 @@ const SignUp = ({ navigation }) => {
           onChangeText={setForm('displayName')}
           onBlur={validate}
           error={form.errors.displayName}
-        />
-        <Box margin="xs" />
-        <ColorPicker
-          onSelect={setForm('color')}
-          label="Your favourite color"
-          hint="We will choose a random color if you don't choose"
-          value={form.values.color}
         />
         <Box margin="xs" />
         <CheckBox
