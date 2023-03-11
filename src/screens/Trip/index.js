@@ -107,14 +107,20 @@ const TripTabs = ({ route }) => {
       await connectSocket();
       const response = await joinTrip(code);
 
-      dispatch(set(response));
+      dispatch(
+        set({
+          ...response,
+          events: response.events.map((e) => ({ ...e, seen: true })),
+          expenses: response.expenses.map((e) => ({ ...e, seen: true })),
+        })
+      );
 
       listenEvent('EXPENSE_ADDED', (expense) => {
-        dispatch(addExpense(expense));
+        dispatch(addExpense({ ...expense, seen: false }));
       });
 
       listenEvent('SETTLEMENT_ADDED', (expense) => {
-        dispatch(addExpense(expense));
+        dispatch(addExpense({ ...expense, seen: false }));
       });
 
       listenEvent('EXPENSE_UPDATED', (expense) => {
@@ -126,7 +132,7 @@ const TripTabs = ({ route }) => {
       });
 
       listenEvent('EVENT_ADDED', (event) => {
-        dispatch(addEvent(event));
+        dispatch(addEvent({ ...event, seen: false }));
       });
 
       listenEvent('EVENT_UPDATED', (event) => {
@@ -194,13 +200,34 @@ const TripTabs = ({ route }) => {
       </Box>
     );
 
+  const isThereAUnseenEvent = trip.events.some((e) => !e.seen);
+  const isThereAUnseenExpense = trip.expenses.some((e) => !e.seen);
+  const routesToShowBubble = {
+    Expences: isThereAUnseenExpense,
+    Events: isThereAUnseenEvent,
+  };
+
   return (
     <Tab.Navigator
       initialRouteName="Home"
       screenOptions={({ route }) => {
         return {
           tabBarIcon: ({ color, size }) => (
-            <Icon name={ICONS_FOR_ROUTES[route.name] || 'minus'} size={size} color={color} />
+            <Box>
+              <Icon name={ICONS_FOR_ROUTES[route.name] || 'minus'} size={size} color={color} />
+              {routesToShowBubble[route.name] && (
+                <Box
+                  style={{
+                    position: 'absolute',
+                    width: 7.5,
+                    height: 7.5,
+                    backgroundColor: 'red',
+                    borderRadius: 5,
+                    right: 0,
+                  }}
+                />
+              )}
+            </Box>
           ),
           tabBarActiveTintColor: theme.colors.primary,
           tabBarInactiveTintColor: theme.colors.darkGray,

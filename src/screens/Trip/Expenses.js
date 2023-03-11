@@ -1,15 +1,24 @@
-import React, { useContext, useRef } from 'react';
+import React, { useCallback, useContext, useRef } from 'react';
 import { FlatList, Pressable } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import format from 'date-fns/format';
 import Box from '../../components/atoms/Box';
 import Text from '../../components/atoms/Text';
 import Button from '../../components/molecules/Button';
-import { selectExpenses, selectRidersMap } from '../../redux/slices/tripSlice';
+import {
+  selectExpenses,
+  selectRidersMap,
+  updateExpensesAsSeen,
+} from '../../redux/slices/tripSlice';
 import { ThemeContext } from '../../ThemeContext';
 import { currencyFormatter } from '../../utils/formators';
 
 import NoDataIllustration from '../../images/illustrations/no-data.svg';
+
+const viewabilityConfig = {
+  itemVisiblePercentThreshold: 100,
+  minimumViewTime: 2000,
+};
 
 const Expenses = ({ navigation }) => {
   const { expenses, tripCode, ridersMap } = useSelector((state) => ({
@@ -19,6 +28,7 @@ const Expenses = ({ navigation }) => {
   }));
   const { theme } = useContext(ThemeContext);
   const flatlist = useRef(null);
+  const dispatch = useDispatch();
 
   const gotoCreateExpenseScreen = () => {
     navigation.push('ExpenseForm', { tripCode });
@@ -43,6 +53,19 @@ const Expenses = ({ navigation }) => {
         }}
         onPress={gotoExpenseScreen.bind(null, expense._id)}
       >
+        {!expense.seen && (
+          <Text
+            style={{
+              position: 'absolute',
+              right: 0,
+              top: 0,
+              paddingHorizontal: 5,
+              backgroundColor: theme.colors.success,
+            }}
+          >
+            New
+          </Text>
+        )}
         <Box style={{ flex: 0.12 }}>
           <Text>
             {format(expenseCreatedOn, 'd')}
@@ -70,6 +93,10 @@ const Expenses = ({ navigation }) => {
       </Pressable>
     );
   };
+
+  const onViewableItemsChanged = useCallback((info) => {
+    dispatch(updateExpensesAsSeen(info.viewableItems.map((vi) => vi.item._id)));
+  }, []);
 
   return (
     <Box backgroundColor="background" padding="l" style={{ flex: 1 }}>
@@ -102,6 +129,8 @@ const Expenses = ({ navigation }) => {
           keyExtractor={(item) => item._id}
           renderItem={renderExpense}
           style={{ marginBottom: 30 }}
+          viewabilityConfig={viewabilityConfig}
+          onViewableItemsChanged={onViewableItemsChanged}
         />
       )}
 

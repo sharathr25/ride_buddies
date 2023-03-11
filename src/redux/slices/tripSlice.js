@@ -11,6 +11,16 @@ const tripSlice = createSlice({
         e._id === action.payload._id ? { ...e, ...action.payload } : e
       ),
     }),
+    updateExpensesAsSeen: (state, action) => ({
+      ...state,
+      expenses: state.expenses.map((e) =>
+        action.payload.includes(e._id) ? { ...e, seen: true } : e
+      ),
+    }),
+    updateEventsAsSeen: (state, action) => ({
+      ...state,
+      events: state.events.map((e) => (action.payload.includes(e._id) ? { ...e, seen: true } : e)),
+    }),
     removeExpense: (state, action) => ({
       ...state,
       expenses: state.expenses.filter((e) => e._id !== action.payload),
@@ -51,6 +61,8 @@ export const {
   updateEvent,
   removeEvent,
   updateLocation,
+  updateExpensesAsSeen,
+  updateEventsAsSeen,
 } = tripSlice.actions;
 
 export const selectTrip = (state) => state.trip;
